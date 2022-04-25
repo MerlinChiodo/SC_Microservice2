@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Fahrt {
+  fahrt_id              Int       @id @default(autoincrement())
+  buslinie              Int?
+  abfahrt_haltestelle   String?
+  abfahrt_zeit          DateTime?
+  ankunft_haltestelle   String?
+  ankunft_zeit          DateTime?
+}
+
+model Feedback{
+  feedback_id           Int       @id @default(autoincrement())
+  nachricht             String?
+  bewertung             Int?
+  verspaetung           Float
+}
+
+model Mitarbeiter {
+  mitarbeiter_id        Int       @id @default(autoincrement())
+  smartCity_id          Int     
+  email                 String
+  passwort              String
+}
+
+model Busreisende{
+  busreisende_id      Int         @id @default(autoincrement())
+  smartCity_id        Int     
+}
+
+model Ticket {
+  ticket_id           Int         @id @default(autoincrement())
+  ticket_art          String?
+  geltungstag         DateTime?
+  preis               String?
+}
+
+model Meldung {
+  meldung_id          Int         @id @default(autoincrement())
+  titel               String
+  kurzbeschreibung    String
+  text                String
+  prioritaet          String?
+  tag                 String
+  datum               DateTime
+}

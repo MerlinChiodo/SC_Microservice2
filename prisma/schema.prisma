@@ -12,30 +12,41 @@ datasource db {
 
 model Fahrt {
   fahrt_id              Int       @id @default(autoincrement())
-  buslinie              Int?
-  abfahrt_haltestelle   String?
-  abfahrt_zeit          DateTime?
-  ankunft_haltestelle   String?
-  ankunft_zeit          DateTime?
+  buslinie              Int
+  abfahrt_haltestelle   String
+  abfahrt_zeit          DateTime
+  ankunft_haltestelle   String
+  ankunft_zeit          DateTime
+  feedbacks             Feedback[]
+  ticket                Ticket    @relation(fields: [ticket_id],references: [ticket_id])
+  ticket_id             Int
 }
 
 model Feedback{
   feedback_id           Int       @id @default(autoincrement())
   nachricht             String?
   bewertung             Int?
-  verspaetung           Float
+  verspaetung           Float?
+  fahrt                 Fahrt   @relation(fields: [fahrt_id], references: [fahrt_id])
+  fahrt_id              Int
 }
 
 model Mitarbeiter {
   mitarbeiter_id        Int       @id @default(autoincrement())
-  smartCity_id          Int     
+  smartCity_id          String     
   email                 String
   passwort              String
+  meldungen             Meldung[]
+  anfragen              Anfrage[]
 }
 
 model Busreisende{
   busreisende_id      Int         @id @default(autoincrement())
-  smartCity_id        Int     
+  smartCity_id        String
+  vorname             String?
+  nachname            String?
+  email               String?
+  tickets             Ticket[]
 }
 
 model Ticket {
@@ -43,6 +54,10 @@ model Ticket {
   ticket_art          String?
   geltungstag         DateTime?
   preis               String?
+  fahrten             Fahrt[]
+  anfrage             Anfrage?    @relation(fields: [anfrage_id], references: [anfrage_id])
+  anfrage_id          Int?
+  busreisende         Busreisende[]
 }
 
 model Meldung {
@@ -53,4 +68,16 @@ model Meldung {
   prioritaet          String?
   tag                 String
   datum               DateTime
+  mitarbeiter         Mitarbeiter @relation(fields: [mitarbeiter_id], references: [mitarbeiter_id])
+  mitarbeiter_id      Int
+}
+
+model Anfrage {
+  anfrage_id          Int         @id @default(autoincrement())
+  smartCity_id        String     
+  anzahlPassagiere    Int 
+  bearbeitet          Boolean?
+  tickets             Ticket[]
+  mitarbeiter         Mitarbeiter @relation(fields: [mitarbeiter_id], references: [mitarbeiter_id])
+  mitarbeiter_id      Int
 }

@@ -5,5 +5,4 @@ exports.addTicket = function(req, res, next){
     res.send("Ticket added")
 };
 
-
 module.exports = ticketRouter;

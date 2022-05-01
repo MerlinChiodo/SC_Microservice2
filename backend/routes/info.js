@@ -1,17 +1,17 @@
 var express = require('express');
 var infoRouter = express.Router();
 
-exports.getAllInfoPosts = function(req, res, next){
+infoRouter.get("/getAllInfoPosts", async (req, res, next) =>{
     res.send("getAllInfoPosts");
-};
-exports.createInfoPost = async (req, res, next) => {
+});
+infoRouter.post("/createInfoPost", async (req, res, next) => {
     res.send("creteInfoPost");
-};
-exports.deleteInfoPost = function(req, res,next){
+});
+infoRouter.delete("/deleteInfoPost/:post_id", async (req, res,next)=>{
     res.send("deleteInfoPost");
-};
-exports.editInfoPost = function(req, res, next){
+});
+infoRouter.put("/editInfoPost", async (req, res, next) =>{
     res.send("editInfoPost");
-};
+});
 
 module.exports = infoRouter;

@@ -1,0 +1,41 @@
+{
+    "title": "new newsletter post",
+    "type": "object",
+    "description": "Schema for the event to send a newsletter post",
+    "properties": {
+        "event_id" : {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000
+        },
+        "event_name": {
+            "type": "string",
+            "const": "New Newsletter Post"
+        },
+        "service_name": {
+            "type": "string",
+            "const": "stadtbus"
+        },
+        "title": {
+            "type": "string",
+            "minLength": 1
+        },
+        "text_short": {
+            "type": "string",
+            "minLength": 1
+        },
+        "text_long": {
+            "type": "string",
+            "minLength": 1
+        },
+        "picture_url": {
+            "type": "string",
+            "minLength": 1
+        },
+        "date": {
+            "type": "string"
+        }
+    },
+    "required": ["event_id", "event_name","service_name", "title", "text_long", "date"],
+    "additionalProperties": false
+}

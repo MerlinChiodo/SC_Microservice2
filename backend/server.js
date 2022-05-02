@@ -5,10 +5,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require("./routes/index")
-var passengerRouter = require('./routes/passenger');
-var infoRouter = require("./routes/info");
-var ticketRouter = require("./routes/ticket")
-var employeeRouter = require("./routes/employee");
+var passengerRouter = require('./routes/passengerRouter');
+var infoRouter = require("./routes/infoRouter");
+var ticketRouter = require("./routes/ticketRouter")
+var employeeRouter = require("./routes/feedbackRouter");
 
 const app = express();
 
@@ -17,10 +17,10 @@ app.set('views', './views')
 app.set('view engine', 'pug');
 
 // app.use(logger('dev'));
-
 // app.use(express.urlencoded({ extended: false }));
 // app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(indexRouter);
 
 app.use('/passenger', passengerRouter);

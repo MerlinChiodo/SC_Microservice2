@@ -1,0 +1,33 @@
+{
+  "title": "new kita inquiry",
+  "type": "object",
+  "description": "Schema for the event to receive a new kita inquiry",
+  "properties": {
+    "event_id" : {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10000
+    },
+    "event_name": {
+      "type": "string",
+      "const": "New Kita Inquiry"
+    },
+    "service_name": {
+      "type": "string",
+      "const": "kita"
+    },
+    "number_of_passengers": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000
+    },
+    "person_responsible": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string"
+    }
+  },
+  "required": ["event_id", "event_name","service_name","number_of_passengers", "person_responsible","date"],
+  "additionalProperties": false
+}

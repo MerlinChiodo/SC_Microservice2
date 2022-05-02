@@ -4,10 +4,12 @@ const Ajv = require("ajv")
 
 const schema_newsletterPost = require("./forum/newNewsletterPostSchema.json")
 const schema_calendarEntry = require("./forum/newCalendarEntrySchema.json")
-const schema_updateAboutUs = require("./landingpage/AboutUsSchema")
+const schema_updateAboutUs = require("./landingpage/AboutUsSchema.json")
+const schema_kitainquiry = require("./kita/newKitaInquirySchema.json")
 
 const ajv = exports.ajv = new Ajv()
 
 ajv.addSchema(schema_newsletterPost, "newsletterPost")
 ajv.addSchema(schema_calendarEntry, "calendarEntry")
 ajv.addSchema(schema_updateAboutUs, "updateAboutUs")
+ajv.addSchema(schema_kitainquiry, "kitaInquiry")

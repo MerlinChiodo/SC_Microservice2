@@ -16,13 +16,20 @@ function updateAboutUs(req, res) {
             if (channelError) {
                 throw channelError
             }
-            /*            channel.assertQueue(queue, {
-                            durable: true
-                        })*/
             const validate = ajv.getSchema("updateAboutUs")
             if (validate(req.body)) {
-                channel.publish('events', "public.stadtbus", Buffer.from(JSON.stringify(req.body)))
-                console.log(`RabbitMQ: sent event: ${req.body}`)
+
+                const aboutUs = {
+                    event_id: 2001,
+                    event_name: 'Update About Us',
+                    service_name: 'stadtbus',
+                    date: req.body.date,
+                    about_us: req.body.about_us,
+                    picture: req.body.picture
+                }
+
+                channel.publish('events', "public.stadtbus", Buffer.from(JSON.stringify(aboutUs)))
+                return res.status(200).end('ok')
             } else {
                 // report error
                 res.status(400).end("Invalid About Us Data")

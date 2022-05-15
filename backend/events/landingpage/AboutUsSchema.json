@@ -26,7 +26,7 @@
         },
         "date": {
             "type": "string",
-            "format": "date"
+            "format": "date-time"
         }
     },
     "required": ["event_id", "event_name","service_name", "about_us"],

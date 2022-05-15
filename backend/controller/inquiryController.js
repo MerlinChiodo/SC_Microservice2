@@ -1,13 +1,15 @@
-const prisma = require('../lib/prisma.js');
+const prisma = require('../lib/prisma');
 
 exports.getAllInquiries = async(req, res, next) => {
-    res.send("getAllInquiries");
-};
+    res.send("getAllInquiries")
+}
 
 exports.getInquiry = async(req, res, next) => {
-    res.send("getInquiry " + req.params.inquiry_id);
-};
+    res.send("getInquiry " + req.params.inquiry_id)
+}
 
 exports.createInquiry = async(req, res, next) => {
-    res.send("createInquiry");
-};
+    res.send("createInquiry")
+
+
+}

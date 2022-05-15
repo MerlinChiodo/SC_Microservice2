@@ -1,4 +1,4 @@
-const prisma = require('../lib/prisma.js');
+const prisma = require('../lib/prisma');
 
 exports.getAllInfoPosts = async (req, res, next) =>{
     res.send("getAllInfoPosts");

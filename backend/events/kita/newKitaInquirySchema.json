@@ -25,7 +25,8 @@
       "type": "string"
     },
     "date": {
-      "type": "string"
+      "type": "string",
+      "format": "date-time"
     }
   },
   "required": ["event_id", "event_name","service_name","number_of_passengers", "person_responsible","date"],

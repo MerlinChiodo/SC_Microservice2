@@ -8,72 +8,82 @@ datasource db {
 }
 
 model Fahrt {
-  fahrt_id              Int       @id @default(autoincrement())
-  buslinie              Int
-  abfahrt_haltestelle   String
-  abfahrt_zeit          DateTime
-  ankunft_haltestelle   String
-  ankunft_zeit          DateTime
-  feedbacks             Feedback[]
-  ticket                Ticket    @relation(fields: [ticket_id],references: [ticket_id])
-  ticket_id             Int
+  fahrt_id            Int        @id @default(autoincrement())
+  buslinie            Int
+  abfahrt_haltestelle String
+  abfahrt_zeit        DateTime
+  ankunft_haltestelle String
+  ankunft_zeit        DateTime
+  ticket_id           Int
+  ticket              Ticket     @relation(fields: [ticket_id], references: [ticket_id])
+  feedbacks           Feedback[]
+
+  @@index([ticket_id], map: "Fahrt_ticket_id_fkey")
 }
 
-model Feedback{
-  feedback_id           Int       @id @default(autoincrement())
-  nachricht             String?
-  bewertung             Int
-  verspaetung           Float?
-  fahrt                 Fahrt   @relation(fields: [fahrt_id], references: [fahrt_id])
-  fahrt_id              Int
+model Feedback {
+  feedback_id Int     @id @default(autoincrement())
+  nachricht   String?
+  bewertung   Int
+  verspaetung Float?
+  fahrt_id    Int
+  fahrt       Fahrt   @relation(fields: [fahrt_id], references: [fahrt_id])
+
+  @@index([fahrt_id], map: "Feedback_fahrt_id_fkey")
 }
 
 model Mitarbeiter {
-  mitarbeiter_id        Int       @id @default(autoincrement())
-  smartCity_id          String?
-  email                 String
-  passwort              String
-  meldungen             Meldung[]
-  anfragen              Anfrage[]
+  mitarbeiter_id Int       @id @default(autoincrement())
+  smartCity_id   String?
+  email          String
+  passwort       String
+  anfragen       Anfrage[]
+  meldungen      Meldung[]
 }
 
-model Busreisende{
-  busreisende_id      Int         @id @default(autoincrement())
-  smartCity_id        String?
-  vorname             String?
-  nachname            String?
-  email               String?
-  tickets             Ticket[]
+model Busreisende {
+  busreisende_id Int      @id @default(autoincrement())
+  smartCity_id   String?
+  vorname        String?
+  nachname       String?
+  email          String?
+  tickets        Ticket[]
 }
 
 model Ticket {
-  ticket_id           Int         @id @default(autoincrement())
-  ticket_art          String
-  geltungstag         DateTime
-  preis               String
-  fahrten             Fahrt[]
-  anfrage             Anfrage?    @relation(fields: [anfrage_id], references: [anfrage_id])
-  anfrage_id          Int?
-  busreisende         Busreisende[]
+  ticket_id   Int           @id @default(autoincrement())
+  ticket_art  String
+  geltungstag DateTime
+  preis       String
+  anfrage_id  Int?
+  anfrage     Anfrage?      @relation(fields: [anfrage_id], references: [anfrage_id])
+  fahrten     Fahrt[]
+  busreisende Busreisende[]
+
+  @@index([anfrage_id], map: "Ticket_anfrage_id_fkey")
 }
 
 model Meldung {
-  meldung_id          Int         @id @default(autoincrement())
-  titel               String
-  kurzbeschreibung    String
-  text                String
-  prioritaet          String?
-  datum               DateTime    @default(now())
-  mitarbeiter         Mitarbeiter @relation(fields: [mitarbeiter_id], references: [mitarbeiter_id])
-  mitarbeiter_id      Int
+  meldung_id       Int         @id @default(autoincrement())
+  titel            String
+  kurzbeschreibung String
+  text             String
+  prioritaet       String?
+  datum            DateTime    @default(now())
+  mitarbeiter_id   Int
+  mitarbeiter      Mitarbeiter @relation(fields: [mitarbeiter_id], references: [mitarbeiter_id])
+
+  @@index([mitarbeiter_id], map: "Meldung_mitarbeiter_id_fkey")
 }
 
 model Anfrage {
-  anfrage_id          Int         @id @default(autoincrement())
-  smartCity_id        String
-  anzahlPassagiere    Int
-  bearbeitet          Boolean?
-  tickets             Ticket[]
-  mitarbeiter         Mitarbeiter @relation(fields: [mitarbeiter_id], references: [mitarbeiter_id])
-  mitarbeiter_id      Int
+  anfrage_id       Int         @id @default(autoincrement())
+  smartCity_id     String
+  anzahlPassagiere Int
+  bearbeitet       Boolean?
+  mitarbeiter_id   Int
+  mitarbeiter      Mitarbeiter @relation(fields: [mitarbeiter_id], references: [mitarbeiter_id])
+  tickets          Ticket[]
+
+  @@index([mitarbeiter_id], map: "Anfrage_mitarbeiter_id_fkey")
 }

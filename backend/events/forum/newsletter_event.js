@@ -16,13 +16,24 @@ function sendNewsletterPost(req, res) {
             if (channelError) {
                 throw channelError
             }
-/*            channel.assertQueue(queue, {
-                durable: true
-            })*/
+            //TODO: date validieren
             const validate = ajv.getSchema("newsletterPost")
             if (validate(req.body)) {
-                channel.publish('events', "public.stadtbus", Buffer.from(JSON.stringify(req.body)))
-                console.log(`RabbitMQ: sent event ${req.body}`)
+
+                const newsletter_event = {
+                    event_id: 2001,
+                    event_name: 'New Newsletter',
+                    service_name: 'stadtbus',
+                    title: req.body.title,
+                    text_short: req.body.text_short,
+                    text_long: req.body.text_long,
+                    date: req.body.date,
+                    picture_url: req.body.picture_url
+                }
+
+
+                channel.publish('events', "public.stadtbus", Buffer.from(JSON.stringify(newsletter_event)))
+                console.log(`RabbitMQ: sent event ${newsletter_event}`)
             } else {
                 // report error
                 res.status(400).end("Invalid Newsletter Post Data")

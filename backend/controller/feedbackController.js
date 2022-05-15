@@ -1,4 +1,4 @@
-const prisma = require('../lib/prisma.js');
+const prisma = require('../lib/prisma');
 
 exports.getFeedbackPerRoute = async(req, res, next) => {
     res.send("getFeedbackPerRoute " + req.params.route_id);

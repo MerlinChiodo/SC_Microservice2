@@ -9,6 +9,7 @@ var passengerRouter = require('./routes/passengerRouter');
 var infoRouter = require("./routes/infoRouter");
 var ticketRouter = require("./routes/ticketRouter")
 var employeeRouter = require("./routes/feedbackRouter");
+var inquiryRouter = require("./routes/inquiryRouter")
 
 const app = express();
 
@@ -27,5 +28,6 @@ app.use('/passenger', passengerRouter);
 app.use("/info", infoRouter);
 app.use("/ticket", ticketRouter);
 app.use("/employee", employeeRouter);
+app.use("/inquiry", inquiryRouter)
 
 module.exports = app;

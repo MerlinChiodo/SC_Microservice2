@@ -20,7 +20,7 @@ exports.updateAboutUs = async (req, res) => {
             if (validate(req.body)) {
 
                 const aboutUs = {
-                    event_id: 2001,
+                    event_id: 2003,
                     event_name: 'Update About Us',
                     service_name: 'stadtbus',
                     date: req.body.date,

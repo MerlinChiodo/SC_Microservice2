@@ -16,21 +16,11 @@ model Fahrt {
   ankunft_zeit        DateTime
   ticket_id           Int?
   ticket              Ticket?    @relation(fields: [ticket_id], references: [ticket_id])
-  feedbacks           Feedback[]
+
 
   @@index([ticket_id], map: "Fahrt_ticket_id_fkey")
 }
 
-model Feedback {
-  feedback_id Int     @id @default(autoincrement())
-  nachricht   String?
-  bewertung   Int
-  verspaetung Float?
-  fahrt_id    Int
-  fahrt       Fahrt   @relation(fields: [fahrt_id], references: [fahrt_id])
-
-  @@index([fahrt_id], map: "Feedback_fahrt_id_fkey")
-}
 
 model Mitarbeiter {
   mitarbeiter_id Int       @id @default(autoincrement())

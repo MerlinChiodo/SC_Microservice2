@@ -5,7 +5,7 @@ exports.getAllInquiries = async(req, res, next) => {
 }
 
 exports.getInquiry = async(req, res, next) => {
-    res.send("getInquiry " + req.params.inquiry_id)
+    res.send("getInquiry ")
 }
 
 exports.createInquiry = async(req, res, next) => {

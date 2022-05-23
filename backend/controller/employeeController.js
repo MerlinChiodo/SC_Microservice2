@@ -5,5 +5,5 @@ exports.getAllEmployees = async (req, res, next) =>{
 };
 
 exports.getEmployee = async (req, res) => {
-    res.send("getEmployee", req.params.employee_id)
+    res.send("getEmployee")
 }

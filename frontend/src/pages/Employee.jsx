@@ -5,7 +5,9 @@ function Employee() {
     return (
         <>
             <Card title="Kalender" text="Neuer Kalender Eintrag für das Forum">
-                <button className="btn mt-2 btn-primary">Eintrag hinzufügen</button>
+                <button>
+                    <Link className="btn mt-2 btn-primary" to='/'>Eintrag hinzufügen</Link>
+                </button>
             </Card>
             <Card title="Newsletter" text="Neuer Newsletter Artikel für das Forum">
                 <button>
@@ -14,7 +16,7 @@ function Employee() {
             </Card>
             <Card title="Anträge" text="Alle Anträge einsehen und bearbeiten">
                 <button>
-                    <Link className="btn mt-2 btn-primary" to='/articleform'>Anträge einsehen</Link>
+                    <Link className="btn mt-2 btn-primary" to='/'>Anträge einsehen</Link>
                 </button>
             </Card>
             <Card title="About Us" text="About Us auf der Landingpage bearbeiten">

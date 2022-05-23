@@ -5,7 +5,7 @@ exports.getAllInfoPosts = async (req, res, next) =>{
 };
 
 exports.createInfoPost = async (req, res, next) => {
-    res.send("creteInfoPost");
+    res.send("createInfoPost");
 };
 
 exports.deleteInfoPost = async (req, res, next)=>{

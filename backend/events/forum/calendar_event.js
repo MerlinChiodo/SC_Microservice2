@@ -7,8 +7,7 @@ const rabbitMQUsername = process.env.rabbitMQUsername
 const rabbitMQPassword = process.env.rabbitMQPassword
 const serverURL = process.env.serverURL
 
-
-function sendCalendarEntry(req, res) {
+exports.sendCalendarEntry = async (req, res) => {
     amqp.connect(`amqp://${rabbitMQUsername}:${rabbitMQPassword}@${serverURL}:5672`, (connectError, connection) => {
         if (connectError) {
             throw connectError
@@ -36,11 +35,9 @@ function sendCalendarEntry(req, res) {
                 channel.publish('events', "public.stadtbus", Buffer.from(JSON.stringify(calender_event)))
                 console.log(`RabbitMQ: sent event: ${calender_event}`)
             } else {
-                // report error
                 return res.status(400).end("Invalid Calendar Entry Data")
             }
         })
     })
 }
 
-export {sendCalendarEntry}

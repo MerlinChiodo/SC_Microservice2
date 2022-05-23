@@ -10,6 +10,7 @@ var infoRouter = require("./routes/infoRouter");
 var ticketRouter = require("./routes/ticketRouter")
 var employeeRouter = require("./routes/feedbackRouter");
 var inquiryRouter = require("./routes/inquiryRouter")
+var eventRouter = require("./routes/eventRouter")
 
 const app = express();
 
@@ -22,12 +23,13 @@ app.set('view engine', 'pug');
 // app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(indexRouter);
+app.use(indexRouter)
 
-app.use('/passenger', passengerRouter);
-app.use("/info", infoRouter);
-app.use("/ticket", ticketRouter);
-app.use("/employee", employeeRouter);
+app.use('/passenger', passengerRouter)
+app.use("/info", infoRouter)
+app.use("/ticket", ticketRouter)
+app.use("/employee", employeeRouter)
 app.use("/inquiry", inquiryRouter)
+app.use("/event", eventRouter)
 
 module.exports = app;

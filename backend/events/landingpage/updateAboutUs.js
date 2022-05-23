@@ -31,7 +31,6 @@ function updateAboutUs(req, res) {
                 channel.publish('events', "public.stadtbus", Buffer.from(JSON.stringify(aboutUs)))
                 return res.status(200).end('ok')
             } else {
-                // report error
                 res.status(400).end("Invalid About Us Data")
             }
         })

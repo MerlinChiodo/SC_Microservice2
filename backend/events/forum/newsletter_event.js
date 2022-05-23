@@ -7,7 +7,8 @@ const rabbitMQUsername = process.env.rabbitMQUsername
 const rabbitMQPassword = process.env.rabbitMQPassword
 const serverURL = process.env.serverURL
 
-function sendNewsletterPost(req, res) {
+
+exports.sendNewsletter = async (req, res) => {
     amqp.connect(`amqp://${rabbitMQUsername}:${rabbitMQPassword}@${serverURL}:5672`, (connectError, connection) => {
         if (connectError) {
             throw connectError
@@ -35,12 +36,10 @@ function sendNewsletterPost(req, res) {
                 channel.publish('events', "public.stadtbus", Buffer.from(JSON.stringify(newsletter_event)))
                 console.log(`RabbitMQ: sent event ${newsletter_event}`)
             } else {
-                // report error
                 res.status(400).end("Invalid Newsletter Post Data")
             }
         })
     })
 }
 
-export {sendNewsletterPost}
 

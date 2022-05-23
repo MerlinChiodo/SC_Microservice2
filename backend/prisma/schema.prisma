@@ -14,8 +14,8 @@ model Fahrt {
   abfahrt_zeit        DateTime
   ankunft_haltestelle String
   ankunft_zeit        DateTime
-  ticket_id           Int
-  ticket              Ticket     @relation(fields: [ticket_id], references: [ticket_id])
+  ticket_id           Int?
+  ticket              Ticket?    @relation(fields: [ticket_id], references: [ticket_id])
   feedbacks           Feedback[]
 
   @@index([ticket_id], map: "Fahrt_ticket_id_fkey")
@@ -51,12 +51,12 @@ model Busreisende {
 }
 
 model Ticket {
-  ticket_id   Int           @id @default(autoincrement())
-  ticket_art  String
+  ticket_id   Int               @id @default(autoincrement())
+  ticket_art  Ticketart
   geltungstag DateTime
   preis       String
   anfrage_id  Int?
-  anfrage     Anfrage?      @relation(fields: [anfrage_id], references: [anfrage_id])
+  anfrage     Anfrage?          @relation(fields: [anfrage_id], references: [anfrage_id])
   fahrten     Fahrt[]
   busreisende Busreisende[]
 
@@ -68,7 +68,7 @@ model Meldung {
   titel            String
   kurzbeschreibung String
   text             String
-  prioritaet       String?
+  prioritaet       Int
   datum            DateTime    @default(now())
   mitarbeiter_id   Int
   mitarbeiter      Mitarbeiter @relation(fields: [mitarbeiter_id], references: [mitarbeiter_id])
@@ -86,4 +86,12 @@ model Anfrage {
   tickets          Ticket[]
 
   @@index([mitarbeiter_id], map: "Anfrage_mitarbeiter_id_fkey")
+}
+
+enum Ticketart {
+  EINZELTICKET
+  FAMILIENTICKET
+  GRUPPENTICKET
+  MONATSTICKET
+  SONDERTICKET
 }

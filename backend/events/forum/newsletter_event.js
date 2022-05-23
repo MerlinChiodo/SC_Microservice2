@@ -26,9 +26,9 @@ exports.sendNewsletter = async (req, res) => {
                     event_name: 'New Newsletter',
                     service_name: 'stadtbus',
                     title: req.body.title,
-                    text_short: req.body.text_short,
-                    text_long: req.body.text_long,
-                    date: req.body.date,
+                    short_description: req.body.short_description,
+                    long_description: req.body.long_description,
+                    event_on: req.body.event_on,
                     picture_url: req.body.picture_url
                 }
 

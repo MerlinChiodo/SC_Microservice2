@@ -20,11 +20,11 @@
             "type": "string",
             "minLength": 1
         },
-        "text_short": {
+        "short_description": {
             "type": "string",
             "minLength": 1
         },
-        "text_long": {
+        "long_description": {
             "type": "string",
             "minLength": 1
         },
@@ -32,10 +32,10 @@
             "type": "string",
             "minLength": 1
         },
-        "date": {
+        "event_on": {
             "type": "string"
         }
     },
-    "required": ["event_id", "event_name", "service_name", "title", "text_long", "date"],
+    "required": ["event_id", "event_name", "service_name", "title", "short_description", "event_on"],
     "additionalProperties": false
 }

@@ -3,13 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "run-webserver": "node ./bin/www",
+    "start": "concurrently npm:run-*"
   },
   "dependencies": {
     "@prisma/client": "^3.12.0",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
     "amqplib": "^0.8.0",
+    "concurrently": "^7.2.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",

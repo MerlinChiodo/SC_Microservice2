@@ -18,10 +18,17 @@ const app = express();
 app.set('views', './views')
 app.set('view engine', 'pug');
 
+
 // app.use(logger('dev'));
 // app.use(express.urlencoded({ extended: false }));
 // app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.use(express.static(path.join(__dirname, "../frontend",'build')));
+
+app.get("*", async (req, res) =>{
+    res.sendFile(path.join(__dirname, "../frontend","build", "index.html"))
+})
 
 app.use(indexRouter)
 
@@ -31,5 +38,7 @@ app.use("/ticket", ticketRouter)
 app.use("/employee", employeeRouter)
 app.use("/inquiry", inquiryRouter)
 app.use("/event", eventRouter)
+
+
 
 module.exports = app;

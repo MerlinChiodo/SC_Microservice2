@@ -5,7 +5,6 @@ node_modules
 .env.local
 .env.*.local
 backend/.env
-frontend/.env
 frontend/node_modules
 # Editor directories and files
 .idea

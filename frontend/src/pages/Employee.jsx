@@ -17,6 +17,9 @@ function Employee() {
                     <Link className="btn mt-2 btn-primary" to='/articleform'>Anträge einsehen</Link>
                 </button>
             </Card>
+            <Card title="About Us" text="About Us auf der Landingpage bearbeiten">
+                <button className="btn mt-2 btn-primary"> About Us ändern</button>
+            </Card>
         </>
     )
 }

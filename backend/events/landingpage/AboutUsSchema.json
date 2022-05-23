@@ -19,7 +19,7 @@
         "about_us" : {
             "type": "string"
         },
-        "picture_url": {
+        "picture": {
             "type": "string",
             "format": "uri",
             "minLength": 1
@@ -29,6 +29,6 @@
             "format": "date-time"
         }
     },
-    "required": ["event_id", "event_name","service_name", "about_us"],
+    "required": ["event_id", "event_name","service_name", "date"],
     "additionalProperties": false
 }

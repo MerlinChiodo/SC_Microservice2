@@ -19,7 +19,7 @@ exports.deleteService = async (req, res) => {
 
                 const data = {
                     event_id: 2004,
-                    event_name: 'Update About Us',
+                    event_name: 'Delete My Service',
                     service_name: 'stadtbus',
                     date: req.body.date
                 }

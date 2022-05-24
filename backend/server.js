@@ -22,9 +22,9 @@ app.set('view engine', 'pug');
 
 
 app.use(logger('dev'));
-/*app.use(cors({
-    origin: 'http://localhost:3001'
-}))*/
+app.use(cors({
+    origin: 'http://http://vps2290194.fastwebserver.de:9720'
+}))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

@@ -1,4 +1,4 @@
-import Form from "../components/Form";
+
 
 function NewsletterForm(){
     return(

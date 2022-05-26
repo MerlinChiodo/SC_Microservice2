@@ -7,9 +7,9 @@ const backendurl = "http://vps2290194.fastwebserver.de:9720/event/"
 
 function Employee() {
 
-
-
+    //test
     const handleClick = async () => {
+
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -22,17 +22,10 @@ function Employee() {
                 long_description: "Lorem Ipsum",
                 event_on: "22.05.2022", }),
         }
-        try {
             const response = await fetch(backendurl + "sendCalendarEntry", requestOptions)
             const data = await response.json()
-            console.log(JSON.stringify(data))
-    } catch (err){
-            console.log(err.message);
-        }
+            this.calendarResponse = data;
     }
-
-
-
 
     return (
         <>

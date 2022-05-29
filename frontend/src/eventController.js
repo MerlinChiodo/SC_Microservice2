@@ -11,7 +11,7 @@ export async function sendCalendarEntry(){
         redirect: 'follow',
         headers: { 'Content-Type': 'application/json' }
     };
-    return await axios.post(backendurl + "sendCalendarEntry", {
+    const response = await axios.post(backendurl + "sendCalendarEntry", {
         event_id: 2002,
             event_name: "New Calendar Entry",
             service_name: "stadtbus",
@@ -19,11 +19,7 @@ export async function sendCalendarEntry(){
             short_description: "Smarte Events im Stadtbus",
             long_description: "Lorem Ipsum",
             event_on: "22.05.2022" }, requestOptions)
-        .then((response) => {
-            console.log(response);
-        }, (error) => {
-            console.log(error);
-        });
+    return response.data
 }
 
 

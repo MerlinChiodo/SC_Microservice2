@@ -8,7 +8,7 @@ const rabbitMQPassword = process.env.rabbitMQPassword
 const serverURL = process.env.serverURL
 
 exports.sendCalendarEntry = async (req, res) => {
-    amqp.connect(`amqp://${rabbitMQUsername}:${rabbitMQPassword}@${serverURL}:5672`, (connectError, connection) => {
+    amqp.connect(`amqp://${rabbitMQUsername}:${rabbitMQPassword}@${serverURL}`, (connectError, connection) => {
         if (connectError) {
             throw connectError
         }

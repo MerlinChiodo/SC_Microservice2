@@ -1,0 +1,41 @@
+ {
+    "title": "new calendar entry",
+    "type": "object",
+    "description": "Schema for the event to send a calendar entry",
+    "properties": {
+        "event_id" : {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000
+        },
+        "event_name": {
+            "type": "string",
+            "const": "New Calendar Entry"
+        },
+        "service_name": {
+            "type": "string",
+            "const": "stadtbus"
+        },
+        "title": {
+            "type": "string",
+            "minLength": 1
+        },
+        "short_description": {
+            "type": "string",
+            "minLength": 1
+        },
+        "long_description": {
+            "type": "string",
+            "minLength": 1
+        },
+        "picture_url": {
+            "type": "string",
+            "minLength": 1
+        },
+        "event_on": {
+            "type": "string"
+        }
+    },
+    "required": ["event_id", "event_name", "service_name", "title", "short_description", "event_on"],
+    "additionalProperties": false
+}

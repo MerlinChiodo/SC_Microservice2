@@ -34,7 +34,6 @@ exports.sendCalendarEntry = async (req, res) => {
 
                 channel.publish('events', "public.stadtbus", Buffer.from(JSON.stringify(req.body)))
                 console.log(`RabbitMQ: sent event: ${JSON.stringify(req.body)}`)
-                return res.status(200).send({error: false, msg: 'event successfully sent'})
             } else {
                 return res.status(400).end("Invalid Calendar Entry Data")
             }

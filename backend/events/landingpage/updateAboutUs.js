@@ -8,7 +8,7 @@ const rabbitMQPassword = process.env.rabbitMQPassword
 const serverURL = process.env.serverURL
 
 exports.updateAboutUs = async (req, res) => {
-    amqp.connect(`amqp://${rabbitMQUsername}:${rabbitMQPassword}@${serverURL}:5672`, (connectError, connection) => {
+    amqp.connect(`amqp://${rabbitMQUsername}:${rabbitMQPassword}@${serverURL}`, (connectError, connection) => {
         if (connectError) {
             throw connectError
         }
@@ -29,7 +29,7 @@ exports.updateAboutUs = async (req, res) => {
                 }
 
                 channel.publish('events', "public.stadtbus", Buffer.from(JSON.stringify(aboutUs)))
-                return res.status(200).end('ok')
+                return res.status(200).send({error: false, msg: 'event successfully sent'})
             } else {
                 res.status(400).end("Invalid About Us Data")
             }

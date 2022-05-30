@@ -11,7 +11,7 @@ const moment = require('moment')
 
 
 exports.receiveKitaInquiry = async (req, res) => {
-    amqp.connect(`amqp://${rabbitMQUsername}:${rabbitMQPassword}@${serverURL}:5672`, function (error0, connection) {
+    amqp.connect(`amqp://${rabbitMQUsername}:${rabbitMQPassword}@${serverURL}`, function (error0, connection) {
         if (error0) {
             throw error0
         }

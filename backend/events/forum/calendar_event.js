@@ -21,7 +21,7 @@ exports.sendCalendarEntry = async (req, res) => {
 
             if (validate(req.body)) {
 
-               /* const calender_event = {
+                const calendar_event = {
                     event_id: 2002,
                     event_name: 'New Calendar Entry',
                     service_name: 'stadtbus',
@@ -30,10 +30,9 @@ exports.sendCalendarEntry = async (req, res) => {
                     long_description: req.body.long_description,
                     event_on: req.body.event_on,
                     picture_url: req.body.picture_url
-                }*/
+                }
 
-                channel.publish('events', "public.stadtbus", Buffer.from(JSON.stringify(req.body)))
-                console.log(`RabbitMQ: sent event: ${JSON.stringify(req.body)}`)
+                channel.publish('events', "public.stadtbus", Buffer.from(JSON.stringify(calendar_event)))
                 return res.status(200).send({error: false, msg: 'event successfully sent'})
             } else {
                 return res.status(400).end("Invalid Calendar Entry Data")

@@ -34,7 +34,6 @@ exports.sendNewsletter = async (req, res) => {
 
 
                 channel.publish('events', "public.stadtbus", Buffer.from(JSON.stringify(newsletter_event)))
-                console.log(`RabbitMQ: sent event ${newsletter_event}`)
                 return res.status(200).send({error: false, msg: 'event successfully sent'})
             } else {
                 res.status(400).end("Invalid Newsletter Post Data")

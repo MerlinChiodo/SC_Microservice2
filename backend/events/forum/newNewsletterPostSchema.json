@@ -33,8 +33,7 @@
             "minLength": 1
         },
         "event_on": {
-            "type": "string",
-            "format": "date-time"
+            "type": "string"
         }
     },
     "required": ["event_id", "event_name","service_name", "title", "short_description", "event_on"],

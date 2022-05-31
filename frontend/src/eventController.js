@@ -1,7 +1,3 @@
-
-const backendurl = "http://" + window.location.host +"/event/"
-//test: funktioniert lokal aber nicht auf dem server
-
 export async function sendCalendarEntry(){
     fetch('/event/sendCalendarEntry', {
         method: 'POST',

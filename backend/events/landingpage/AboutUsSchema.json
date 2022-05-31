@@ -25,8 +25,7 @@
             "minLength": 1
         },
         "date": {
-            "type": "string",
-            "format": "date-time"
+            "type": "string"
         }
     },
     "required": ["event_id", "event_name","service_name", "date"],

@@ -21,38 +21,42 @@ exports.receiveKitaInquiry = async (req, res) => {
             }
 
             channel.consume('stadtbus', async function (msg) {
-                console.log(msg.content.toString())
 
+                console.log(msg.content.toString())
                 let kitaInquiry = JSON.parse(msg.content.toString())
                 const validate = ajv.getSchema("kitaInquiry")
 
-                if (validate(kitaInquiry)) {
+                if (kitaInquiry.event_name === "New Kita Inquiry") {
+                    if (validate(kitaInquiry)) {
 
-                    let date
-                    try {
-                        //validating date
-                        let momentDate = moment(eventJSON.date, 'YYYY-MM-DDTHH:mm-ss')
-                        date = momentDate.toDate()
-                    } catch (e) {
-                        return console.log(e)
-                    }
+                        let date
+                        try {
+                            //validating date
+                            let momentDate = moment(kitaInquiry.date, 'YYYY-MM-DDTHH:mm-ss')
+                            date = momentDate.toDate()
+                        } catch (e) {
+                            return console.log(e)
+                        }
 
-                    try {
-                        const createKitaInquiry = await prisma.anfrage.create({
-                            data: {
-                                event_id: kitaInquiry.event_id,
-                                event_name: kitaInquiry.event_name,
-                                service_name: kitaInquiry.service_name,
-                                number_of_passengers: kitaInquiry.number_of_passengers,
-                                person_responsible: kitaInquiry.person_responsible,
-                                date: date
-                            }
-                        })
-                    } catch (e) {
-                        return console.log(e)
+                        try {
+                            const createKitaInquiry = await prisma.anfrage.create({
+                                data: {
+                                    event_id: kitaInquiry.event_id,
+                                    event_name: kitaInquiry.event_name,
+                                    service_name: kitaInquiry.service_name,
+                                    number_of_passengers: kitaInquiry.number_of_passengers,
+                                    person_responsible: kitaInquiry.person_responsible,
+                                    date: date
+                                }
+                            })
+                        } catch (e) {
+                            return console.log(e)
+                        }
+                    } else {
+                        console.log(validate.errors)
                     }
                 } else {
-                    console.log(validate.errors)
+                    console.log("invalid event")
                 }
             }, {
                 noAck: true,

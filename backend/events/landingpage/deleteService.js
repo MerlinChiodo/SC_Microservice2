@@ -30,5 +30,6 @@ exports.deleteService = async (req, res) => {
                 res.status(400).end("Invalid Data - unable to delete service ")
             }
         })
+        connection.close()
     })
 }

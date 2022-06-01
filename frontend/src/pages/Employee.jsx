@@ -8,7 +8,8 @@ function Employee() {
     return (
         <>
             <Card title="Kalender" text="Neuer Kalender Eintrag für das Forum">
-                <button onClick={sendCalendarEntry} className="btn mt-2 btn-primary" to="/employee">Eintrag hinzufügen
+                <button>
+                    <Link className="btn mt-2 btn-primary" to='/calendarform'>Eintrag hinzufügen</Link>
                 </button>
             </Card>
             <Card title="Newsletter" text="Neuer Newsletter Artikel für das Forum">

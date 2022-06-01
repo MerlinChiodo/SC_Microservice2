@@ -1,6 +1,8 @@
+import React from 'react'
 
 
 function NewsletterForm(){
+
     return(
         <form>
             <div className="m-6">

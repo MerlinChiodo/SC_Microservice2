@@ -5,7 +5,7 @@
   "scripts": {
     "run-webserver": "node ./bin/www",
     "start": "concurrently npm:run-*",
-    "run eventlistener": "node ./events/kita/newKitaInquiry.js"
+    "run-eventlistener": "node ./events/kita/newKitaInquiry.js"
   },
   "dependencies": {
     "@prisma/client": "^3.12.0",

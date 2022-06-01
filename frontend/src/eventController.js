@@ -9,7 +9,7 @@ export async function sendCalendarEntry(){
             title: "Bus Event",
             short_description: "Smarte Events im Stadtbus",
             long_description: "Lorem Ipsum",
-            event_on: "22.05.2022" })
+            event_on: "2019-10-12T07:20:50.52Z" })
     }).then(async (response) => {
         if (response.ok) {
             let result = await response.json();

@@ -39,6 +39,7 @@ exports.sendNewsletter = async (req, res) => {
                 res.status(400).end("Invalid Newsletter Post Data")
             }
         })
+        connection.close()
     })
 }
 

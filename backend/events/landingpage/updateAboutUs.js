@@ -34,6 +34,7 @@ exports.updateAboutUs = async (req, res) => {
                 res.status(400).end("Invalid About Us Data")
             }
         })
+        connection.close()
     })
 }
 

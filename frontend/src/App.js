@@ -4,8 +4,8 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Employee from "./pages/Employee";
 import NewsletterForm from "./pages/NewsletterForm"
-import { ChakraProvider } from '@chakra-ui/react'
 import CalendarEntryForm from "./pages/CalendarEntryForm";
+import AboutUsForm from "./pages/AboutUsForm";
 
 
 function App() {
@@ -23,6 +23,7 @@ function App() {
                       <Route path='/employee' element={<Employee/>} />
                       <Route path='/articleform' element={<NewsletterForm/>} />
                       <Route path='/calendarform' element={<CalendarEntryForm/>} />
+                      <Route path='/aboutusform' element={<AboutUsForm/>}/>
                   </Routes>
       </Router>
   )

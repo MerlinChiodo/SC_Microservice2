@@ -25,7 +25,6 @@ code {
 
 
 
-
 .mantine-mbvx4i{
   height: auto;
   padding: 0.625rem;
@@ -63,6 +62,38 @@ code {
     text-align: center;
   }
 }
+
+.mantine-z5q45j {
+   height: auto;
+   padding: 0.625rem;
+   font-size: 0.875rem;
+   line-height: 1.25rem;
+   text-align: center;
+   border-radius: 0.5rem;
+   --tw-bg-opacity: 1;
+   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+   --tw-border-opacity: 1;
+   border-color: rgb(209 213 219 / var(--tw-border-opacity));
+   border-width: 1px;
+   --tw-text-opacity: 1;
+   color: rgb(17 24 39 / var(--tw-text-opacity));
+ }
+@media (prefers-color-scheme: dark) {
+  .mantine-z5q45j {
+    height: auto;
+    padding: 0.625rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    text-align: center;
+    --tw-text-opacity: 1;
+    color: rgb(156 163 175 / var(--tw-text-opacity));
+    --tw-bg-opacity: 1;
+    background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+    --tw-border-opacity: 1;
+    border-color: rgb(75 85 99 / var(--tw-border-opacity));
+  }
+}
+
 
 
 

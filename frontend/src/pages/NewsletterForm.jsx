@@ -5,7 +5,7 @@ import ForumForm from "../components/ForumForm";
 function NewsletterForm(){
 
     return(
-        <ForumForm></ForumForm>
+        <ForumForm eventType={"Newsletter"}></ForumForm>
     )
 }
 export default NewsletterForm

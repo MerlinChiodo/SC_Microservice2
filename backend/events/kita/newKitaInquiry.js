@@ -7,7 +7,7 @@ const serverURL = process.env.serverURL
 const {ajv} = require("../validation")
 const prisma = require('../../lib/prisma')
 
-exports.receiveKitaInquiry = async (req, res) => {
+
     amqp.connect(`amqp://${rabbitMQUsername}:${rabbitMQPassword}@${serverURL}`, function (error0, connection) {
         if (error0) {
             throw error0
@@ -42,16 +42,15 @@ exports.receiveKitaInquiry = async (req, res) => {
                         }
                     } else {
                         console.log(validate.errors)
-                        res.status(400).end("Invalid Inquiry Data")
+                        console.log("Invalid Inquiry Data")
                     }
                 } else {
-                    return res.status(400).end("Invalid Event")
+                    console.log("Invalid Event")
                 }
             }, {
                 noAck: true,
             })
         })
-        connection.close()
     })
-}
+
 

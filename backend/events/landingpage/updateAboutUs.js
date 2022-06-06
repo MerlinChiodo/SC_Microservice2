@@ -17,24 +17,18 @@ exports.updateAboutUs = async (req, res) => {
                 throw channelError
             }
             const validate = ajv.getSchema("updateAboutUs")
-            if (validate(req.body)) {
 
-                const aboutUs = {
-                    event_id: 2003,
-                    event_name: 'Update About Us',
-                    service_name: 'stadtbus',
-                    date: req.body.date,
-                    about_us: req.body.about_us,
-                    picture: req.body.picture
-                }
-
-                channel.publish('events', "public.stadtbus", Buffer.from(JSON.stringify(aboutUs)))
-                return res.status(200).send({error: false, msg: 'event successfully sent'})
-            } else {
-                res.status(400).end("Invalid About Us Data")
-            }
+            try {
+                    if (validate(req.body)) {
+                        channel.publish('events', "public.stadtbus", Buffer.from(JSON.stringify(req.body)))
+                        return res.status(200).send({error: false, msg: 'event successfully sent'})
+                    } else {
+                        res.status(400).end("Invalid About Us Data")
+                    }
+                } catch (e) {
+                console.log(e)
+        }
         })
-        connection.close()
     })
 }
 

@@ -21,10 +21,12 @@
         },
         "picture": {
             "type": "string",
-            "format": "uri",
-            "minLength": 1
+            "nullable": true
         },
         "date": {
+            "type": "string"
+        },
+        "url": {
             "type": "string"
         }
     },

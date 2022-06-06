@@ -1,30 +1,33 @@
 import React from 'react'
-import {DatePicker} from "@mantine/dates";
-import {Calendar} from "tabler-icons-react";
-import {useForm, zodResolver} from "@mantine/form";
-import {z} from "zod";
+import {useState} from 'react'
+import {postEvent} from "../eventController";
 
-const schema = z.object({
-    title: z.string().min(2, { message: 'Title should have at least 2 letters' }),
-    short_description: z.string().min(2, { message: 'Short description should have at least 2 letters' }),
-
-})
 
 function AboutUsForm() {
 
-    const form = useForm({
-        schema: zodResolver(schema),
-        initialValues: {
-            title: '',
-            short_description: '',
-            date: ''
-        },
-    });
+/*    const [btnDisabled, setBtnDisabled] = useState(true)
+    const [website, setWebsite] = useState('')
+    const [aboutUs, setAboutUs] = useState('')*/
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+            postEvent('/event/updateAboutUs', {
+                    event_id: 2003,
+                    event_name: "Updated About US",
+                    service_name: "stadtbus",
+                    about_us: e.target.about_us.value,
+                    date: new Date().toISOString(),
+                    picture: "",
+                    url: "http://" +e.target.website.value
+                }
+            ).then(res=> console.log(res))
+    }
+
     return(
         <>
             <div className="container mx-auto p-6">
-            <form onSubmit={form.onSubmit((values) => console.log(values))}>
-                    <div>
+            <form onSubmit={handleSubmit} >
+                <div>
                     <label htmlFor="website" className="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                         Website
                     </label>
@@ -33,20 +36,26 @@ function AboutUsForm() {
                           http://
                         </span>
                             <input
-                                type="url"
+                                type="text"
                                 name="website"
+                                defaultValue={"vps2290194.fastwebserver.de:9720"}
+                                minLength={2}
                                 id="website"
                                 className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-none rounded-r-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="www.example.com"
+                                required
                             />
                     </div>
                 </div>
                 <div>
-                <label for="about_us" className="block mb-2 mt-6 text-sm font-medium text-gray-900 dark:text-gray-300">About Us Text</label>
-                    <textarea id="about_us"
-                              rows="4"
-                              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                              >
+                <label htmlFor="about_us" className="block mb-2 mt-6 text-sm font-medium text-gray-900 dark:text-gray-300">About Us Text</label>
+                    <textarea
+                          id="about_us"
+                          minLength={2}
+                          rows="4"
+                          className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          required
+                    >
                     </textarea>
                 </div>
                 <div>
@@ -80,6 +89,7 @@ function AboutUsForm() {
                     </div>
 
                     <button type="submit"
+
                             className="btn-primary text-white mt-6  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 text-center dark:btn-primary dark:hover:btn-primary dark:focus:ring-blue-800">Veröffentlichen
                     </button>
             </form>

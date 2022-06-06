@@ -1,19 +1,12 @@
-export async function sendCalendarEntry(){
-    fetch('/event/sendCalendarEntry', {
+export async function postEvent(url, body){
+    fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            event_id: 2002,
-            event_name: "New Calendar Entry",
-            service_name: "stadtbus",
-            title: "Bus Event",
-            short_description: "Smarte Events im Stadtbus",
-            long_description: "Lorem Ipsum",
-            event_on: "2019-10-12T07:20:50.52Z" })
+        body: JSON.stringify(body)
     }).then(async (response) => {
         if (response.ok) {
             let result = await response.json();
-
+            console.log(result)
         }
     }).catch(error => {
             console.error(error);

@@ -18,26 +18,15 @@ exports.sendCalendarEntry = async (req, res) => {
             }
             //TODO: date validieren
             const validate = ajv.getSchema("calendarEntry")
-
+            try {
             if (validate(req.body)) {
-                try {
-                    const calendar_event = {
-                        event_id: 2002,
-                        event_name: 'New Calendar Entry',
-                        service_name: 'stadtbus',
-                        title: req.body.title,
-                        short_description: req.body.short_description,
-                        long_description: req.body.long_description,
-                        event_on: req.body.event_on,
-                        picture_url: req.body.picture_url
-                    }
-                    channel.publish('events', "public.stadtbus", Buffer.from(JSON.stringify(calendar_event)))
+                    channel.publish('events', "public.stadtbus", Buffer.from(JSON.stringify(req.body)))
                     res.status(200).send({error: false, msg: 'event successfully sent'})
-                } catch (e) {
-                    console.log(e)
-                }
             } else {
                 return res.status(400).end("Invalid Calendar Entry Data")
+            }
+            } catch (e) {
+                console.log(e)
             }
 
         })

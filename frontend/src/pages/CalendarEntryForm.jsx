@@ -5,7 +5,7 @@ import ForumForm from "../components/ForumForm";
 function CalendarEntryForm(){
 
     return(
-        <ForumForm></ForumForm>
+        <ForumForm eventType={"Calendar"}></ForumForm>
     )
 }
 export default CalendarEntryForm

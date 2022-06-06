@@ -10,7 +10,7 @@
         },
         "event_name": {
             "type": "string",
-            "const": "New Calendar Entry"
+            "const": "New Calendar Post"
         },
         "service_name": {
             "type": "string",
@@ -25,18 +25,15 @@
             "minLength": 1
         },
         "long_description": {
-            "type": "string",
-            "minLength": 1
+            "type": "string"
         },
         "picture_url": {
-            "type": "string",
-            "minLength": 1
+            "type": "string"
         },
         "event_on": {
-            "type": "string",
-            "format": "date-time"
+            "type": "string"
         }
     },
-    "required": ["event_id", "event_name", "service_name", "title", "short_description", "event_on"],
-    "additionalProperties": false
+    "required": ["event_id", "event_name", "service_name", "title", "short_description", "event_on"]
+
 }

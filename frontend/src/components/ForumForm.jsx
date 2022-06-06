@@ -3,42 +3,92 @@ import { useForm, zodResolver } from '@mantine/form';
 import { z } from 'zod';
 import { DatePicker } from '@mantine/dates';
 import { Calendar } from 'tabler-icons-react';
+import {postEvent} from "../eventController";
+import {useState} from "react";
+
 
 const schema = z.object({
     title: z.string().min(2, { message: 'Title should have at least 2 letters' }),
     short_description: z.string().min(2, { message: 'Short description should have at least 2 letters' }),
-
+    date: z.date(),
+    long_description: z.string().optional()
 })
 
-function ForumForm(){
+function ForumForm({eventType}){
 
-    const form = useForm({
+    const [btnDisable, setBtnDisable] = useState(true)
+
+    const handleChange = (event) =>{
+        form.setFieldValue(`${event.currentTarget.id}`, event.currentTarget.value)
+        if (!(form.validate().hasErrors)){
+            setBtnDisable(false)
+        }
+    }
+
+    const handleSubmit = (e) => {
+            switch (eventType) {
+                case "Newsletter":
+                    console.log("Newsletter")
+                    postEvent("/event/sendNewsletter", {
+                        event_id: 2001,
+                        event_name: "New Newsletter Post",
+                        service_name: "stadtbus",
+                        title: form.values.title,
+                        short_description: form.values.short_description,
+                        long_description: form.values.long_description,
+                        picture_url: "mopo",
+                        event_on: form.values.date.toISOString()
+                    })
+                    break;
+                case "Calendar":
+                    console.log("Calendar")
+                    postEvent("/event/sendCalendarEntry", {
+                        event_id: 2002,
+                        event_name: "New Calendar Post",
+                        service_name: "stadtbus",
+                        title: form.values.title,
+                        short_description: form.values.short_description,
+                        long_description: form.values.long_description,
+                        picture_url: "mopo",
+                        event_on: form.values.date.toISOString()
+                    })
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+   const form = useForm({
         schema: zodResolver(schema),
         initialValues: {
-            title: '',
-            short_description: '',
-            date: ''
+            title: 'Events im Stadtbus',
+            short_description: "",
+            long_description: "",
+            date: new Date()
         },
     });
 
     return(
         <div className="container mx-auto p-6">
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <form onSubmit={form.onSubmit(handleSubmit)}>
                 <div className="flex ">
                     <div className="flex-1">
-                        <label for="titel"
+                        <label htmlFor="title"
                                className="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                             Titel</label>
                         <input type="text"
-                               id="titel"
+                               id="title"
+                               minLength={2}
                                className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                placeholder="Titel"
                                required
-                               {...form.getInputProps('title')}
+                               value={form.values.title}
+                               onChange={handleChange}
                         />
                     </div>
                     <div className="flex-initial ml-10">
-                        <label for="datepicker" className=" mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Datum</label>
+                        <label htmlFor="datepicker" className=" mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Datum</label>
                         <DatePicker id="datepicker"
                                     placeholder="Datum auswählen"
                                     allowFreeInput
@@ -50,11 +100,14 @@ function ForumForm(){
                 </div>
                 <div className="mt-6">
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Kurzbeschreibung</label>
-                    <input type="text" id="short_description"
+                    <input type="text"
+                           id="short_description"
                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                            placeholder="Kurzbeschreibung"
                            required
-                           {...form.getInputProps('short_description')}
+                           minLength={2}
+                           value={form.values.short_description}
+                           onChange={handleChange}
                     />
                 </div>
                 <div className="mt-6">
@@ -62,7 +115,10 @@ function ForumForm(){
                     <textarea id="long_description"
                               rows="4"
                               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                              placeholder="Langbeschreibung">
+                              placeholder="Langbeschreibung"
+                              value={form.values.long_description}
+                              onChange={handleChange}
+                    >
                     </textarea>
                 </div>
                 <div className="mt-6">
@@ -95,6 +151,7 @@ function ForumForm(){
                     </div>
                 </div>
                 <button type="submit"
+                        disabled={btnDisable}
                         className="text-white mt-6 btn-primary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 text-center dark:btn-primary dark:hover:btn-primary dark:focus:ring-blue-800">Veröffentlichen
                 </button>
             </form>

@@ -26,6 +26,7 @@ function AboutUsForm() {
     return(
         <>
             <div className="container mx-auto p-6">
+                <h1 className="font-medium leading-tight text-2xl mb-6">About Us</h1>
             <form onSubmit={handleSubmit} >
                 <div>
                     <label htmlFor="website" className="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">

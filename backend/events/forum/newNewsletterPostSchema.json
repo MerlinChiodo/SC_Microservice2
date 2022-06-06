@@ -10,7 +10,7 @@
         },
         "event_name": {
             "type": "string",
-            "const": "New Newsletter Post"
+            "const": "newServicePost"
         },
         "service_name": {
             "type": "string",

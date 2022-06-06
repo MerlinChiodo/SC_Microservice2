@@ -10,7 +10,7 @@
         },
         "event_name": {
             "type": "string",
-            "const": "New Calendar Post"
+            "const": "newServicePost"
         },
         "service_name": {
             "type": "string",

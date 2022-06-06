@@ -70,7 +70,7 @@ function ForumForm({eventType}){
     });
 
     return(
-        <div className="container mx-auto p-6">
+
         <form onSubmit={form.onSubmit(handleSubmit)}>
                 <div className="flex ">
                     <div className="flex-1">
@@ -155,7 +155,7 @@ function ForumForm({eventType}){
                         className="text-white mt-6 btn-primary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 text-center dark:btn-primary dark:hover:btn-primary dark:focus:ring-blue-800">Veröffentlichen
                 </button>
             </form>
-        </div>
+
     )
 }
 

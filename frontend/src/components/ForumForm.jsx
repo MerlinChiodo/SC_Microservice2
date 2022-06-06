@@ -31,21 +31,21 @@ function ForumForm({eventType}){
                     console.log("Newsletter")
                     postEvent("/event/sendNewsletter", {
                         event_id: 2001,
-                        event_name: "New Newsletter Post",
-                        service_name: "stadtbus",
+                        event_name: "newServicePost",
+                        service: "stadtbus",
                         title: form.values.title,
                         short_description: form.values.short_description,
                         long_description: form.values.long_description,
                         picture_url: "mopo",
-                        event_on: form.values.date.toISOString()
+                        /*event_on: form.values.date.toISOString()*/
                     })
                     break;
                 case "Calendar":
                     console.log("Calendar")
                     postEvent("/event/sendCalendarEntry", {
                         event_id: 2002,
-                        event_name: "New Calendar Post",
-                        service_name: "stadtbus",
+                        event_name: "newServicePost",
+                        service: "stadtbus",
                         title: form.values.title,
                         short_description: form.values.short_description,
                         long_description: form.values.long_description,

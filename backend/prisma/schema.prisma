@@ -44,7 +44,7 @@ model Ticket {
   ticket_id   Int               @id @default(autoincrement())
   ticket_art  Ticketart
   geltungstag DateTime
-  preis       String
+  preis       String?
   anfrage_id  Int?
   anfrage     Anfrage?          @relation(fields: [anfrage_id], references: [anfrage_id])
   fahrten     Fahrt[]
@@ -68,12 +68,14 @@ model Meldung {
 
 model Anfrage {
   anfrage_id       Int         @id @default(autoincrement())
-  smartCity_id     String
+  smartCity_id     String?
+  verantwortlicher String
+  institution      String?
   anzahlPassagiere Int
   bearbeitet       Boolean?
-  mitarbeiter_id   Int
-  mitarbeiter      Mitarbeiter @relation(fields: [mitarbeiter_id], references: [mitarbeiter_id])
-  tickets          Ticket[]
+  mitarbeiter_id   Int?
+  mitarbeiter      Mitarbeiter? @relation(fields: [mitarbeiter_id], references: [mitarbeiter_id])
+  ticket           Ticket?
 
   @@index([mitarbeiter_id], map: "Anfrage_mitarbeiter_id_fkey")
 }

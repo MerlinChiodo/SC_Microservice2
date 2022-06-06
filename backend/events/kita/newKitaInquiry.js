@@ -26,19 +26,22 @@ const prisma = require('../../lib/prisma')
                 if (kitaInquiry.event_name === "New Kita Inquiry") {
                     if (validate(kitaInquiry)) {
                         try {
-                            let createKitaInquiry = await prisma.anfrage.create({
+                            let createKitaInquiry = await prisma.Anfrage.create({
                                 data: {
-                                    event_id: kitaInquiry.event_id,
-                                    event_name: kitaInquiry.event_name,
-                                    service_name: kitaInquiry.service_name,
-                                    number_of_passengers: kitaInquiry.number_of_passengers,
-                                    person_responsible: kitaInquiry.person_responsible,
-                                    kita_responsible: kitaInquiry.kita_responsible,
-                                    date: kitaInquiry.date
-                                }
+                                    verantwortlicher: kitaInquiry.person_responsible,
+                                    institution: kitaInquiry.kita_responsible,
+                                    anzahlPassagiere: kitaInquiry.number_of_passengers,
+                                    ticket : {
+                                        create : {
+                                            ticket_art: "GRUPPENTICKET",
+                                            geltungstag: kitaInquiry.date,
+                                        },
+                                    },
+                                },
                             })
+                            console.log("prisma create success")
                         } catch (e) {
-                            return console.log(e)
+                            console.log(e)
                         }
                     } else {
                         console.log(validate.errors)

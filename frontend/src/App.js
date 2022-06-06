@@ -6,6 +6,7 @@ import Employee from "./pages/Employee";
 import NewsletterForm from "./pages/NewsletterForm"
 import CalendarEntryForm from "./pages/CalendarEntryForm";
 import AboutUsForm from "./pages/AboutUsForm";
+import Inquiries from "./pages/Inquiries";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
                       <Route path='/articleform' element={<NewsletterForm/>} />
                       <Route path='/calendarform' element={<CalendarEntryForm/>} />
                       <Route path='/aboutusform' element={<AboutUsForm/>}/>
+                      <Route path="/inquiries" element={<Inquiries/>}/>
                   </Routes>
       </Router>
   )

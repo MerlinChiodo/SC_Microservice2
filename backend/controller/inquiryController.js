@@ -3,7 +3,11 @@ const prisma = require('../lib/prisma');
 exports.getAllInquiries = async(req, res) => {
 
     try {
-        const inquiries = await prisma.anfrage.findMany()
+        const inquiries = await prisma.Anfrage.findMany({
+            include: {
+                ticket: true
+            },
+        })
         if (inquiries) {
             return res.status(200).json({success: true, msg: inquiries})
         } else {
@@ -25,7 +29,7 @@ exports.getInquiry = async(req, res) => {
         return res.status(500).send(error.message)
     }
     try {
-        const inquiry = await prisma.anfrage.findUnique({
+        const inquiry = await prisma.Anfrage.findUnique({
             where: {
                 id: inquiry_id,
             },

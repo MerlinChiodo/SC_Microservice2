@@ -45,6 +45,7 @@ function NewsletterForm(){
 
     return(
     <div className="container mx-auto p-6">
+        <h1 className="font-medium leading-tight text-2xl mb-6">Newsletter Artikel</h1>
         <form onSubmit={form.onSubmit(handleSubmit)}>
             <div className="flex ">
                 <div className="flex-1">

@@ -16,7 +16,7 @@ function Map() {
     let animations = {};
     let steps = 500;
     let webSocket;
-    let busmarker = {};
+
 
     const mapContainer = useRef(null);
     const map = useRef(null);
@@ -42,8 +42,6 @@ function Map() {
             setLat(map.current.getCenter().lat.toFixed(4));
             setZoom(map.current.getZoom().toFixed(2));
 
-            // window.setTimeout(praeambel);
-            // getStops();
 
         });
     });
@@ -54,19 +52,18 @@ function Map() {
         setupWebsocket();
         getCurrentVehicles();
         requestAnimationFrame(animation);
+        getStops()
     }, [])
 
     function setupWebsocket() {
         webSocket.onmessage = function (event) {
-            //message.textContent = event.data;
-            //document.getElementById("timestamp").innerHTML = "Letztes Update: "+(new Date()).toLocaleTimeString();
             updateVehicles(event.data);
         };
         webSocket.onerror = function (event) {
-            alert("Websocket Error, bitte Seite neu laden.");
+            alert("Websocket Error");
         };
         webSocket.onclose = function (event) {
-            alert("Websocket Close, bitte Seite neu laden.");
+            alert("Websocket geschlossen");
         };
     }
 
@@ -134,18 +131,17 @@ function Map() {
     }
 
     function updateVehicles_Update(vehicles, key) {
-        var marker = markers[vehicles.features[key].properties["fahrzeugid"]];
-        if (marker.delay !== vehicles.features[key].properties.delay) {
-            let classNameRegex = /vehicle_(green|red|blue|yellow)/
-            let vehicleClass = getMarkerClass(vehicles.features[key]);
-            let el = marker.getElement();
-            el.className = el.className.replace(classNameRegex, vehicleClass);
-            marker.delay = vehicles.features[key].properties.delay;
-        }
-        updateAnimation(marker, vehicles, key);
-        marker.setLngLat(vehicles.features[key].geometry.coordinates);
-        marker.setPopup(createPopup(vehicles.features[key]));
-
+            const marker = markers[vehicles.features[key].properties["fahrzeugid"]];
+            if (marker.delay !== vehicles.features[key].properties.delay) {
+                let classNameRegex = /vehicle_(green|red|blue|yellow)/
+                let vehicleClass = getMarkerClass(vehicles.features[key]);
+                let el = marker.getElement();
+                el.className = el.className.replace(classNameRegex, vehicleClass);
+                marker.delay = vehicles.features[key].properties.delay;
+            }
+            updateAnimation(marker, vehicles, key);
+            marker.setLngLat(vehicles.features[key].geometry.coordinates);
+            marker.setPopup(createPopup(vehicles.features[key]));
     }
 
     function updateAnimation(marker, vehicles, key) {
@@ -173,8 +169,7 @@ function Map() {
             var segment = turf.along(route.features[0], i, 'kilometers');
             arc.push(segment.geometry.coordinates);
         }
-        var d = new Date();
-        var n = d.getTime();
+        var n = new Date().getTime();
         animations[fahrzeugid] = {
             "arc": arc,
             "counter": 0,
@@ -184,10 +179,9 @@ function Map() {
     }
 
     function animation() {
-        for (var key in animations){
+        for (const key in animations){
 
-            var d = new Date();
-            var n = d.getTime();
+            var n = new Date().getTime();
 
             if(n - animations[key]["timestamp"] < 10000){
                 let marker = markers[key];
@@ -208,9 +202,6 @@ function Map() {
                 if(newPosition) marker.setLngLat(newPosition);
                 delete animations[key];
             }
-
-
-
         }
         requestAnimationFrame(animation);
     }
@@ -219,7 +210,7 @@ function Map() {
     function updateVehicles_Insert(vehicles, key) {
         var marker = vehicles.features[key];
         var el = createMarkerDiv(marker);
-
+        let busmarker;
         // make a marker for each feature and add to the map
         busmarker = new mapboxgl.Marker(el)
             .setLngLat(vehicles.features[key].geometry.coordinates)

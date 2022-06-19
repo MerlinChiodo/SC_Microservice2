@@ -13,7 +13,7 @@ import Inquiries from "./pages/Inquiries";
 function App() {
   return (
       <Router>
-              <Navbar/>
+              <Navbar>
 
                   <Routes>
                       <Route path='/' element={
@@ -28,6 +28,7 @@ function App() {
                       <Route path='/aboutusform' element={<AboutUsForm/>}/>
                       <Route path="/inquiries" element={<Inquiries/>}/>
                   </Routes>
+              </Navbar>
       </Router>
   )
 }

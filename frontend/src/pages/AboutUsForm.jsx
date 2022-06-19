@@ -26,11 +26,11 @@ function AboutUsForm() {
                 <h1 className="font-medium leading-tight text-2xl mb-6">About Us</h1>
             <form onSubmit={handleSubmit} >
                 <div>
-                    <label htmlFor="website" className="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    <label htmlFor="website" className="mb-2 text-sm font-medium text-gray-900">
                         Website
                     </label>
                     <div className="mt-1 flex rounded-md shadow-sm">
-                        <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm ">
                           http://
                         </span>
                             <input
@@ -39,26 +39,26 @@ function AboutUsForm() {
                                 defaultValue={"vps2290194.fastwebserver.de:9720"}
                                 minLength={2}
                                 id="website"
-                                className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-none rounded-r-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-none rounded-r-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 "
                                 placeholder="www.example.com"
                                 required
                             />
                     </div>
                 </div>
                 <div>
-                <label htmlFor="about_us" className="block mb-2 mt-6 text-sm font-medium text-gray-900 dark:text-gray-300">About Us Text</label>
+                <label htmlFor="about_us" className="block mb-2 mt-6 text-sm font-medium text-gray-900 ">About Us Text</label>
                     <textarea
                           id="about_us"
                           minLength={2}
                           rows="4"
                           placeholder="About Us"
-                          className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                           required
                     >
                     </textarea>
                 </div>
                 <div>
-                        <label className="block mb-2 mt-6 text-sm font-medium text-gray-900 dark:text-gray-300">Bildupload</label>
+                        <label className="block mb-2 mt-6 text-sm font-medium text-gray-900 ">Bildupload</label>
                         <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                             <div className="space-y-1 text-center">
                                 <svg
@@ -89,7 +89,7 @@ function AboutUsForm() {
 
                     <button type="submit"
 
-                            className="btn-primary text-white mt-6  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 text-center dark:btn-primary dark:hover:btn-primary dark:focus:ring-blue-800">Veröffentlichen
+                            className="btn-primary text-white mt-6  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 text-center ">Veröffentlichen
                     </button>
             </form>
             </div>

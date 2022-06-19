@@ -7,7 +7,7 @@ import NewsletterForm from "./pages/NewsletterForm"
 import CalendarEntryForm from "./pages/CalendarEntryForm";
 import AboutUsForm from "./pages/AboutUsForm";
 import Inquiries from "./pages/Inquiries";
-import Map from "./pages/Map";
+
 
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
                   <Routes>
                       <Route path='/' element={
                               <>
-                                  <Map/>
+                                  <Home/>
                               </>
                       }/>
                       <Route path='/home' element={<Home/>}/>

@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -20,80 +19,73 @@ code {
     height: 400px;
 }
 
+.vehicle_red {
+    background-image: url('../public/bus_red.svg');
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.vehicle_green {
+    background-image: url('../public/bus_green.svg');
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.legend_green {
+    background-image: url('../public/bus_green.svg');
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.vehicle_blue {
+    background-image: url('../public/bus_blue.svg');
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.vehicle_yellow {
+    background-image: url('../public/bus_yellow.svg');
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/*
+.stop {
+    background-image: url('../public/stop.svg');
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}*/
+
+.mapboxgl-popup {
+    max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
 @layer components {
   .btn-primary {
-    border-radius: 1rem;
-  }
-}
-
-
-
-.mantine-mbvx4i{
-  height: auto;
-  padding: 0.625rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
-  --tw-border-opacity: 1;
-  border-color: rgb(209 213 219 / var(--tw-border-opacity));
-  border-width: 1px;
-  --tw-text-opacity: 1;
-  color: rgb(17 24 39 / var(--tw-text-opacity));
-  border-radius: 0.5rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-.mantine-mbvx4i::placeholder {
-  --tw-placeholder-opacity: 1;
-  color: rgb(156 163 175 / var(--tw-placeholder-opacity));
-  text-align: center;
-}
-
-@media (prefers-color-scheme: dark) {
-  .mantine-mbvx4i {
-    --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity));
-    --tw-bg-opacity: 1;
-    background-color: rgb(55 65 81 / var(--tw-bg-opacity));
-    --tw-border-opacity: 1;
-    border-color: rgb(75 85 99 / var(--tw-border-opacity));
-  }
-}
-@media (prefers-color-scheme: dark) {
-  .mantine-mbvx4i::placeholder {
-    --tw-placeholder-opacity: 1;
-    color: rgb(156 163 175 / var(--tw-placeholder-opacity));
-    text-align: center;
-  }
-}
-
-.mantine-z5q45j {
-   height: auto;
-   padding: 0.625rem;
-   font-size: 0.875rem;
-   line-height: 1.25rem;
-   text-align: center;
-   border-radius: 0.5rem;
-   --tw-bg-opacity: 1;
-   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
-   --tw-border-opacity: 1;
-   border-color: rgb(209 213 219 / var(--tw-border-opacity));
-   border-width: 1px;
-   --tw-text-opacity: 1;
-   color: rgb(17 24 39 / var(--tw-text-opacity));
- }
-@media (prefers-color-scheme: dark) {
-  .mantine-z5q45j {
-    height: auto;
-    padding: 0.625rem;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    text-align: center;
-    --tw-text-opacity: 1;
-    color: rgb(156 163 175 / var(--tw-text-opacity));
-    --tw-bg-opacity: 1;
-    background-color: rgb(55 65 81 / var(--tw-bg-opacity));
-    --tw-border-opacity: 1;
-    border-color: rgb(75 85 99 / var(--tw-border-opacity));
+      border-radius: 1rem;
   }
 }
 

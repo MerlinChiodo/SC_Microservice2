@@ -4,8 +4,17 @@ import mapboxgl from '!mapbox-gl';
 import {useEffect} from "react";
 import * as turf from "@turf/turf";
 import AuskunftForm from "../components/AuskunftForm";
+import { Wrapper, Status } from "@googlemaps/react-wrapper";
 
 function Map() {
+
+
+    const render = (status) => {
+        if (status === Status.LOADING) return <h3>{status}...</h3>;
+        if (status === Status.FAILURE) return <h3>{status}...</h3>;
+        return null;
+    };
+
 
     const websocket_url = "wss://websocket.busradar.conterra.de";
     const api_url = "https://rest.busradar.conterra.de/prod/";
@@ -123,7 +132,7 @@ function Map() {
 
     function updateVehicle_Remove(vehicles, key) {
         if (vehicles.features[key].properties["fahrzeugid"] in markers) {
-            // mymap.removeLayer(markers[vehicles.features[key].properties["fahrzeugid"]]);
+            //map.current.removeLayer(markers[vehicles.features[key].properties["fahrzeugid"]]);
             markers[vehicles.features[key].properties["fahrzeugid"]].remove();
             delete(markers[vehicles.features[key].properties["fahrzeugid"]]);
             delete(animations[vehicles.features[key].properties["fahrzeugid"]]);
@@ -314,7 +323,8 @@ function Map() {
     return (
         <div>
             <div>
-                <AuskunftForm></AuskunftForm>
+                <Wrapper apiKey={""} render={render}>
+                <AuskunftForm></AuskunftForm></Wrapper>
             </div>
             <p id="timestamp"></p>
             <div ref={mapContainer} className="map-container" />

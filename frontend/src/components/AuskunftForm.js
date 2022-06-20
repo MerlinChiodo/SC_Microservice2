@@ -4,6 +4,7 @@ import { Autocomplete } from '@mantine/core';
 import {DatePicker, TimeInput} from "@mantine/dates";
 import {Calendar, Clock} from "tabler-icons-react";
 import dayjs from 'dayjs';
+import { Wrapper, Status } from "@googlemaps/react-wrapper";
 
 
 
@@ -15,6 +16,7 @@ function AuskunftForm(){
 
     useEffect(()=>{
         fetchStops()
+        calcRoute()
     }, [])
 
     const fetchStops = async () => {
@@ -23,13 +25,38 @@ function AuskunftForm(){
         getStops(stops)
     }
 
+    function calcRoute(){
+        var directionsService = new window.google.maps.DirectionsService();
+        var haight = new window.google.maps.LatLng(37.7699298, -122.4469157);
+        var oceanBeach = new window.google.maps.LatLng(37.7683909618184, -122.51089453697205);
+
+        var request = {
+            origin: haight,
+            destination: oceanBeach,
+            travelMode: 'DRIVING'
+        };
+        directionsService.route(request, function(result, status) {
+            if (status === 'OK') {
+                console.log(result)
+            }
+        });
+    }
+
+
     function getStops(stops_json) {
-        let stops = []
+        let stop_names = []
+        let array = []
         for (let key in stops_json.features) {
             let stop_name = stops_json.features[key].properties.lbez
-            stops.push(stop_name)
+            let coords = stops_json.features[key].geometry.coordinates
+            stop_names.push(stop_name)
+            let stops = {
+                name: stop_name,
+                coordinates: coords
+            }
+            array.push(stops)
         }
-        setData(stops)
+        setData(stop_names)
     }
 
     return(

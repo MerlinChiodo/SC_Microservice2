@@ -18,14 +18,14 @@ function Map() {
 
     const websocket_url = "wss://websocket.busradar.conterra.de";
     const api_url = "https://rest.busradar.conterra.de/prod/";
-    mapboxgl.accessToken = "pk.eyJ1IjoidGlub20iLCJhIjoiY2ppa2dzOXd2MHhjNDN2b3dkeXlhMzQ3NyJ9.-GK7-nWyeh988RBOhjUwtQ";
+    mapboxgl.accessToken = "";
 
     let markers = {};
     let stopmarker = {};
     let animations = {};
     let steps = 500;
     let webSocket;
-
+    let busmarker;
 
     const mapContainer = useRef(null);
     const map = useRef(null);
@@ -61,7 +61,7 @@ function Map() {
         setupWebsocket();
         getCurrentVehicles();
         requestAnimationFrame(animation);
-        getStops()
+
     }, [])
 
     function setupWebsocket() {
@@ -76,16 +76,14 @@ function Map() {
         };
     }
 
-    function httpGetAsync(theUrl, callback) {
-        let xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-                callback(xmlHttp.responseText);
-        }
-        xmlHttp.open("GET", theUrl, true); // true for asynchronous
-        xmlHttp.send(null);
+    function getAsync(url, callback) {
+        fetch(url)
+            .then(async (response) => {
+                if (response.ok) {
+                   callback(response)
+                }
+            }).catch((e) => console.log(e))
     }
-
 
     function addStops(e) {
         let json = JSON.parse(e);
@@ -108,7 +106,6 @@ function Map() {
         }
     }
     function updateVehicles(e) {
-        // document.getElementById("timestamp").innerHTML = "Letztes Update: "+(new Date()).toLocaleTimeString();
         var vehicles = JSON.parse(e);
         for (var key in vehicles.features) {
 
@@ -118,21 +115,22 @@ function Map() {
             }
             //Update vehicle if it is already on map
             else if (vehicles.features[key].properties["fahrzeugid"] in markers) {
+                console.log("update")
                 updateVehicles_Update(vehicles, key);
             }
-            // Else insert new markers
+            //insert new markers
             else {
-                updateVehicles_Insert(vehicles, key);
+
+                insert_vehicles(vehicles, key);
             }
         }
-        //console.log(Object.keys(markers).length);
-        /*        document.getElementById("fzcount").innerHTML = "Fahrzeuge: " + Object.keys(markers).length;*/
+/*        console.log(Object.keys(markers).length);
+        console.log(Object.keys(animations).length)*/
                 document.getElementById("timestamp").innerHTML = "Letztes Update: " + new Date().toLocaleTimeString();
     }
 
     function updateVehicle_Remove(vehicles, key) {
         if (vehicles.features[key].properties["fahrzeugid"] in markers) {
-            //map.current.removeLayer(markers[vehicles.features[key].properties["fahrzeugid"]]);
             markers[vehicles.features[key].properties["fahrzeugid"]].remove();
             delete(markers[vehicles.features[key].properties["fahrzeugid"]]);
             delete(animations[vehicles.features[key].properties["fahrzeugid"]]);
@@ -200,7 +198,6 @@ function Map() {
                 animations[key]["counter"] = counter;
 
                 if(newPosition) marker.setLngLat(newPosition);
-
                 // remove from animations if all animation steps are processed
                 if(counter >= steps - 1){
                     delete animations[key];
@@ -210,16 +207,16 @@ function Map() {
                 let newPosition = animations[key]["arc"][steps-1];
                 if(newPosition) marker.setLngLat(newPosition);
                 delete animations[key];
+
             }
         }
         requestAnimationFrame(animation);
     }
 
 
-    function updateVehicles_Insert(vehicles, key) {
+    function insert_vehicles(vehicles, key) {
         var marker = vehicles.features[key];
-        var el = createMarkerDiv(marker);
-        let busmarker;
+        var el = createMarker(marker);
         // make a marker for each feature and add to the map
         busmarker = new mapboxgl.Marker(el)
             .setLngLat(vehicles.features[key].geometry.coordinates)
@@ -229,7 +226,7 @@ function Map() {
         markers[vehicles.features[key].properties.fahrzeugid] = busmarker;
     }
 
-    function createMarkerDiv(marker) {
+    function createMarker(marker) {
         var el = document.createElement('div');
         el.className = getMarkerClass(marker);
         return el;
@@ -264,23 +261,19 @@ function Map() {
     }
 
     function getCurrentVehicles() {
-        httpGetAsync(api_url + "fahrzeuge", updateVehicles);
+        getAsync(api_url + "fahrzeuge", updateVehicles);
     }
 
     function getStops() {
-        httpGetAsync(api_url + "haltestellen", addStops);
+        getAsync(api_url + "haltestellen", addStops);
     }
 
-    function returnStop(e) {
-        // document.getElementById("timestamp").innerHTML
-        alert(e);
-    }
 
     function getStop(id, cid) {
         if (id in stopmarker) {
             /*document.getElementById(cid).innerHTML = "Nächster Halt: " + stopmarker[id].properties.lbez;*/
         } else {
-            httpGetAsync(api_url + "haltestellen/" + id,
+            getAsync(api_url + "haltestellen/" + id,
                 function (e) {
                     var f = JSON.parse(e);
                     /*document.getElementById(cid).innerHTML = "Nächster Halt: " + f.properties.lbez;*/
@@ -307,7 +300,7 @@ function Map() {
     }
 
     function getAbfahrten(hsid, cid) {
-        httpGetAsync(api_url + "haltestellen/" + hsid + "/abfahrten",
+        getAsync(api_url + "haltestellen/" + hsid + "/abfahrten",
             function (e) {
                 var features = JSON.parse(e);
                 var tab = "<h4>Abfahrten die n&auml;chsten 20 Minuten</h4><ul>";

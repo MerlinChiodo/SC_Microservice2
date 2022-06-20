@@ -3,9 +3,6 @@ import { useState } from 'react';
 import { Autocomplete } from '@mantine/core';
 import {DatePicker, TimeInput} from "@mantine/dates";
 import {Calendar, Clock} from "tabler-icons-react";
-import dayjs from 'dayjs';
-import { Wrapper, Status } from "@googlemaps/react-wrapper";
-
 
 
 function AuskunftForm(){
@@ -27,13 +24,13 @@ function AuskunftForm(){
 
     function calcRoute(){
         var directionsService = new window.google.maps.DirectionsService();
-        var haight = new window.google.maps.LatLng(37.7699298, -122.4469157);
-        var oceanBeach = new window.google.maps.LatLng(37.7683909618184, -122.51089453697205);
+        var zoo = new window.google.maps.LatLng(51.948935246413264, 7.589520850520359);
+        var museum = new window.google.maps.LatLng(51.96113236070515, 7.623992984539246);
 
         var request = {
-            origin: haight,
-            destination: oceanBeach,
-            travelMode: 'DRIVING'
+            origin: zoo,
+            destination: museum,
+            travelMode: 'TRANSIT'
         };
         directionsService.route(request, function(result, status) {
             if (status === 'OK') {

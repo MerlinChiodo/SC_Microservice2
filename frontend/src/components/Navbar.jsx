@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 
 function Navbar({ title }) {
     return (
-        <nav className="navbar bg-base-300">
+        <nav className="navbar bg-base-300 sticky top-0 z-40">
             <div className="flex-1">
                 <button className="btn btn-square btn-ghost">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                          className="inline-block w-5 h-5 stroke-current">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                               d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
                 </button>
@@ -29,7 +29,7 @@ function Navbar({ title }) {
                                 <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
                             </svg>
                         </a>
-                        <ul className="p-2 bg-base-100">
+                        <ul className="p-2 bg-base-100 ">
                             <li><a>Fahrtauskunft</a></li>
                             <li><a>Aktuelle Störungen</a></li>
                         </ul>

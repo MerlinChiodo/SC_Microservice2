@@ -2,15 +2,19 @@ import React from 'react'
 import {useState} from "react";
 import {postEvent} from "../eventController";
 import {useForm, zodResolver} from "@mantine/form";
+import {DatePicker} from "@mantine/dates";
+import {Calendar} from "tabler-icons-react";
 import {z} from "zod";
 
 const schema = z.object({
     title: z.string().min(2, { message: 'Title should have at least 2 letters' }),
     short_description: z.string().min(2, { message: 'Short description should have at least 2 letters' }),
+    date: z.date(),
     long_description: z.string().optional()
 })
 
-function NewsletterForm(){
+function CalendarEntryForm(){
+
 
     const [btnDisable, setBtnDisable] = useState(true)
 
@@ -22,14 +26,15 @@ function NewsletterForm(){
     }
 
     const handleSubmit = (e) => {
-        postEvent("/event/sendNewsletter", {
-            event_id: 2001,
-            event_name: "newServicePost",
-            service: "stadtbus",
-            title: form.values.title,
-            short_description: form.values.short_description,
-            long_description: form.values.long_description,
-            picture_url: "mopo",
+                postEvent("/event/sendCalendarEntry", {
+                    event_id: 2002,
+                    event_name: "newServicePost",
+                    service: "stadtbus",
+                    title: form.values.title,
+                    short_description: form.values.short_description,
+                    long_description: form.values.long_description,
+                    picture_url: "mopo",
+                    event_on: form.values.date.toISOString()
         })
     }
 
@@ -40,12 +45,13 @@ function NewsletterForm(){
             title: 'Events im Stadtbus',
             short_description: "",
             long_description: "",
+            date: new Date()
         },
     });
 
     return(
     <div className="container mx-auto p-6">
-        <h1 className="font-medium leading-tight text-2xl mb-6">Newsletter Artikel</h1>
+        <h1 className="font-medium leading-tight text-2xl mb-6">Kalendereintrag</h1>
         <form onSubmit={form.onSubmit(handleSubmit)}>
             <div className="flex ">
                 <div className="flex-1">
@@ -61,6 +67,16 @@ function NewsletterForm(){
                            value={form.values.title}
                            onChange={handleChange}
                     />
+                </div>
+                <div className="flex-initial ml-10">
+                    <label htmlFor="datepicker" className=" mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Datum</label>
+                    <DatePicker id="datepicker"
+                                placeholder="Datum auswählen"
+                                allowFreeInput
+                                inputFormat="DD/MM/YYYY"
+                                icon={<Calendar size={16}/>}
+                                {...form.getInputProps('date')}
+                    ></DatePicker>
                 </div>
             </div>
             <div className="mt-6">
@@ -123,4 +139,4 @@ function NewsletterForm(){
     </div>
     )
 }
-export default NewsletterForm
+export default CalendarEntryForm

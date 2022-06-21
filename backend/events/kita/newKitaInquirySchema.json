@@ -24,11 +24,13 @@
     "person_responsible": {
       "type": "string"
     },
+    "kita_responsible": {
+      "type": "string"
+    },
     "date": {
-      "type": "string",
-      "format": "date-time"
+      "type": "string"
     }
   },
-  "required": ["event_id", "event_name","service_name","number_of_passengers", "person_responsible","date"],
+  "required": ["event_id", "event_name","service_name","number_of_passengers", "person_responsible", "kita_responsible", "date"],
   "additionalProperties": false
 }

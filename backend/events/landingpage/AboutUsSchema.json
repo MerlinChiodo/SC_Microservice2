@@ -21,12 +21,13 @@
         },
         "picture": {
             "type": "string",
-            "format": "uri",
-            "minLength": 1
+            "nullable": true
         },
         "date": {
-            "type": "string",
-            "format": "date-time"
+            "type": "string"
+        },
+        "url": {
+            "type": "string"
         }
     },
     "required": ["event_id", "event_name","service_name", "date"],

@@ -6,7 +6,7 @@ const rabbitMQPassword = process.env.rabbitMQPassword
 const serverURL = process.env.serverURL
 
 exports.deleteService = async (req, res) => {
-    amqp.connect(`amqp://${rabbitMQUsername}:${rabbitMQPassword}@${serverURL}:5672`, (connectError, connection) => {
+    amqp.connect(`amqp://${rabbitMQUsername}:${rabbitMQPassword}@${serverURL}`, (connectError, connection) => {
         if (connectError) {
             throw connectError
         }
@@ -25,7 +25,7 @@ exports.deleteService = async (req, res) => {
                 }
 
                 channel.publish('events', "public.stadtbus", Buffer.from(JSON.stringify(data)))
-                return res.status(200).end('ok')
+                return res.status(200).send({error: false, msg: 'event successfully sent'})
             } else {
                 res.status(400).end("Invalid Data - unable to delete service ")
             }

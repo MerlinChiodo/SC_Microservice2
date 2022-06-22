@@ -1,7 +1,7 @@
 import React from 'react'
 import Map from "./Map";
 import {Status, Wrapper} from "@googlemaps/react-wrapper";
-import AuskunftForm from "../components/AuskunftForm";
+import AuskunftForm from "./AuskunftForm";
 function Home() {
 
     const google_api_key = process.env.REACT_APP_google_key;

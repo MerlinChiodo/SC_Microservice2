@@ -7,11 +7,13 @@ import NewsletterForm from "./pages/NewsletterForm"
 import CalendarEntryForm from "./pages/CalendarEntryForm";
 import AboutUsForm from "./pages/AboutUsForm";
 import Inquiries from "./pages/Inquiries";
+import {RouteProvider} from "./context/route/routeContext";
 
 
 
 function App() {
   return (
+      <RouteProvider>
       <Router>
               <Navbar>
 
@@ -30,6 +32,7 @@ function App() {
                   </Routes>
               </Navbar>
       </Router>
+      </RouteProvider>
   )
 }
 

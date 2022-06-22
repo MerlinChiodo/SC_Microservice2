@@ -3,7 +3,7 @@ import React, {useRef, useState} from 'react'
 import mapboxgl from '!mapbox-gl';
 import {useEffect} from "react";
 import * as turf from "@turf/turf";
-import AuskunftForm from "../components/AuskunftForm";
+import AuskunftForm from "./AuskunftForm";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 
 function Map() {

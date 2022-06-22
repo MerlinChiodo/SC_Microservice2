@@ -13,7 +13,6 @@ function AuskunftForm(){
 
     useEffect(()=>{
         fetchStops()
-        calcRoute()
     }, [])
 
     const fetchStops = async () => {
@@ -22,22 +21,7 @@ function AuskunftForm(){
         getStops(stops)
     }
 
-    function calcRoute(){
-        var directionsService = new window.google.maps.DirectionsService();
-        var zoo = new window.google.maps.LatLng(51.948935246413264, 7.589520850520359);
-        var museum = new window.google.maps.LatLng(51.96113236070515, 7.623992984539246);
 
-        var request = {
-            origin: zoo,
-            destination: museum,
-            travelMode: 'TRANSIT'
-        };
-        directionsService.route(request, function(result, status) {
-            if (status === 'OK') {
-                console.log(result)
-            }
-        });
-    }
 
 
     function getStops(stops_json) {

@@ -7,7 +7,8 @@ import NewsletterForm from "./pages/NewsletterForm"
 import CalendarEntryForm from "./pages/CalendarEntryForm";
 import AboutUsForm from "./pages/AboutUsForm";
 import Inquiries from "./pages/Inquiries";
-import {RouteProvider} from "./context/route/routeContext";
+import {RouteProvider} from "./context/route/RouteContext";
+import DisplayTickets from "./pages/DisplayTickets";
 
 
 
@@ -28,7 +29,8 @@ function App() {
                       <Route path='/articleform' element={<NewsletterForm/>} />
                       <Route path='/calendarform' element={<CalendarEntryForm/>} />
                       <Route path='/aboutusform' element={<AboutUsForm/>}/>
-                      <Route path="/inquiries" element={<Inquiries/>}/>
+                      <Route path='/inquiries' element={<Inquiries/>}/>
+                      <Route path='/tickets' element={<DisplayTickets/>}/>
                   </Routes>
               </Navbar>
       </Router>

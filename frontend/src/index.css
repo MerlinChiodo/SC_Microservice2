@@ -81,6 +81,7 @@ code {
 .mapboxgl-popup-content {
     text-align: center;
     font-family: 'Open Sans', sans-serif;
+    border-radius: 1rem;
 }
 
 @layer components {

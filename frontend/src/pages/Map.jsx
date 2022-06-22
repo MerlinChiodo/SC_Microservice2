@@ -18,7 +18,10 @@ function Map() {
 
     const websocket_url = "wss://websocket.busradar.conterra.de";
     const api_url = "https://rest.busradar.conterra.de/prod/";
-    mapboxgl.accessToken = "";
+    mapboxgl.accessToken = process.env.REACT_APP_mapbox_key
+    const google_api_key = process.env.REACT_APP_google_key;
+
+
 
     let markers = {};
     let stopmarker = {};
@@ -323,7 +326,7 @@ function Map() {
     return (
         <div>
             <div>
-                <Wrapper apiKey={""} render={render}>
+                <Wrapper apiKey={google_api_key} render={render}>
                 <AuskunftForm></AuskunftForm></Wrapper>
             </div>
             <p id="timestamp"></p>

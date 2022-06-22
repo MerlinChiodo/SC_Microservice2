@@ -9,16 +9,11 @@ import { Wrapper, Status } from "@googlemaps/react-wrapper";
 function Map() {
 
 
-    const render = (status) => {
-        if (status === Status.LOADING) return <h3>{status}...</h3>;
-        if (status === Status.FAILURE) return <h3>{status}...</h3>;
-        return null;
-    };
-
 
     const websocket_url = "wss://websocket.busradar.conterra.de";
     const api_url = "https://rest.busradar.conterra.de/prod/";
-    mapboxgl.accessToken = "";
+    mapboxgl.accessToken = process.env.REACT_APP_mapbox_key
+
 
     let markers = {};
     let stopmarker = {};
@@ -315,10 +310,6 @@ function Map() {
 
     return (
         <div>
-            <div>
-                <Wrapper apiKey={""} render={render}>
-                <AuskunftForm></AuskunftForm></Wrapper>
-            </div>
             <p id="timestamp"></p>
             <div ref={mapContainer} className="map-container" />
         </div>

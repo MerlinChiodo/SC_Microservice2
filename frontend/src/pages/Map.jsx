@@ -3,7 +3,7 @@ import React, {useRef, useState} from 'react'
 import mapboxgl from '!mapbox-gl';
 import {useEffect} from "react";
 import * as turf from "@turf/turf";
-import AuskunftForm from "../components/AuskunftForm";
+import AuskunftForm from "./AuskunftForm";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 
 function Map() {
@@ -18,7 +18,7 @@ function Map() {
 
     const websocket_url = "wss://websocket.busradar.conterra.de";
     const api_url = "https://rest.busradar.conterra.de/prod/";
-    mapboxgl.accessToken = "pk.eyJ1IjoidGlub20iLCJhIjoiY2ppa2dzOXd2MHhjNDN2b3dkeXlhMzQ3NyJ9.-GK7-nWyeh988RBOhjUwtQ";
+    mapboxgl.accessToken = "";
 
     let markers = {};
     let stopmarker = {};

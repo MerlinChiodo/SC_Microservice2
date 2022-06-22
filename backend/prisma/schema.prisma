@@ -72,7 +72,7 @@ model Anfrage {
   verantwortlicher String
   institution      String?
   anzahlPassagiere Int
-  bearbeitet       Boolean?
+  bearbeitet       Boolean?    @default(false)
   mitarbeiter_id   Int?
   mitarbeiter      Mitarbeiter? @relation(fields: [mitarbeiter_id], references: [mitarbeiter_id])
   ticket           Ticket?

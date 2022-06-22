@@ -1,7 +1,15 @@
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import {Login} from "tabler-icons-react";
+import UserContext from "../context/user/UserContext";
+import {useContext} from "react";
+
 
 function Navbar({ title, children }) {
+
+
+    const {getLoginUser} = useContext(UserContext)
+
     return (
             <div className="drawer ">
                 <input id="my-drawer-3" type="checkbox" className="drawer-toggle"/>
@@ -32,6 +40,15 @@ function Navbar({ title, children }) {
                                     <Link to='/employee' className="btn btn-ghost normal-case rounded-xl">
                                         Mitarbeiter
                                     </Link>
+                                </li>
+                                <li>
+                                    <a className='btn btn-ghost normal-case rounded-xl' href='http://auth.smartcityproject.net:8080/external?redirect_success=https://www.google.com/&redirect_error=https://www.google.com/'>
+                                        <Login
+                                            onClick={() => getLoginUser('https://www.google.com/', 'https://www.google.com/')}
+                                            size={28}
+                                            strokeWidth={1}
+                                            color={'black'}></Login>
+                                    </a>
                                 </li>
                             </ul>
                         </div>

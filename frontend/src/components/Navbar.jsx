@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login} from "tabler-icons-react";
+import {Login, Logout} from "tabler-icons-react";
 import UserContext from "../context/user/UserContext";
 import {useContext} from "react";
 
@@ -25,9 +25,8 @@ function Navbar({ title, children }) {
                             </label>
                         </div>
                         <div className="flex-1 px-2 mx-2">
-                            <Link to='/home'className="btn btn-ghost normal-case text-xl">{title}</Link>
+                            <Link to='/'className="btn btn-ghost normal-case text-xl">{title}</Link>
                         </div>
-
                         <div className="flex-none hidden lg:block">
                             <ul className="menu menu-horizontal">
                                 <li>
@@ -42,12 +41,31 @@ function Navbar({ title, children }) {
                                     </Link>
                                 </li>
                                 <li>
-                                    <a className='btn btn-ghost normal-case rounded-xl' href='http://auth.smartcityproject.net:8080/external?redirect_success=https://www.google.com/&redirect_error=https://www.google.com/'>
-                                        <Login
-                                            onClick={() => getLoginUser('https://www.google.com/', 'https://www.google.com/')}
-                                            size={28}
-                                            strokeWidth={1}
-                                            color={'black'}></Login>
+                                    <div className='btn btn-ghost normal-case rounded-xl place-content-center' >
+                                        <label className="swap">
+                                            <input type="checkbox"/>
+                                                <div className="swap-off">
+                                                    <a href='http://auth.smartcityproject.net:8080/external?redirect_success=https://www.google.com/&redirect_error=https://www.google.com/'>
+                                                    <Login
+                                                        onClick={() => getLoginUser('https://www.google.com/', 'https://www.google.com/')}
+                                                        size={28}
+                                                        strokeWidth={1}
+                                                        color={'black'}></Login>
+                                                    </a>
+                                                </div>
+                                                <div className="swap-on">
+                                                    <Logout
+                                                        onClick={() => getLoginUser('https://www.google.com/', 'https://www.google.com/')}
+                                                        size={28}
+                                                        strokeWidth={1}
+                                                        color={'black'}></Logout>
+                                                </div>
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a className='btn btn-ghost normal-case rounded-xl place-content-center' href='http://vps2290194.fastwebserver.de:9800/'>
+                                        Redirect-Platzhalter
                                     </a>
                                 </li>
                             </ul>
@@ -58,6 +76,11 @@ function Navbar({ title, children }) {
                 <div className="drawer-side">
                     <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
                     <ul className="menu p-4 overflow-y-auto w-80 bg-base-100">
+                        <li>
+                            <Link to='/' className="btn btn-ghost normal-case rounded-xl">
+                                Home
+                            </Link>
+                        </li>
                         <li>
                             <Link to='/tickets' className="btn btn-ghost normal-case rounded-xl">
                                 Tickets

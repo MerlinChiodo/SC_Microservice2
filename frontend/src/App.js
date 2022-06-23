@@ -24,7 +24,6 @@ function App() {
                                   <Home/>
                               </>
                       }/>
-                      <Route path='/home' element={<Home/>}/>
                       <Route path='/employee' element={<Employee/>} />
                       <Route path='/articleform' element={<NewsletterForm/>} />
                       <Route path='/calendarform' element={<CalendarEntryForm/>} />

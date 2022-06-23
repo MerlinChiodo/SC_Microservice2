@@ -4,14 +4,16 @@ import { Autocomplete } from '@mantine/core';
 import {DatePicker, TimeInput} from "@mantine/dates";
 import {Calendar, Clock} from "tabler-icons-react";
 import RouteContext from "../context/route/RouteContext";
+import dayjs from 'dayjs';
 
 
 function AuskunftForm(){
 
-    const {route, setRoute} = useContext(RouteContext)
+    const {setRoute} = useContext(RouteContext)
     const api_url = "https://rest.busradar.conterra.de/prod/";
 
-    const[data, setData] = useState([])
+    const[stops, setStops] = useState([])
+    const[time, setTime] = useState(new Date())
 
     useEffect(()=>{
         fetchStops()
@@ -35,7 +37,7 @@ function AuskunftForm(){
             }
             stops.push(stop)
         }
-        setData(stops)
+        setStops(stops)
     }
 
     const calculateRoute = (departure_coords, arrival_coords) => {
@@ -43,25 +45,45 @@ function AuskunftForm(){
         const directionsService = new window.google.maps.DirectionsService();
         const departure = new window.google.maps.LatLng(departure_coords[1], departure_coords[0]);
         const arrival = new window.google.maps.LatLng(arrival_coords[1], arrival_coords[0]);
+        const departureTime = dayjs(time).toDate()
 
         const request = {
             origin: departure,
             destination: arrival,
-            travelMode: 'TRANSIT'
+            travelMode: 'TRANSIT',
+            transitOptions: {modes: ['BUS', 'SUBWAY', 'TRAM'], departureTime: departureTime}
         };
         directionsService.route(request, function(result, status) {
             if (status === 'OK') {
                 console.log(result)
-                setRoute(result)
+                try {
+                    setRoute({
+                        line: result.routes[0].legs[0].steps.find((step) => step.travel_mode === "TRANSIT").transit.line.short_name,
+                        headsign: result.routes[0].legs[0].steps.find((step) => step.travel_mode === "TRANSIT").transit.headsign,
+                        num_stops: result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").transit.num_stops,
+                        departure_station: result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").transit.departure_stop.name,
+                        arrival_station: result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").transit.arrival_stop.name,
+                        departureTime: result.routes[0].legs[0].departure_time.text,
+                        arrivalTime: result.routes[0].legs[0].arrival_time.text
+                    })
+                } catch (e) {
+                    console.log("keine gültige Busverbindung")
+                }
+              /*  //Ticket erstellen wenn nur es nicht nur WALKING gibt
+                console.log(result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").transit.line.short_name)
+                console.log(result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").transit.headsign)
+                console.log(result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").transit.num_stops)
+                console.log(result.routes[0].legs[0].departure_time.text)
+                console.log(result.routes[0].legs[0].arrival_time.text)*/
             }
         })
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const coords_departure = data.find(stop => stop.name===e.target.abfahrt_haltestelle.value).coordinates
-        const coords_arrival = data.find(stop => stop.name===e.target.ankunfts_haltestelle.value).coordinates
-
+        const coords_departure = stops.find(stop => stop.name===e.target.abfahrt_haltestelle.value).coordinates
+        const coords_arrival = stops.find(stop => stop.name===e.target.ankunfts_haltestelle.value).coordinates
+        setRoute({})
         calculateRoute(coords_departure, coords_arrival)
     }
 
@@ -74,7 +96,7 @@ function AuskunftForm(){
                         <Autocomplete
                             minLength={2}
                             id="abfahrt_haltestelle"
-                            data={data.map((stop)=> stop["name"])}
+                            data={stops.map((stop)=> stop["name"])}
                             styles={{
                                 input: {borderRadius: 10}
                             }}
@@ -86,8 +108,7 @@ function AuskunftForm(){
                         <label className="mb-2 text-sm font-medium text-gray-900" htmlFor="ankunfts_haltestelle">nach</label>
                             <Autocomplete
                                 id="ankunfts_haltestelle"
-                                className=""
-                                data={data.map((stop)=> stop["name"])}
+                                data={stops.map((stop)=> stop["name"])}
                                 minLength={2}
                                 styles={{
                                     input: {borderRadius: 10}
@@ -101,7 +122,7 @@ function AuskunftForm(){
                 <div className="grid grid-cols-2 gap-6 place-items-center place-items-stretch">
                     <div>
                         <label className="mb-2 text-sm font-medium text-gray-900" htmlFor="ankunfts_haltestelle">am</label>
-                        <DatePicker id="datepicker"
+                        <DatePicker
                                     styles={{
                                         input: {borderRadius: 10, height: "auto", lineHeight: 2.5},
                                     }}
@@ -114,12 +135,16 @@ function AuskunftForm(){
                     <div>
                         <label className="mb-2 text-sm font-medium text-gray-900" htmlFor="ankunfts_haltestelle">um</label>
                         <TimeInput
+
                                 styles={{
                                     input: {borderRadius: 10, height: "auto", lineHeight: 2.86},
                                 }}
                                 placeholder="Pick time"
                                 icon={<Clock size={16} />}
                                 defaultValue={new Date()}
+                                value={time}
+                                onChange={setTime}
+                                format='24'
                                 required
                             />
                     </div>

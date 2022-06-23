@@ -11,21 +11,21 @@ function Ticket({children, route}){
                 <div className="card-body p-0">
                     <div className="grid grid-cols-2 divide-x-4 divide-dashed divide-base-100 ">
                         <div className="grid grid-cols-2">
-                            <div className="flex flex-col p-4 gap-6 place-self-stretch">
+                            <div className="flex flex-col p-4 gap-6 place-content-stretch">
                                 <div className="flex flex-row">
-                                    <p  className="text-xl font-medium truncate ">
+                                    <p  className="text-xl font-medium ">
                                         Ticketart
                                     </p>
-                                    <p  className="text-xl font-medium truncate ">
-                                        Linie
+                                    <p  className="text-xl font-medium ">
+                                        Linie {route.line} {route.headsign}
                                     </p>
                                 </div>
                                 <div className="flex flex-row">
-                                    <p  className="text-sm font-medium truncate ">
-                                        Abfahrt
+                                    <p  className="text-sm font-medium ">
+                                        Abfahrt {route.departure_station} {route.departureTime}
                                     </p>
-                                    <p  className="text-sm font-medium truncate ">
-                                        Ankunft
+                                    <p  className="text-sm font-medium ">
+                                        Ankunft {route.arrival_station} {route.arrivalTime}
                                     </p>
                                 </div>
                             </div>

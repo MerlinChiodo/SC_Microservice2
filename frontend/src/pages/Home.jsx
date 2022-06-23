@@ -18,7 +18,7 @@ function Home() {
                 <Wrapper apiKey={google_api_key} render={render}>
                     <AuskunftForm></AuskunftForm></Wrapper>
             </div>
-            <Map></Map>
+       {/*     <Map></Map>*/}
         </div>
     )
 }

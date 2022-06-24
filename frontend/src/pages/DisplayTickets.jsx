@@ -10,9 +10,9 @@ function DisplayTickets() {
 
     return(
         <div className="container mx-auto p-6 bg-base-100">
-            <div className="flex text-sm breadcrumbs place-content-center">
+            <div className="flex text-lg breadcrumbs place-content-center">
                 <ul>
-                    <li><a className="font-semibold">Ticket auswählen</a></li>
+                    <li className="font-semibold">Ticket auswählen</li>
                     <li>Login</li>
                     <li>Bezahlen</li>
                 </ul>

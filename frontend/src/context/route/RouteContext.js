@@ -28,6 +28,9 @@ export const RouteProvider = ({children}) => {
             }
         });
     }*/
+    function clearRoute() {
+        setRoute({})
+    }
 
     return (
                 <RouteContext.Provider
@@ -35,7 +38,8 @@ export const RouteProvider = ({children}) => {
                         departure_date,
                         departure_time,
                         route,
-                        setRoute
+                        setRoute,
+                        clearRoute
                     }}>
                     {children}
                 </RouteContext.Provider>

@@ -9,6 +9,7 @@ import AboutUsForm from "./pages/AboutUsForm";
 import Inquiries from "./pages/Inquiries";
 import {RouteProvider} from "./context/route/RouteContext";
 import DisplayTickets from "./pages/DisplayTickets";
+import Tickets from "./pages/Tickets";
 
 
 
@@ -30,7 +31,8 @@ function App() {
                       <Route path='/calendarform' element={<CalendarEntryForm/>} />
                       <Route path='/aboutusform' element={<AboutUsForm/>}/>
                       <Route path='/inquiries' element={<Inquiries/>}/>
-                      <Route path='/tickets' element={<DisplayTickets/>}/>
+                      <Route path='/ticket' element={<DisplayTickets/>}/>
+                      <Route path='/tickets' element={<Tickets/>}/>
                   </Routes>
               </Navbar>
       </Router>

@@ -5,15 +5,19 @@ import {DatePicker, TimeInput} from "@mantine/dates";
 import {Calendar, Clock} from "tabler-icons-react";
 import RouteContext from "../context/route/RouteContext";
 import dayjs from 'dayjs';
+import {Link} from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 
 function AuskunftForm(){
 
-    const {setRoute} = useContext(RouteContext)
+    const {setRoute, clearRoute} = useContext(RouteContext)
+    const navigate = useNavigate();
     const api_url = "https://rest.busradar.conterra.de/prod/";
 
     const[stops, setStops] = useState([])
     const[time, setTime] = useState(new Date())
+    const[isRouteValid, setIsRouteValid] = useState(false)
 
     useEffect(()=>{
         fetchStops()
@@ -64,11 +68,16 @@ function AuskunftForm(){
                         departure_station: result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").transit.departure_stop.name,
                         arrival_station: result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").transit.arrival_stop.name,
                         departureTime: result.routes[0].legs[0].departure_time.text,
-                        arrivalTime: result.routes[0].legs[0].arrival_time.text
+                        arrivalTime: result.routes[0].legs[0].arrival_time.text,
+                        changes: result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").length,
+                        duration: result.routes[0].legs[0].duration.text
                     })
                 } catch (e) {
                     console.log("keine gültige Busverbindung")
+                    setIsRouteValid(false)
                 }
+                setIsRouteValid(true)
+                navigate("/ticket")
               /*  //Ticket erstellen wenn nur es nicht nur WALKING gibt
                 console.log(result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").transit.line.short_name)
                 console.log(result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").transit.headsign)
@@ -83,7 +92,7 @@ function AuskunftForm(){
         e.preventDefault()
         const coords_departure = stops.find(stop => stop.name===e.target.abfahrt_haltestelle.value).coordinates
         const coords_arrival = stops.find(stop => stop.name===e.target.ankunfts_haltestelle.value).coordinates
-        setRoute({})
+        clearRoute()
         calculateRoute(coords_departure, coords_arrival)
     }
 
@@ -150,9 +159,10 @@ function AuskunftForm(){
                     </div>
                 </div>
 
-
-                <button type="submit"
-                        className="text-white mt-6 btn-secondary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Route finden
+{/*                    <button type="submit" className=" mt-6">
+                        <Link to='/ticket' className="place-self-center w-fit text-white btn-secondary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Route finden</Link>
+                    </button>*/}
+                <button id='route_button' type="submit" className="mt-6 place-self-center w-fit text-white btn-secondary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Route finden
                 </button>
             </form>
         </div>

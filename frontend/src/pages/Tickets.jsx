@@ -31,7 +31,7 @@ function Tickets() {
                                 label="Personenanzahl"
                                 required
                             />
-                            <button type='submit' className="btn-secondary rounded-lg text-white mt-4 p-1.5 mx-auto">Ticket kaufen</button>
+                            <button type='submit' className="btn-secondary rounded-lg text-white mt-4 btn-sm mx-auto">Ticket kaufen</button>
                         </form>
                     </div>
                 </Accordion.Item>

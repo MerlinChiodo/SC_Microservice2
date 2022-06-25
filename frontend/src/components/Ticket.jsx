@@ -6,6 +6,11 @@ import {Select} from "@mantine/core";
 
 function Ticket({children, route}){
 
+    const handleClick = () => {
+
+    }
+
+
     return(
         <div className="card rounded-md min-w-fit shrink-0 m-6 bg-base-200 shadow-xl collapse" tabIndex="0">
                 <div className="card-body p-4 collapse-title">
@@ -35,22 +40,20 @@ function Ticket({children, route}){
                                 <div className="p-4">
                                     <Select
                                         data={['Einzelfahrt', 'Familientarif']}
-                                        placeholder="Einzelfahrt"
                                         label="Tarife"
+                                        defaultValue={'Einzelfahrt'}
                                         styles={{
                                             input: {borderRadius: 10}
                                         }}
                                     />
                                 </div>
                         </div>
-                        <div className="basis-1/12 p-6 hover:bg-base-300 place-self-center">
-                            <ShoppingCart  size={30}
-                                           style={{margin: 0,placeSelf: "center"}}
-                                           strokeWidth={2}
-/*
-                                           onClick={}
-*/
-                            />
+                        <div className="basis-1/12 p-6 place-self-center hover:bg-base-300 rounded-lg" onClick={handleClick}>
+                                <ShoppingCart  size={30}
+                                               style={{margin: 0,placeSelf: "center"}}
+                                               strokeWidth={2}
+                                />
+
                             <p  className="text-xs font-medium mt-2">
                                 Preis
                             </p>

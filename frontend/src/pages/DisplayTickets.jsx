@@ -7,7 +7,6 @@ function DisplayTickets() {
 
     const {route, setRoute} = useContext(RouteContext)
 
-
     return(
         <div className="container mx-auto p-6 bg-base-100">
             <div className="flex text-lg breadcrumbs place-content-center">
@@ -17,8 +16,11 @@ function DisplayTickets() {
                     <li>Bezahlen</li>
                 </ul>
             </div>
-            <Ticket route={route}>
-            </Ticket>
+            {route.map((routeItem) => (
+                <Ticket route={routeItem}>
+                </Ticket>
+            ))}
+
         </div>
     )
 

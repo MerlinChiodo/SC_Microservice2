@@ -60,8 +60,21 @@ function AuskunftForm(){
         directionsService.route(request, function(result, status) {
             if (status === 'OK') {
                 console.log(result)
+
+
+        const request2 = {
+            origin: departure,
+            destination: arrival,
+            travelMode: 'TRANSIT',
+            transitOptions: {modes: ['BUS', 'SUBWAY', 'TRAM'], departureTime: dayjs(result.routes[0].legs[0].departure_time.text).add(5, 'minutes').toDate()}
+        };
+        directionsService.route(request2, function(result2, status2) {
+            if (status2 === 'OK') {
+                console.log(result2)
+
+
                 try {
-                    setRoute({
+                    setRoute([{
                         departure_station: result.routes[0].legs[0].start_address.split(",")[0],
                         arrival_station: result.routes[0].legs[0].end_address.split(",")[0],
                         departureTime: result.routes[0].legs[0].departure_time.text,
@@ -69,7 +82,7 @@ function AuskunftForm(){
                         changes: result.routes[0].legs[0].steps.filter((step) => step.travel_mode ==="TRANSIT").length,
                         duration: result.routes[0].legs[0].duration.text,
                         steps: result.routes[0].legs[0].steps
-                    })
+                    }, {}])
                 } catch (e) {
                     console.log("keine gültige Busverbindung")
                     setIsRouteValid(false)
@@ -77,9 +90,7 @@ function AuskunftForm(){
 
                 setIsRouteValid(true)
                 navigate("/ticket")
-            }
-        })
-    }
+            }})}})}
 
     const handleSubmit = (e) => {
         e.preventDefault()

@@ -62,29 +62,21 @@ function AuskunftForm(){
                 console.log(result)
                 try {
                     setRoute({
-                        line: result.routes[0].legs[0].steps.find((step) => step.travel_mode === "TRANSIT").transit.line.short_name,
-                        headsign: result.routes[0].legs[0].steps.find((step) => step.travel_mode === "TRANSIT").transit.headsign,
-                        num_stops: result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").transit.num_stops,
-                        departure_station: result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").transit.departure_stop.name,
-                        arrival_station: result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").transit.arrival_stop.name,
+                        departure_station: result.routes[0].legs[0].start_address.split(",")[0],
+                        arrival_station: result.routes[0].legs[0].end_address.split(",")[0],
                         departureTime: result.routes[0].legs[0].departure_time.text,
                         arrivalTime: result.routes[0].legs[0].arrival_time.text,
                         changes: result.routes[0].legs[0].steps.filter((step) => step.travel_mode ==="TRANSIT").length,
-                        duration: result.routes[0].legs[0].duration.text
+                        duration: result.routes[0].legs[0].duration.text,
+                        steps: result.routes[0].legs[0].steps
                     })
                 } catch (e) {
                     console.log("keine gültige Busverbindung")
                     setIsRouteValid(false)
                 }
-                console.log(result.routes[0].legs[0].steps.filter((step) => step.travel_mode ==="TRANSIT"))
+
                 setIsRouteValid(true)
                 navigate("/ticket")
-              /*  //Ticket erstellen wenn nur es nicht nur WALKING gibt
-                console.log(result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").transit.line.short_name)
-                console.log(result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").transit.headsign)
-                console.log(result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").transit.num_stops)
-                console.log(result.routes[0].legs[0].departure_time.text)
-                console.log(result.routes[0].legs[0].arrival_time.text)*/
             }
         })
     }

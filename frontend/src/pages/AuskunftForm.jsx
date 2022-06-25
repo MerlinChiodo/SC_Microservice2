@@ -69,13 +69,14 @@ function AuskunftForm(){
                         arrival_station: result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").transit.arrival_stop.name,
                         departureTime: result.routes[0].legs[0].departure_time.text,
                         arrivalTime: result.routes[0].legs[0].arrival_time.text,
-                        changes: result.routes[0].legs[0].steps.find((step) => step.travel_mode ==="TRANSIT").length,
+                        changes: result.routes[0].legs[0].steps.filter((step) => step.travel_mode ==="TRANSIT").length,
                         duration: result.routes[0].legs[0].duration.text
                     })
                 } catch (e) {
                     console.log("keine gültige Busverbindung")
                     setIsRouteValid(false)
                 }
+                console.log(result.routes[0].legs[0].steps.filter((step) => step.travel_mode ==="TRANSIT"))
                 setIsRouteValid(true)
                 navigate("/ticket")
               /*  //Ticket erstellen wenn nur es nicht nur WALKING gibt

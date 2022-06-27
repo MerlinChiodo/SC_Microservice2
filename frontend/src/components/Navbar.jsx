@@ -8,7 +8,7 @@ import {useContext} from "react";
 function Navbar({ title, children }) {
 
 
-    const {getLoginUser} = useContext(UserContext)
+    const {getLoginUser, logout, isLoggedIn} = useContext(UserContext)
 
     return (
             <div className="drawer ">
@@ -42,29 +42,23 @@ function Navbar({ title, children }) {
                                 </li>
                                 <li>
                                     <div className='btn btn-ghost normal-case rounded-xl place-content-center' >
-                                        <label className="swap">
-                                            <input type="checkbox"/>
-                                                <div className="swap-off">
-                                                    <a href='http://auth.smartcityproject.net:8080/external?redirect_success=https://www.google.com/&redirect_error=https://www.google.com/'>
-                                                    <Login
-                                                        onClick={() => getLoginUser('https://www.google.com/', 'https://www.google.com/')}
-                                                        size={28}
-                                                        strokeWidth={1}
-                                                        color={'black'}></Login>
-                                                    </a>
-                                                </div>
-                                                <div className="swap-on">
-                                                    <Logout
-                                                        onClick={() => getLoginUser('https://www.google.com/', 'https://www.google.com/')}
-                                                        size={28}
-                                                        strokeWidth={1}
-                                                        color={'black'}></Logout>
-                                                </div>
-                                        </label>
+                                        {!isLoggedIn && (<Login
+                                                            onClick={() => getLoginUser('http://localhost:3000/', 'http://localhost:3000/employee')}
+                                                            size={28}
+                                                            strokeWidth={1}
+                                                            color={'black'}>
+                                                        </Login>)}
+
+                                            {isLoggedIn && (<Logout
+                                                            onClick={logout}
+                                                            size={28}
+                                                            strokeWidth={1}
+                                                            color={'black'}>
+                                                        </Logout>)}
                                     </div>
                                 </li>
                                 <li>
-                                    <a className='btn btn-ghost normal-case rounded-xl place-content-center' href='http://vps2290194.fastwebserver.de:9800/'>
+                                    <a className='btn btn-ghost normal-case rounded-xl place-content-center' href='http://www.supersmartcity.de/'>
                                         Redirect-Platzhalter
                                     </a>
                                 </li>

@@ -5,7 +5,7 @@ import RouteContext from "../context/route/RouteContext";
 
 function DisplayTickets() {
 
-    const {route, setRoute} = useContext(RouteContext)
+    const {route} = useContext(RouteContext)
 
     return(
         <div className="container mx-auto p-6 bg-base-100">
@@ -16,8 +16,8 @@ function DisplayTickets() {
                     <li>Bezahlen</li>
                 </ul>
             </div>
-            {route.map((routeItem) => (
-                <Ticket route={routeItem}>
+            {route.map((routeItem, index) => (
+                <Ticket routeItem={routeItem} index={index}>
                 </Ticket>
             ))}
 

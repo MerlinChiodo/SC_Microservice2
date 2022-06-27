@@ -1,13 +1,25 @@
 import { ShoppingCart } from 'tabler-icons-react';
 import { ChevronRight } from 'tabler-icons-react';
 import {Select} from "@mantine/core";
+import {useContext, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import RouteContext from "../context/route/RouteContext";
 
 
 
-function Ticket({children, route}){
+function Ticket({children, routeItem, index}){
+
+    const navigate = useNavigate()
+    const {setTicket, route, ticket} = useContext(RouteContext)
+
+    const [tarif, setTarif] = useState('Einzelfahrt')
 
     const handleClick = () => {
-
+        setTicket({
+            tripInfo: route[index],
+            tarif: tarif
+        })
+        navigate('/login')
     }
 
 
@@ -19,49 +31,52 @@ function Ticket({children, route}){
                             <div className="flex flex-col place-content-around gap-2">
                                     <div className="flex flex-row">
                                         <p  className="text-xl font-medium mr-2">
-                                            {route.departureTime} - {route.arrivalTime}
+                                            {routeItem.departureTime} - {routeItem.arrivalTime}
                                         </p>
                                         <p className="text-lg font-medium mx-2">
-                                            Umstiege: {route.changes -1}
+                                            Umstiege: {routeItem.changes -1}
                                         </p>
                                         <p className="text-lg font-medium mx-2">
-                                            Dauer: {route.duration}
+                                            Dauer: {routeItem.duration}
                                         </p>
                                     </div>
                                     <div className="flex flex-row">
                                         <p  className="text-sm font-medium">
-                                            Abfahrt: <br/>{route.departure_station}
+                                            Abfahrt: <br/>{routeItem.departure_station}
                                         </p>
                                         <p  className="text-sm font-medium">
-                                            Ankunft: <br/> {route.arrival_station}
+                                            Ankunft: <br/> {routeItem.arrival_station}
                                         </p>
                                     </div>
                             </div>
-                                <div className="p-4">
-                                    <Select
-                                        data={['Einzelfahrt', 'Familientarif']}
-                                        label="Tarife"
-                                        defaultValue={'Einzelfahrt'}
-                                        styles={{
-                                            input: {borderRadius: 10}
-                                        }}
-                                    />
+                                <div className="p-4" >
+                                        <Select
+                                            id="tarif"
+                                            data={['Einzelfahrt', 'Tagesticket', 'StadtTicket']}
+                                            label="Tarife"
+                                            value={tarif}
+                                            onChange={setTarif}
+                                            styles={{
+                                                input: {borderRadius: 10}
+                                            }}
+                                        />
+                                    </div>
                                 </div>
-                        </div>
-                        <div className="basis-1/12 p-6 place-self-center hover:bg-base-300 rounded-lg" onClick={handleClick}>
-                                <ShoppingCart  size={30}
-                                               style={{margin: 0,placeSelf: "center"}}
-                                               strokeWidth={2}
-                                />
 
-                            <p  className="text-xs font-medium mt-2">
-                                Preis
-                            </p>
-                        </div>
+                                    <div className="basis-1/12 p-6 place-self-center hover:bg-base-300 rounded-lg" >
+                                        <ShoppingCart  size={30}
+                                                       style={{margin: 0, placeSelf: "center"}}
+                                                       strokeWidth={2}
+                                                        onClick={handleClick}
+                                        />
+                                        <p  className="text-xs font-medium mt-2">
+                                            Preis
+                                        </p>
+                                    </div>
                     </div>
                 </div>
                 <div className="collapse-content h-auto ">
-                   {route.steps.map((step) => {
+                   {routeItem.steps.map((step) => {
                         if(step.travel_mode ==="WALKING")
                             return (
                                 <div className="flex flex-row">

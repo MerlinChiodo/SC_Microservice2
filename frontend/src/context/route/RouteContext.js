@@ -10,6 +10,7 @@ export const RouteProvider = ({children}) => {
     const [departure_date, setDeparture_date] = useState(new Date())
     const [departure_time, setDeparture_time] = useState("")
     const [route, setRoute] = useState([{}])
+    const [ticket, setTicket] = useState({})
 
     function clearRoute() {
         setRoute([{}])
@@ -22,6 +23,8 @@ export const RouteProvider = ({children}) => {
                         departure_time,
                         route,
                         setRoute,
+                        ticket,
+                        setTicket,
                         clearRoute
                     }}>
                     {children}

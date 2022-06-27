@@ -110,7 +110,6 @@ function Map() {
             }
             //Update vehicle if it is already on map
             else if (vehicles.features[key].properties["fahrzeugid"] in markers) {
-                console.log("update")
                 updateVehicles_Update(vehicles, key);
             }
             //insert new markers

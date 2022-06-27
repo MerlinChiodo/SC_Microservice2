@@ -4,6 +4,7 @@ exports.getAllInquiries = async(req, res) => {
 
     try {
         const inquiries = await prisma.Anfrage.findMany({
+            where : {bearbeitet : false},
             include: {
                 ticket: true
             },

@@ -10,13 +10,16 @@ import Inquiries from "./pages/Inquiries";
 import {RouteProvider} from "./context/route/RouteContext";
 import DisplayTickets from "./pages/DisplayTickets";
 import Tickets from "./pages/Tickets";
+import {UserProvider} from "./context/user/UserContext";
 
 
 
 function App() {
   return (
       <RouteProvider>
+      <UserProvider>
       <Router>
+
               <Navbar>
 
                   <Routes>
@@ -25,7 +28,6 @@ function App() {
                                   <Home/>
                               </>
                       }/>
-                      <Route path='/home' element={<Home/>}/>
                       <Route path='/employee' element={<Employee/>} />
                       <Route path='/articleform' element={<NewsletterForm/>} />
                       <Route path='/calendarform' element={<CalendarEntryForm/>} />
@@ -36,7 +38,9 @@ function App() {
                   </Routes>
               </Navbar>
       </Router>
+      </UserProvider>
       </RouteProvider>
+
   )
 }
 

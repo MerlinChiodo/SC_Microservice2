@@ -92,13 +92,14 @@ function AuskunftForm(){
                                 steps: result2.routes[0].legs[0].steps
                             }
                             ])
+
+                            setIsRouteValid(true)
+                            navigate("/ticket")
                         } catch (e) {
                             console.log("keine gültige Busverbindung")
                             setIsRouteValid(false)
                         }
 
-                        setIsRouteValid(true)
-                        navigate("/ticket")
                     }
                 })
             }

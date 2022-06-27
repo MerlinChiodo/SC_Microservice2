@@ -11,6 +11,7 @@ import {RouteProvider} from "./context/route/RouteContext";
 import DisplayTickets from "./pages/DisplayTickets";
 import Tickets from "./pages/Tickets";
 import {UserProvider} from "./context/user/UserContext";
+import Login from "./pages/Login";
 
 
 
@@ -35,6 +36,7 @@ function App() {
                       <Route path='/inquiries' element={<Inquiries/>}/>
                       <Route path='/ticket' element={<DisplayTickets/>}/>
                       <Route path='/tickets' element={<Tickets/>}/>
+                      <Route path='/login' element={<Login/>}/>
                   </Routes>
               </Navbar>
       </Router>

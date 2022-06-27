@@ -5,6 +5,7 @@ import AuskunftForm from "./AuskunftForm";
 function Home() {
 
     const google_api_key = process.env.REACT_APP_google_key;
+
     const render = (status) => {
         if (status === Status.LOADING) return <h3>{status}...</h3>;
         if (status === Status.FAILURE) return <h3>{status}...</h3>;

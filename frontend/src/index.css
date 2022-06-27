@@ -82,7 +82,7 @@ code {
     text-align: center;
     font-family: 'Open Sans', sans-serif;
     @apply border rounded-xl bg-base-300 text-gray-800
-    border-radius: 1rem;
+
 }
 
 @layer components {

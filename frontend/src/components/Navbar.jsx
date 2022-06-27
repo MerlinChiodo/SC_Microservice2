@@ -59,7 +59,7 @@ function Navbar({ title, children }) {
                                 </li>
                                 <li>
                                     <a className='btn btn-ghost normal-case rounded-xl place-content-center' href='http://www.supersmartcity.de/'>
-                                        Redirect-Platzhalter
+                                        Landingpage
                                     </a>
                                 </li>
                             </ul>

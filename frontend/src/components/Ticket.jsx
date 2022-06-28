@@ -11,7 +11,6 @@ function Ticket({children, routeItem, index}){
 
     const navigate = useNavigate()
     const {setTicket, route, ticket} = useContext(RouteContext)
-
     const [tarif, setTarif] = useState('Einzelfahrt')
 
     const handleClick = () => {

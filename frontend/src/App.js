@@ -12,16 +12,22 @@ import DisplayTickets from "./pages/DisplayTickets";
 import Tickets from "./pages/Tickets";
 import {UserProvider} from "./context/user/UserContext";
 import Login from "./pages/Login";
-
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import Checkout from "./pages/Checkout";
 
 
 function App() {
-  return (
-      <RouteProvider>
-      <UserProvider>
-      <Router>
+    return (
+        <RouteProvider>
+            <UserProvider>
 
-              <Navbar>
+                <PayPalScriptProvider options={{
+                    "client-id": "test",
+                    components: "buttons",
+                    currency: "USD"
+                }}>
+                <Router>
+                <Navbar>
 
                   <Routes>
                       <Route path='/' element={
@@ -37,13 +43,19 @@ function App() {
                       <Route path='/ticket' element={<DisplayTickets/>}/>
                       <Route path='/tickets' element={<Tickets/>}/>
                       <Route path='/login' element={<Login/>}/>
+                      <Route path='/checkout' element={<Checkout/>}/>
                   </Routes>
-              </Navbar>
-      </Router>
-      </UserProvider>
-      </RouteProvider>
+
+                </Navbar>
+                </Router>
+                </PayPalScriptProvider>
+            </UserProvider>
+        </RouteProvider>
 
   )
 }
 
 export default App
+
+
+

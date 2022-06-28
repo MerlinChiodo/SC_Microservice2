@@ -14,7 +14,7 @@ function Login() {
                     <div className="max-w-md">
                         <h1 className="text-5xl font-bold">Bereits in der SmartCity angemeldet</h1>
                         <p className="py-6"></p>
-                        <Link to='/checkout'><button className="btn btn-primary">Weiter zur Zahlung</button></Link>
+                        <Link to='/checkout'><p className="btn btn-primary">Weiter zur Zahlung</p></Link>
                     </div>
                 </div>
             </div>
@@ -22,7 +22,14 @@ function Login() {
 
     ) : (
         <div className="container mx-auto p-6">
-            <div className="hero ">
+            <div className="flex text-lg breadcrumbs place-content-center">
+                <ul>
+                    <li>Ticket auswählen</li>
+                    <li className="font-semibold">Login</li>
+                    <li>Bezahlen</li>
+                </ul>
+            </div>
+            <div className="hero">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <div className="text-center lg:text-left">
                         <Link to='/checkout'><h1 className="text-5xl font-bold hover:underline">oder weiter mit der SmartCity.</h1></Link>

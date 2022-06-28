@@ -1,6 +1,7 @@
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 import {Status, Wrapper} from "@googlemaps/react-wrapper";
 import AuskunftForm from "./AuskunftForm";
+import UserContext from "../context/user/UserContext";
 
 function Home() {
 
@@ -12,9 +13,6 @@ function Home() {
         return null;
     };
 
-    useEffect(()=>{
-
-    }, [])
 
 
     return (

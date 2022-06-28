@@ -16,7 +16,6 @@ export const UserProvider = ({children}) => {
 
 
     const getLoginUser = async (redirect_success, redirect_error) => {
-        setLoading(true)
         window.location.replace(`http://www.supersmartcity.de:9760/external?redirect_success=${redirect_success}&redirect_error=${redirect_error}`)
     };
 
@@ -34,12 +33,13 @@ export const UserProvider = ({children}) => {
                 })
             const data = await res.json()
             if(res.ok) {
+                console.log(data)
                 Cookies.set('user_session_token', data.user_session_token)
                 localStorage.setItem('token', data.user_session_token)
                 try {
                     setUser({
                         id: data.citizen_id,
-                        data: data.info,
+                        user_data: data.info,
                         token: data.user_session_token
                     })
                 } catch (e) {

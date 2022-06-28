@@ -7,21 +7,30 @@ import RouteContext from "../context/route/RouteContext";
 import dayjs from 'dayjs';
 import {Link} from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import UserContext from "../context/user/UserContext";
 
 
 function AuskunftForm(){
 
     const {setRoute, clearRoute} = useContext(RouteContext)
+    const {isLoggedIn, user} = useContext(UserContext)
     const navigate = useNavigate();
     const api_url = "https://rest.busradar.conterra.de/prod/";
 
     const[stops, setStops] = useState([])
     const[time, setTime] = useState(new Date())
     const[isRouteValid, setIsRouteValid] = useState(false)
+    const[homeAddress, setHomeAddress] = useState("")
 
     useEffect(()=>{
         fetchStops()
     }, [])
+
+    useEffect(()=>{
+        if(isLoggedIn && user.user_data.address !==undefined){
+            setHomeAddress(`${user.user_data.address.street} ${user.user_data.address.housenumber}, ${user.user_data.address.city_code} ${user.user_data.address.city}`)
+        }
+    }, [isLoggedIn])
 
     const fetchStops = async () => {
         const response = await fetch(api_url+ 'haltestellen')
@@ -61,7 +70,6 @@ function AuskunftForm(){
             if (status === 'OK') {
                 console.log(result)
 
-
                 const request2 = {
                     origin: departure,
                     destination: arrival,
@@ -71,7 +79,6 @@ function AuskunftForm(){
                 directionsService.route(request2, function(result2, status2) {
                     if (status2 === 'OK') {
                         console.log(result2)
-
 
                         try {
                             setRoute([{
@@ -99,7 +106,6 @@ function AuskunftForm(){
                             console.log("keine gültige Busverbindung")
                             setIsRouteValid(false)
                         }
-
                     }
                 })
             }
@@ -123,10 +129,12 @@ function AuskunftForm(){
                         <Autocomplete
                             minLength={2}
                             id="abfahrt_haltestelle"
-                            data={stops.map((stop)=> stop["name"])}
+                            //data={stops.map((stop)=> stop["name"])}
                             styles={{
                                 input: {borderRadius: 10}
                             }}
+                            data={[{value: homeAddress, group: "zuhause"},
+                            ]}
                             required
                         >
                         </Autocomplete>
@@ -176,10 +184,6 @@ function AuskunftForm(){
                             />
                     </div>
                 </div>
-
-{/*                    <button type="submit" className=" mt-6">
-                        <Link to='/ticket' className="place-self-center w-fit text-white btn-secondary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Route finden</Link>
-                    </button>*/}
                 <button id='route_button' type="submit" className="mt-6 place-self-center w-fit text-white btn-secondary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Route finden
                 </button>
             </form>

@@ -14,6 +14,7 @@ import {UserProvider} from "./context/user/UserContext";
 import Login from "./pages/Login";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Checkout from "./pages/Checkout";
+import Error from "./pages/Error";
 
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
                 <PayPalScriptProvider options={{
                     "client-id": "test",
                     components: "buttons",
-                    currency: "USD"
+                    currency: "EUR"
                 }}>
                 <Router>
                 <Navbar>
@@ -44,6 +45,7 @@ function App() {
                       <Route path='/tickets' element={<Tickets/>}/>
                       <Route path='/login' element={<Login/>}/>
                       <Route path='/checkout' element={<Checkout/>}/>
+                      <Route path='/error' element={<Error/>}/>
                   </Routes>
 
                 </Navbar>

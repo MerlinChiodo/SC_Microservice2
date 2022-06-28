@@ -1,9 +1,7 @@
 import {PayPalButtons, usePayPalScriptReducer} from "@paypal/react-paypal-js";
 import {useContext, useEffect, useState} from "react";
 import RouteContext from "../context/route/RouteContext";
-import {Select} from "@mantine/core";
 import { Ticket } from 'tabler-icons-react';
-
 
 
 const currency = "EUR";
@@ -70,8 +68,8 @@ function Checkout({ currency, showSpinner }) {
                                            style={{margin: 0, placeSelf: "center"}}
                                            strokeWidth={2}
                             />
-                            <p  className="text-xs font-medium mt-2">
-                                Preis
+                            <p  className="text-xs font-medium mt-2 text-center">
+                                {amount} €
                             </p>
                         </div>
                     </div>

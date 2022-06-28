@@ -42,19 +42,19 @@ function Navbar({ title, children }) {
                                 </li>
                                 <li>
                                     <div className='btn btn-ghost normal-case rounded-xl place-content-center' >
-                                        {!isLoggedIn && (<Login
-                                                            onClick={() => getLoginUser('http://localhost:3000/', 'http://localhost:3000/employee')}
-                                                            size={28}
-                                                            strokeWidth={1}
-                                                            color={'black'}>
-                                                        </Login>)}
+                                            {!isLoggedIn && (<Login
+                                                                onClick={() => getLoginUser(window.location.origin, `${window.location.origin}/error/`)}
+                                                                size={28}
+                                                                strokeWidth={1}
+                                                                color={'black'}>
+                                                            </Login>)}
 
                                             {isLoggedIn && (<Logout
-                                                            onClick={logout}
-                                                            size={28}
-                                                            strokeWidth={1}
-                                                            color={'black'}>
-                                                        </Logout>)}
+                                                                onClick={logout}
+                                                                size={28}
+                                                                strokeWidth={1}
+                                                                color={'black'}>
+                                                            </Logout>)}
                                     </div>
                                 </li>
                                 <li>

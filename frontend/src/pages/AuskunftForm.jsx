@@ -129,12 +129,12 @@ function AuskunftForm(){
                         <Autocomplete
                             minLength={2}
                             id="abfahrt_haltestelle"
-                            //data={stops.map((stop)=> stop["name"])}
+                            data={stops.map((stop)=> stop["name"])}
                             styles={{
                                 input: {borderRadius: 10}
                             }}
-                            data={[{value: homeAddress, group: "zuhause"},
-                            ]}
+                           /* data={[{value: homeAddress, group: "zuhause"},
+                            ]}*/
                             required
                         >
                         </Autocomplete>

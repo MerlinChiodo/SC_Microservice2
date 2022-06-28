@@ -2,6 +2,7 @@ import React, {useContext, useEffect} from 'react'
 import {Status, Wrapper} from "@googlemaps/react-wrapper";
 import AuskunftForm from "./AuskunftForm";
 import UserContext from "../context/user/UserContext";
+import Map from "./Map";
 
 function Home() {
 
@@ -21,7 +22,7 @@ function Home() {
                 <Wrapper apiKey={google_api_key} render={render}>
                     <AuskunftForm></AuskunftForm></Wrapper>
             </div>
-       {/*     <Map></Map>*/}
+            <Map></Map>
         </div>
     )
 }

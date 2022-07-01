@@ -12,6 +12,7 @@ const style = {"layout":"vertical"};
 
 function Checkout({ currency, showSpinner }) {
 
+    const email_key = process.env.REACT_APP_email_key
     const {user} = useContext(UserContext)
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
     const [validCheckout, setValidCheckout] = useState(false)
@@ -34,7 +35,7 @@ function Checkout({ currency, showSpinner }) {
                 const ticket = document.getElementById("ticket")
                 htmlToImage.toPng(ticket)
                     .then((url) => {
-                        emailjs.init('LCKjwdRD3AvI_w5KO')
+                        emailjs.init(email_key)
                         emailjs.send('gmail', 'default', {
                             name: `${user.user_data.firstname} ${user.user_data.lastname}` ,
                             qr_code: result.toString(),

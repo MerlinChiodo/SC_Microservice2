@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import InquiryItem from "./InquiryItem";
+import InquiryItem from "../components/InquiryItem";
 
 function Inquiries(){
 

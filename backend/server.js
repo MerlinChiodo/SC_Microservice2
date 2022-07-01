@@ -23,16 +23,13 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(cors())
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
 app.use(express.static(path.join(__dirname, "../frontend/build")));
-/*app.get("*", async (req, res) =>{
-    res.sendFile(path.join(__dirname, "../frontend/build/index.html"))
-})*/
 
-app.use('/', indexRouter)
+
 
 app.use('/passenger', passengerRouter)
 app.use("/info", infoRouter)
@@ -42,7 +39,12 @@ app.use("/inquiry", inquiryRouter)
 app.use("/event", eventRouter)
 
 
-
-
+app.get("*", async (req, res) =>{
+    res.sendFile(path.join(__dirname, "../frontend/build/index.html"))
+})
+/*const __dirname = path.resolve();
+app.get("*", async (req, res) =>{
+    res.sendFile(path.join(__dirname, "../frontend/build/index.html"))
+})*/
 
 module.exports = app;

@@ -5,12 +5,25 @@ function InquiryItem({item}){
 
     const [opened, setOpened] = useState(false);
 
-    const handleClick_deny = () => {
-
+    const handleClick_deny = async () => {
+        const response = await fetch(`/inquiry/denyInquiry/${item.anfrage_id}`, {
+            method: 'DELETE'
+        })
+        const data = await response.json()
+        console.log(data)
+        setOpened(false)
+        //email senden
     }
 
-    const handleClick_accept = () => {
+    const handleClick_accept = async () => {
 
+        const response = await fetch(`/inquiry/acceptInquiry/${item.anfrage_id}`, {
+            method: 'PUT'
+        })
+        const data = await response.json()
+        console.log(data)
+        setOpened(false)
+        //email senden
     }
 
 

@@ -17,7 +17,7 @@ function Checkout({ currency, showSpinner }) {
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
     const [validCheckout, setValidCheckout] = useState(false)
     const {ticket} = useContext(RouteContext)
-    //
+    //TODO: replace this
     const amount = "5";
 
     useEffect(()=>{
@@ -34,7 +34,7 @@ function Checkout({ currency, showSpinner }) {
     }
 
     const sendTicket = async () => {
-        const ticket_content = {
+       /* const ticket_content = {
             ticket_art: ticket.tarif,
             preis: Number(amount),
             abfahrt_haltestelle,
@@ -45,7 +45,7 @@ function Checkout({ currency, showSpinner }) {
             vorname,
             nachname,
             email,
-        }
+        }*/
 
        /* fetch('/ticket/addTicket', {
             method: 'POST',

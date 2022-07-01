@@ -1,6 +1,6 @@
 const prisma = require('../lib/prisma');
 
-exports.getSoldTicketsPerRoute = async(req, res, next) => {
+exports.getSoldTicketsPerRoute = async(req, res) => {
     res.send("getSoldTicketsPerRoute ");
 };
 

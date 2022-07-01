@@ -32,13 +32,13 @@ exports.getInquiry = async(req, res) => {
     try {
         const inquiry = await prisma.Anfrage.findUnique({
             where: {
-                id: inquiry_id,
+                anfrage_id: inquiry_id,
             },
         })
+        return res.status(200).json(inquiry)
     } catch (error){
         return res.status(500).send(error.message)
     }
-    return res.status(200).json(inquiry)
 }
 
 exports.createInquiry = async(req, res) => {
@@ -56,10 +56,10 @@ exports.acceptInquiry = async(req, res) => {
     try {
         const inquiry = await prisma.Anfrage.update({
             where: {
-                id: inquiry_id,
+                anfrage_id: inquiry_id,
             },
             data: {
-                bearbeitet:true
+                bearbeitet : true
             }
         })
 
@@ -82,7 +82,7 @@ exports.denyInquiry = async(req, res) => {
     try {
         const inquiry = await prisma.Anfrage.delete({
             where: {
-                id: inquiry_id,
+                anfrage_id: inquiry_id,
             },
         })
         return res.status(200).json(inquiry)

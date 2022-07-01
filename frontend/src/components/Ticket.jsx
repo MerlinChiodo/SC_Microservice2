@@ -1,5 +1,5 @@
 import { ShoppingCart } from 'tabler-icons-react';
-import { ChevronRight } from 'tabler-icons-react';
+
 import {Select} from "@mantine/core";
 import {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
@@ -20,6 +20,7 @@ function Ticket({children, routeItem, index}){
         })
         navigate('/login')
     }
+
 
 
     return(

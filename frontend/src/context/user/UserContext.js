@@ -9,6 +9,7 @@ export const UserProvider = ({children}) => {
     const [user, setUser] = useState({})
     const [isLoggedIn, setLoggedIn] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [isAdmin, setAdmin] = useState(false)
 
     useEffect(()=> {
         verifyUser()
@@ -56,6 +57,7 @@ export const UserProvider = ({children}) => {
         localStorage.removeItem("token")
         setUser({})
         setLoggedIn(false)
+        setAdmin(false)
     }
 
 

@@ -28,7 +28,7 @@ function Inquiries(){
     ) : (
         <div className="container mx-auto">
             {items.map((item) => (
-                <InquiryItem item={item}></InquiryItem>
+                <InquiryItem item={item} key={item.anfrage_id}></InquiryItem>
             ))}
 
         </div>

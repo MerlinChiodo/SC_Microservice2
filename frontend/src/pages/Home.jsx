@@ -1,7 +1,6 @@
-import React, {useContext, useEffect} from 'react'
+import React from 'react'
 import {Status, Wrapper} from "@googlemaps/react-wrapper";
 import AuskunftForm from "./AuskunftForm";
-import UserContext from "../context/user/UserContext";
 import Map from "./Map";
 
 function Home() {

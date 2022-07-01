@@ -8,9 +8,9 @@ function Login() {
     const navigate = useNavigate()
     const {isLoggedIn, getLoginUser} = useContext(UserContext)
 
+    //TODO: enable checkout without smartcity login
     const handleSubmit = (e) =>{
         e.preventDefault()
-
         navigate('/checkout')
     }
 

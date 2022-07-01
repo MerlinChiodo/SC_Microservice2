@@ -99,8 +99,8 @@ function InquiryItem({item}){
                     </ul>
                 </div>
                 <div className="flex mt-6 place-content-around">
-                    <button className="btn btn-sm btn-outline" onClick={handleClick_deny}>Ablehnen </button>
-                    <button className="btn btn-sm btn-outline btn-success" onClick={handleClick_accept}>Annehmen</button>
+                    <button className="btn btn-sm btn-outline rounded-sm" onClick={handleClick_deny}>Ablehnen </button>
+                    <button className="btn btn-sm btn-outline btn-success rounded-sm" onClick={handleClick_accept}>Annehmen</button>
                 </div>
             </Modal>
 

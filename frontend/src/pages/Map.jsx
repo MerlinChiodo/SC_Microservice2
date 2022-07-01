@@ -3,8 +3,7 @@ import React, {useRef, useState} from 'react'
 import mapboxgl from '!mapbox-gl';
 import {useEffect} from "react";
 import * as turf from "@turf/turf";
-import AuskunftForm from "./AuskunftForm";
-import { Wrapper, Status } from "@googlemaps/react-wrapper";
+
 
 function Map() {
 
@@ -45,8 +44,6 @@ function Map() {
             setLng(map.current.getCenter().lng.toFixed(4));
             setLat(map.current.getCenter().lat.toFixed(4));
             setZoom(map.current.getZoom().toFixed(2));
-
-
         });
     });
 

@@ -1,11 +1,12 @@
 import Ticket from "../components/Ticket";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import RouteContext from "../context/route/RouteContext";
 
 
 function DisplayTickets() {
 
-    const {route} = useContext(RouteContext)
+    const {route, setRoute} = useContext(RouteContext)
+
 
     return(
         <div className="container mx-auto p-6 bg-base-100">

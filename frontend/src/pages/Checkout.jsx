@@ -17,7 +17,12 @@ function Checkout({ currency, showSpinner }) {
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
     const [validCheckout, setValidCheckout] = useState(false)
     const {ticket} = useContext(RouteContext)
+    //
     const amount = "5";
+
+    useEffect(()=>{
+        console.log(ticket)
+    }, [])
 
     const create_qrcode = async () =>{
         const qrcode_url = window.location.origin
@@ -28,8 +33,35 @@ function Checkout({ currency, showSpinner }) {
         }
     }
 
-    function sendEmail() {
+    const sendTicket = async () => {
+        const ticket_content = {
+            ticket_art: ticket.tarif,
+            preis: Number(amount),
+            abfahrt_haltestelle,
+            abfahrt_zeit,
+            ankunft_haltestelle,
+            ankunft_zeit,
+            busreisende_id,
+            vorname,
+            nachname,
+            email,
+        }
 
+       /* fetch('/ticket/addTicket', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(ticket_content)
+        }).then(async (response) => {
+            if (response.ok) {
+                let result = await response.json();
+                console.log(result)
+            }
+        }).catch(error => {
+            console.error(error);
+        })*/
+    }
+
+    function sendEmail() {
         create_qrcode()
             .then((result) => {
                 const ticket = document.getElementById("ticket")
@@ -150,10 +182,13 @@ function Checkout({ currency, showSpinner }) {
                 onApprove={function (data, actions) {
                     return actions.order.capture().then(function () {
                         setValidCheckout(true)
+                        console.log("valid checkout")
+
                     });
                 }}
                 onCancel={function (data, actions) {
-                    return setValidCheckout(false)
+                    setValidCheckout(false)
+                    console.log("invalid checkout")
                 }}
             />
             </div>

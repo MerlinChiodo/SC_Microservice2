@@ -7,25 +7,30 @@ const RouteContext = createContext()
 export const RouteProvider = ({children}) => {
 
 
-    const [departure_date, setDeparture_date] = useState(new Date())
-    const [departure_time, setDeparture_time] = useState("")
-    const [route, setRoute] = useState([{}])
-    const [ticket, setTicket] = useState({})
+    const [route, setRoute] = useState(JSON.parse(localStorage.getItem('routes')) || [{}])
+    const [ticket, setTicket] = useState(JSON.parse(localStorage.getItem('ticket')) || {})
+
 
     function clearRoute() {
+        localStorage.removeItem('routes')
         setRoute([{}])
     }
+
+    function clearTicket(){
+        localStorage.removeItem('ticket')
+        setTicket({})
+    }
+
 
     return (
                 <RouteContext.Provider
                     value={{
-                        departure_date,
-                        departure_time,
                         route,
                         setRoute,
                         ticket,
                         setTicket,
-                        clearRoute
+                        clearRoute,
+                        clearTicket
                     }}>
                     {children}
                 </RouteContext.Provider>

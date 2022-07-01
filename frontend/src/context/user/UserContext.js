@@ -35,7 +35,6 @@ export const UserProvider = ({children}) => {
             const data = await res.json()
             if(res.ok) {
                 console.log(data)
-                Cookies.set('user_session_token', data.user_session_token)
                 localStorage.setItem('token', data.user_session_token)
                 try {
                     setUser({
@@ -52,8 +51,6 @@ export const UserProvider = ({children}) => {
     }
 
     const logout = () => {
-        Cookies.remove('user_session_token', { path: '/', domain: 'localhost' });
-        Cookies.remove('user_session_token', { path: '/', domain: 'smartcityproject.net' });
         localStorage.removeItem("token")
         setUser({})
         setLoggedIn(false)

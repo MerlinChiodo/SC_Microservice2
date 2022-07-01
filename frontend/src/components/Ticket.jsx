@@ -1,7 +1,7 @@
 import { ShoppingCart } from 'tabler-icons-react';
 
 import {Select} from "@mantine/core";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import RouteContext from "../context/route/RouteContext";
 
@@ -13,11 +13,13 @@ function Ticket({children, routeItem, index}){
     const {setTicket, route, ticket} = useContext(RouteContext)
     const [tarif, setTarif] = useState('Einzelfahrt')
 
+
     const handleClick = () => {
-        setTicket({
+        localStorage.setItem('ticket',JSON.stringify({
             tripInfo: route[index],
             tarif: tarif
-        })
+        }))
+        setTicket(JSON.parse(localStorage.getItem('ticket')))
         navigate('/login')
     }
 

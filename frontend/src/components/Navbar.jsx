@@ -39,7 +39,7 @@ function Navbar({ title, children }) {
                                 </li>
 
                                 <li>
-                                    {isAdminLoggedIn && (<Link to='/employee' className="btn btn-ghost normal-case rounded-xl">
+                                    {(<Link to='/employee' className="btn btn-ghost normal-case rounded-xl">
                                         Mitarbeiter
                                     </Link>)}
                                 </li>

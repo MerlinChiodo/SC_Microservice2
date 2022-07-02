@@ -2,9 +2,12 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Logout} from "tabler-icons-react";
 import UserContext from "../context/user/UserContext";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import { Key } from 'tabler-icons-react';
 import { KeyOff } from 'tabler-icons-react';
+import { ShoppingCart } from 'tabler-icons-react';
+import {Drawer} from "@mantine/core";
+import RouteContext from "../context/route/RouteContext";
 
 
 
@@ -13,8 +16,10 @@ function Navbar({ title, children }) {
 
     const {getLoginUser, logout, isLoggedIn, isAdminLoggedIn, logoutAdmin, getLoginAdmin} = useContext(UserContext)
 
+
     return (
-            <div className="drawer ">
+        <>
+        <div className="drawer ">
                 <input id="my-drawer-3" type="checkbox" className="drawer-toggle"/>
                 <div className="drawer-content flex flex-col">
                     <div className="w-full navbar bg-base-300 sticky top-0 z-40">
@@ -37,13 +42,7 @@ function Navbar({ title, children }) {
                                         Tickets
                                     </Link>
                                 </li>
-
-                                <li>
-                                    {(<Link to='/employee' className="btn btn-ghost normal-case rounded-xl">
-                                        Mitarbeiter
-                                    </Link>)}
-                                </li>
-                                <li>
+                                {!isAdminLoggedIn && (<li>
                                     <div className='btn btn-ghost normal-case rounded-xl place-content-center' >
                                             {!isLoggedIn && (<Login
                                                                 onClick={() => getLoginUser(window.location.origin, `${window.location.origin}/error/`)}
@@ -59,27 +58,19 @@ function Navbar({ title, children }) {
                                                                 color={'black'}>
                                                             </Logout>)}
                                     </div>
-                                </li>
-                                <li>
+                                </li>)}
+                                { !isLoggedIn && (<li>
                                     <div className='btn btn-ghost normal-case rounded-xl place-content-center' >
-                                        {!isAdminLoggedIn &&(<Key
-                                            onClick={() => getLoginAdmin(`${window.location.origin}/employee/`, `${window.location.origin}/error/`)}
-                                            size={28}
-                                            strokeWidth={1}
-                                        ></Key>)}
-
                                         {isAdminLoggedIn && (<KeyOff
-                                            onClick={logoutAdmin}
+                                            onClick={() => {
+                                                logoutAdmin()
+                                                window.location.href = window.location.origin
+                                            }}
                                             size={28}
                                             strokeWidth={1}>
                                         </KeyOff>)}
                                     </div>
-                                </li>
-                                <li>
-                                    <a className='btn btn-ghost normal-case rounded-xl place-content-center' href='http://www.supersmartcity.de/'>
-                                        Landingpage
-                                    </a>
-                                </li>
+                                </li>)}
                             </ul>
                         </div>
                     </div>
@@ -108,6 +99,7 @@ function Navbar({ title, children }) {
 
                 </div>
             </div>
+        </>
 )
 }
 

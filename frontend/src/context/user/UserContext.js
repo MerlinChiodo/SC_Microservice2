@@ -12,13 +12,14 @@ export const UserProvider = ({children}) => {
     const [isAdminLoggedIn, setAdminLoggedIn] = useState(false)
     const [admin, setAdmin] = useState({})
 
+
     useEffect(()=> {
         let params = (new URL(document.location)).searchParams;
         const tokenUrl = params.get('token');
         if (tokenUrl !== null) {
             verifyUser(tokenUrl)
         }
-        const tokenCookie = Cookies.get('user_session_token');
+        const tokenCookie = Cookies.get('user_token');
         if (tokenCookie !== undefined) {
             verifyUser(tokenCookie)
         }
@@ -26,16 +27,16 @@ export const UserProvider = ({children}) => {
 
     useEffect(()=> {
         let params = (new URL(document.location)).searchParams;
+        console.log(params)
         const tokenUrl = params.get('token');
         if (tokenUrl !== null) {
             verifyAdmin(tokenUrl)
         }
-        const tokenCookie = Cookies.get('employee_session_token');
+        const tokenCookie = Cookies.get('employee_token');
         if (tokenCookie !== undefined) {
             verifyAdmin(tokenCookie)
         }
     },[setAdminLoggedIn])
-
 
     const getLoginUser = async (redirect_success, redirect_error) => {
         window.location.replace(`http://www.supersmartcity.de:9760/external?redirect_success=${redirect_success}&redirect_error=${redirect_error}`)
@@ -55,19 +56,18 @@ export const UserProvider = ({children}) => {
             })
         const data = await res.json()
         if(res.ok) {
+
             console.log(data)
-            Cookies.set('employee_session_token', data.employee_session_token)
-            localStorage.setItem('employee_token', data.employee_session_token)
+            Cookies.set('employee_token', data.employee_session_token)
             setAdminLoggedIn(true)
             try {
                 setAdmin({
-                   /* id: data.,
-                    admin_data: data.info,*/
                     token: data.employee_session_token
                 })
             } catch (e) {
                 console.log(e)
             }
+            logout()
         }
     }
 
@@ -83,8 +83,7 @@ export const UserProvider = ({children}) => {
             const data = await res.json()
             if(res.ok) {
                 console.log(data)
-                Cookies.set('user_session_token', data.user_session_token)
-                localStorage.setItem('token', data.user_session_token)
+                Cookies.set('user_token', data.user_session_token)
                 setLoggedIn(true)
                 try {
                     setUser({
@@ -95,17 +94,18 @@ export const UserProvider = ({children}) => {
                 } catch (e) {
                     console.log(e)
                 }
+                logoutAdmin()
             }
         }
 
 
     const logout = () => {
-        localStorage.removeItem("token")
+        Cookies.remove('user_token')
         setUser({})
         setLoggedIn(false)
     }
     const logoutAdmin = ()=>{
-        localStorage.removeItem('employee_token')
+        Cookies.remove('employee_token')
         setAdmin({})
         setAdminLoggedIn(false)
     }

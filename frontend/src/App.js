@@ -16,6 +16,7 @@ import { PayPalScriptProvider} from "@paypal/react-paypal-js";
 import Checkout from "./pages/Checkout";
 import Error from "./pages/Error";
 import {NotificationsProvider} from "@mantine/notifications";
+import Footer from "./components/Footer";
 
 
 function App() {
@@ -51,7 +52,10 @@ function App() {
                   </Routes>
 
                 </Navbar>
+                    <Footer></Footer>
                 </Router>
+
+
                 </PayPalScriptProvider>
             </UserProvider>
         </RouteProvider>

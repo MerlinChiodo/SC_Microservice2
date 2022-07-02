@@ -2,6 +2,16 @@
 # node:alpine is a slim Node installed linux vm
 FROM node:16-alpine
 
+#GET ENVS
+ARG REACT_APP_mapbox_key
+ENV REACT_APP_mapbox_key=${REACT_APP_mapbox_key}
+
+ARG REACT_APP_google_key
+ENV REACT_APP_google_key=${REACT_APP_google_key}
+
+ARG REACT_APP_email_key
+ENV REACT_APP_email_key=${REACT_APP_email_key}
+
 # Create an application directories
 RUN mkdir -p /app/frontend
 RUN mkdir -p /app/backend

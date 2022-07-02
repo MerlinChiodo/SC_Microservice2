@@ -13,7 +13,8 @@ function DisplayTickets() {
     const [routesEdit, setRoutesEdit] = useState(false)
 
     useEffect(()=>{
-        console.log("neue Routen")
+        //TODO: remove debug logs
+        console.log("neue Route")
     },[setRoute])
 
     const google_api_key = process.env.REACT_APP_google_key;
@@ -43,7 +44,7 @@ function DisplayTickets() {
                 const newRoute = {
                     departure_coords: route[0].departure_coords,
                     arrival_coords: route[0].arrival_coords,
-                    departure_date: result.routes[0].legs[0].departure_time.departure_date,
+                    departure_date: result.routes[0].legs[0].departure_time.value,
                     departure_station: result.routes[0].legs[0].start_address.split(",")[0],
                     arrival_station: result.routes[0].legs[0].end_address.split(",")[0],
                     departureTime: result.routes[0].legs[0].departure_time.text,

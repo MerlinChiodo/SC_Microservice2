@@ -1,9 +1,12 @@
 import React, {useState} from 'react'
 import {Modal} from "@mantine/core";
+import emailjs from "emailjs-com";
+import {create_qrcode, sendEmail} from "../controllers/emailController";
 
 function InquiryItem({item}){
 
     const [opened, setOpened] = useState(false);
+    const email_key = process.env.REACT_APP_email_key
 
     const handleClick_deny = async () => {
         const response = await fetch(`/inquiry/denyInquiry/${item.anfrage_id}`, {
@@ -24,8 +27,23 @@ function InquiryItem({item}){
         console.log(data)
         setOpened(false)
         //email senden
+        create_qrcode(`${window.location.origin}/inquiry/getInquiry/${item.anfrage_id}`)
+            .then((qrCode) => {
+                sendEmail('inquiry', {
+                    ticket_art: item.ticket.ticket_art,
+                    institution: item.institution,
+                    verantwortlicher: item.verantwortlicher,
+                    anzahl_passagiere: item.anzahlPassagiere,
+                    geltungstag: item.ticket.geltungstag,
+                    preis: item.preis,
+                    to_email: item.verantwortlicher,
+                    qr_code: qrCode.toString()
+                })
+            })
+            .catch(err => {
+                console.error(err)
+            })
     }
-
 
 
     return(

@@ -1,5 +1,5 @@
 import React from 'react'
-import {postEvent} from "../eventController";
+import {postEvent} from "../controllers/eventController";
 
 
 function AboutUsForm() {

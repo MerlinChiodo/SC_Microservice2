@@ -1,6 +1,6 @@
 import React from 'react'
 import {useState} from "react";
-import {postEvent} from "../eventController";
+import {postEvent} from "../controllers/eventController";
 import {useForm, zodResolver} from "@mantine/form";
 import {z} from "zod";
 

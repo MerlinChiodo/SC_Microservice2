@@ -2,17 +2,16 @@ import {PayPalButtons, usePayPalScriptReducer} from "@paypal/react-paypal-js";
 import {useContext, useEffect, useState} from "react";
 import RouteContext from "../context/route/RouteContext";
 import { Ticket } from 'tabler-icons-react';
-import emailjs from 'emailjs-com';
-import QRCode from 'qrcode'
 import UserContext from "../context/user/UserContext";
 import * as htmlToImage from 'html-to-image';
+import {create_qrcode, sendEmail} from "../controllers/emailController";
 
+//TODO: remove this
 const currency = "EUR";
 const style = {"layout":"vertical"};
 
 function Checkout({ currency, showSpinner }) {
 
-    const email_key = process.env.REACT_APP_email_key
     const {user} = useContext(UserContext)
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
     const [validCheckout, setValidCheckout] = useState(false)
@@ -20,34 +19,28 @@ function Checkout({ currency, showSpinner }) {
     //TODO: replace this
     const amount = "5";
 
+    //TODO: remove debug logs
     useEffect(()=>{
         console.log(ticket)
+        console.log(user)
     }, [])
 
-    const create_qrcode = async () =>{
-        const qrcode_url = window.location.origin
-        try {
-            return (await QRCode.toDataURL(qrcode_url))
-        } catch (err) {
-            console.error(err)
-        }
-    }
 
-    const sendTicket = async () => {
-       /* const ticket_content = {
+    const createTicket = async () => {
+        const ticket_content = {
             ticket_art: ticket.tarif,
             preis: Number(amount),
-            abfahrt_haltestelle,
-            abfahrt_zeit,
-            ankunft_haltestelle,
-            ankunft_zeit,
-            busreisende_id,
-            vorname,
-            nachname,
-            email,
-        }*/
+            abfahrt_haltestelle: ticket.tripInfo.departure_station,
+            abfahrt_zeit: ticket.tripInfo.departureTime,
+            ankunft_haltestelle: ticket.tripInfo.arrival_station,
+            ankunft_zeit: ticket.tripInfo.arrivalTime,
+            busreisende_id: user.id,
+            vorname: user.user_data.firstname,
+            nachname: user.user_data.lastname,
+            email: user.user_data.email
+        }
 
-       /* fetch('/ticket/addTicket', {
+        fetch('/ticket/addTicket', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(ticket_content)
@@ -58,27 +51,21 @@ function Checkout({ currency, showSpinner }) {
             }
         }).catch(error => {
             console.error(error);
-        })*/
+        })
     }
 
-    function sendEmail() {
-        create_qrcode()
-            .then((result) => {
+    function sendMail() {
+        create_qrcode(window.location.origin)
+            .then((qrCode) => {
                 const ticket = document.getElementById("ticket")
                 htmlToImage.toPng(ticket)
-                    .then((url) => {
-                        emailjs.init(email_key)
-                        emailjs.send('gmail', 'default', {
-                            name: `${user.user_data.firstname} ${user.user_data.lastname}` ,
-                            qr_code: result.toString(),
-                            ticket: url,
-                            to_email: user.user_data.email
-                        })
-                            .then((result) => {
-                                console.log(result.text);
-                            }, (error) => {
-                                console.log(error.text);
-                            });
+                    .then((ticket_image) => {
+                    sendEmail('default', {
+                        sendname: `${user.user_data.firstname} ${user.user_data.lastname}` ,
+                        qr_code: qrCode.toString(),
+                        ticket: ticket_image,
+                        to_email: user.user_data.email
+                    })
                     })
                     .catch(err => {
                         console.error(err)
@@ -101,7 +88,6 @@ function Checkout({ currency, showSpinner }) {
 
     return (
         <div className="container mx-auto m-6">
-            <button className="btn btn-primary" onClick={sendEmail}>Send Email</button>
             <div className="flex text-lg breadcrumbs place-content-center">
                 <ul>
                     <li >Ticket auswählen</li>
@@ -182,10 +168,14 @@ function Checkout({ currency, showSpinner }) {
                 onApprove={function (data, actions) {
                     return actions.order.capture().then(function () {
                         setValidCheckout(true)
-                        console.log("valid checkout")
-
+                        createTicket().then((response)=>{
+                            sendMail()
+                        }).catch(err =>{
+                            console.log(err)
+                        })
                     });
                 }}
+
                 onCancel={function (data, actions) {
                     setValidCheckout(false)
                     console.log("invalid checkout")

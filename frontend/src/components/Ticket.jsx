@@ -10,7 +10,7 @@ import RouteContext from "../context/route/RouteContext";
 function Ticket({children, routeItem, index}){
 
     const navigate = useNavigate()
-    const {setTicket, route, ticket} = useContext(RouteContext)
+    const {setTicket, route, ticket, setCart_opened} = useContext(RouteContext)
     const [tarif, setTarif] = useState('Einzelfahrt')
 
 
@@ -20,6 +20,7 @@ function Ticket({children, routeItem, index}){
             tarif: tarif
         }))
         setTicket(JSON.parse(localStorage.getItem('ticket')))
+        setCart_opened(true)
         navigate('/login')
     }
 

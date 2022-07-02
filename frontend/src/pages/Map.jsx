@@ -7,8 +7,6 @@ import * as turf from "@turf/turf";
 
 function Map() {
 
-
-
     const websocket_url = "wss://websocket.busradar.conterra.de";
     const api_url = "https://rest.busradar.conterra.de/prod/";
     mapboxgl.accessToken = process.env.REACT_APP_mapbox_key

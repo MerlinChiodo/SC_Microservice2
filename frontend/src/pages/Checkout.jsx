@@ -16,13 +16,13 @@ function Checkout({ currency, showSpinner }) {
     const {user} = useContext(UserContext)
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
     const [validCheckout, setValidCheckout] = useState(false)
-    const {ticket} = useContext(RouteContext)
+    const {tickets} = useContext(RouteContext)
     //TODO: replace this
     const amount = "5";
 
     //TODO: remove debug logs
     useEffect(()=>{
-        console.log(ticket)
+        console.log(tickets)
         console.log(user)
     }, [])
 

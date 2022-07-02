@@ -4,13 +4,14 @@ import {Login, Logout} from "tabler-icons-react";
 import UserContext from "../context/user/UserContext";
 import {useContext} from "react";
 import { Key } from 'tabler-icons-react';
+import { KeyOff } from 'tabler-icons-react';
 
 
 
 function Navbar({ title, children }) {
 
 
-    const {getLoginUser, logout, isLoggedIn, isAdminLoggedIn} = useContext(UserContext)
+    const {getLoginUser, logout, isLoggedIn, isAdminLoggedIn, logoutAdmin, getLoginAdmin} = useContext(UserContext)
 
     return (
             <div className="drawer ">
@@ -38,9 +39,9 @@ function Navbar({ title, children }) {
                                 </li>
 
                                 <li>
-                                    <Link to='/employee' className="btn btn-ghost normal-case rounded-xl">
+                                    {isAdminLoggedIn && (<Link to='/employee' className="btn btn-ghost normal-case rounded-xl">
                                         Mitarbeiter
-                                    </Link>
+                                    </Link>)}
                                 </li>
                                 <li>
                                     <div className='btn btn-ghost normal-case rounded-xl place-content-center' >
@@ -61,11 +62,17 @@ function Navbar({ title, children }) {
                                 </li>
                                 <li>
                                     <div className='btn btn-ghost normal-case rounded-xl place-content-center' >
-                                        {(<Key
-                                            /*onClick={}*/
+                                        {!isAdminLoggedIn &&(<Key
+                                            onClick={() => getLoginAdmin(`${window.location.origin}/employee/`, `${window.location.origin}/error/`)}
                                             size={28}
                                             strokeWidth={1}
                                         ></Key>)}
+
+                                        {isAdminLoggedIn && (<KeyOff
+                                            onClick={logoutAdmin}
+                                            size={28}
+                                            strokeWidth={1}>
+                                        </KeyOff>)}
                                     </div>
                                 </li>
                                 <li>

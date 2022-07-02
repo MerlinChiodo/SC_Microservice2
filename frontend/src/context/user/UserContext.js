@@ -22,18 +22,54 @@ export const UserProvider = ({children}) => {
         if (tokenCookie !== undefined) {
             verifyUser(tokenCookie)
         }
-
-
     },[setLoggedIn])
 
     useEffect(()=> {
-       /* verifyAdmin()*/
+        let params = (new URL(document.location)).searchParams;
+        const tokenUrl = params.get('token');
+        if (tokenUrl !== null) {
+            verifyAdmin(tokenUrl)
+        }
+        const tokenCookie = Cookies.get('employee_session_token');
+        if (tokenCookie !== undefined) {
+            verifyAdmin(tokenCookie)
+        }
     },[setAdminLoggedIn])
 
 
     const getLoginUser = async (redirect_success, redirect_error) => {
         window.location.replace(`http://www.supersmartcity.de:9760/external?redirect_success=${redirect_success}&redirect_error=${redirect_error}`)
     };
+
+    const getLoginAdmin = async(redirect_success, redirect_error) => {
+        window.location.replace(`http://www.supersmartcity.de:9760/employee/external?redirect_success=${redirect_success}&redirect_error=${redirect_error}`)
+    };
+
+    const verifyAdmin = async (token) => {
+        setLoading(true)
+        const res = await fetch('http://www.supersmartcity.de:9760/employee/verify',
+            {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: encodeURIComponent("code") + "=" + encodeURIComponent(token),
+            })
+        const data = await res.json()
+        if(res.ok) {
+            console.log(data)
+            Cookies.set('employee_session_token', data.employee_session_token)
+            localStorage.setItem('employee_token', data.employee_session_token)
+            setAdminLoggedIn(true)
+            try {
+                setAdmin({
+                   /* id: data.,
+                    admin_data: data.info,*/
+                    token: data.employee_session_token
+                })
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    }
 
 
     const verifyUser = async (token) => {
@@ -68,6 +104,11 @@ export const UserProvider = ({children}) => {
         setUser({})
         setLoggedIn(false)
     }
+    const logoutAdmin = ()=>{
+        localStorage.removeItem('employee_token')
+        setAdmin({})
+        setAdminLoggedIn(false)
+    }
 
 
 return (
@@ -78,7 +119,9 @@ return (
             loading,
             verifyUser,
             getLoginUser,
+            getLoginAdmin,
             logout,
+            logoutAdmin,
             isAdminLoggedIn,
             admin
         }}>

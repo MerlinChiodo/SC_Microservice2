@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {Modal} from "@mantine/core";
 import emailjs from "emailjs-com";
 import {create_qrcode, sendEmail} from "../controllers/emailController";
+import {showNotification} from "@mantine/notifications";
 
 function InquiryItem({item}){
 
@@ -38,6 +39,10 @@ function InquiryItem({item}){
                     preis: item.preis,
                     to_email: item.verantwortlicher,
                     qr_code: qrCode.toString()
+                })
+                showNotification({
+                    title: 'Email versendet',
+                    message: 'Eine Email mit deinem Ticket wurde versendet',
                 })
             })
             .catch(err => {

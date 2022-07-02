@@ -15,10 +15,12 @@ import Login from "./pages/Login";
 import { PayPalScriptProvider} from "@paypal/react-paypal-js";
 import Checkout from "./pages/Checkout";
 import Error from "./pages/Error";
+import {NotificationsProvider} from "@mantine/notifications";
 
 
 function App() {
     return (
+        <NotificationsProvider>
         <RouteProvider>
             <UserProvider>
 
@@ -53,6 +55,7 @@ function App() {
                 </PayPalScriptProvider>
             </UserProvider>
         </RouteProvider>
+        </NotificationsProvider>
 
   )
 }

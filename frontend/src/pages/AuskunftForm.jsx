@@ -7,6 +7,7 @@ import RouteContext from "../context/route/RouteContext";
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import UserContext from "../context/user/UserContext";
+import {showNotification} from "@mantine/notifications";
 
 
 function AuskunftForm(){
@@ -87,8 +88,11 @@ function AuskunftForm(){
                     setIsRouteValid(true)
                     navigate("/ticket")
                 } catch (e) {
-                    console.log("keine gültige Busverbindung")
                     setIsRouteValid(false)
+                    showNotification({
+                        title: 'Keine gültige Busverbindung',
+                        message: 'Für diese Bushaltestellen gibt es keine gültige Verbindung',
+                    })
                 }
             }
         })

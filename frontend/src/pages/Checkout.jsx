@@ -5,6 +5,7 @@ import { Ticket } from 'tabler-icons-react';
 import UserContext from "../context/user/UserContext";
 import * as htmlToImage from 'html-to-image';
 import {create_qrcode, sendEmail} from "../controllers/emailController";
+import {showNotification} from "@mantine/notifications";
 
 //TODO: remove this
 const currency = "EUR";
@@ -171,6 +172,11 @@ function Checkout({ currency, showSpinner }) {
                         createTicket().then((response)=>{
                             sendMail()
 
+                            showNotification({
+                                title: 'Email versendet',
+                                message: 'Eine Email mit deinem Ticket wurde versendet',
+                            })
+
                         }).catch(err =>{
                             console.log(err)
                         })
@@ -180,6 +186,10 @@ function Checkout({ currency, showSpinner }) {
                 onCancel={function (data, actions) {
                     setValidCheckout(false)
                     console.log("invalid checkout")
+                    showNotification({
+                        title: 'Zahlungsvorgang abgebrochen',
+                        message: '',
+                    })
                 }}
             />
             </div>

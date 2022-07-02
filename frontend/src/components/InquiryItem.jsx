@@ -6,7 +6,7 @@ import {create_qrcode, sendEmail} from "../controllers/emailController";
 function InquiryItem({item}){
 
     const [opened, setOpened] = useState(false);
-    const email_key = process.env.REACT_APP_email_key
+
 
     const handleClick_deny = async () => {
         const response = await fetch(`/inquiry/denyInquiry/${item.anfrage_id}`, {

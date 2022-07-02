@@ -61,7 +61,7 @@ function Checkout({ currency, showSpinner }) {
                 htmlToImage.toPng(ticket)
                     .then((ticket_image) => {
                     sendEmail('default', {
-                        sendname: `${user.user_data.firstname} ${user.user_data.lastname}` ,
+                        name: `${user.user_data.firstname} ${user.user_data.lastname}` ,
                         qr_code: qrCode.toString(),
                         ticket: ticket_image,
                         to_email: user.user_data.email
@@ -170,6 +170,7 @@ function Checkout({ currency, showSpinner }) {
                         setValidCheckout(true)
                         createTicket().then((response)=>{
                             sendMail()
+
                         }).catch(err =>{
                             console.log(err)
                         })

@@ -3,12 +3,14 @@ import PropTypes from 'prop-types'
 import {Login, Logout} from "tabler-icons-react";
 import UserContext from "../context/user/UserContext";
 import {useContext} from "react";
+import { Key } from 'tabler-icons-react';
+
 
 
 function Navbar({ title, children }) {
 
 
-    const {getLoginUser, logout, isLoggedIn} = useContext(UserContext)
+    const {getLoginUser, logout, isLoggedIn, isAdminLoggedIn} = useContext(UserContext)
 
     return (
             <div className="drawer ">
@@ -55,6 +57,15 @@ function Navbar({ title, children }) {
                                                                 strokeWidth={1}
                                                                 color={'black'}>
                                                             </Logout>)}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div className='btn btn-ghost normal-case rounded-xl place-content-center' >
+                                        {(<Key
+                                            /*onClick={}*/
+                                            size={28}
+                                            strokeWidth={1}
+                                        ></Key>)}
                                     </div>
                                 </li>
                                 <li>

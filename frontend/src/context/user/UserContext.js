@@ -9,11 +9,16 @@ export const UserProvider = ({children}) => {
     const [user, setUser] = useState({})
     const [isLoggedIn, setLoggedIn] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [isAdmin, setAdmin] = useState(false)
+    const [isAdminLoggedIn, setAdminLoggedIn] = useState(false)
+    const [admin, setAdmin] = useState({})
 
     useEffect(()=> {
         verifyUser()
     },[setLoggedIn])
+
+    useEffect(()=> {
+       /* verifyAdmin()*/
+    },[setAdminLoggedIn])
 
 
     const getLoginUser = async (redirect_success, redirect_error) => {
@@ -54,7 +59,6 @@ export const UserProvider = ({children}) => {
         localStorage.removeItem("token")
         setUser({})
         setLoggedIn(false)
-        setAdmin(false)
     }
 
 
@@ -66,7 +70,9 @@ return (
             loading,
             verifyUser,
             getLoginUser,
-            logout
+            logout,
+            isAdminLoggedIn,
+            admin
         }}>
         {children}
     </UserContext.Provider>)

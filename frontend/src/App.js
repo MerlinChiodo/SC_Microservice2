@@ -12,7 +12,7 @@ import DisplayTickets from "./pages/DisplayTickets";
 import Tickets from "./pages/Tickets";
 import {UserProvider} from "./context/user/UserContext";
 import Login from "./pages/Login";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { PayPalScriptProvider} from "@paypal/react-paypal-js";
 import Checkout from "./pages/Checkout";
 import Error from "./pages/Error";
 

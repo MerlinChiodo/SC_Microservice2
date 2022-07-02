@@ -32,9 +32,9 @@ function Login() {
                         <p className="py-6"></p>
                     </div>
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                        <div className="card-title mx-auto mt-6">In der Smartcity anmelden </div>
+                        <div className="card-title mx-auto mt-6">In der Smartcity anmelden</div>
                         <div className="card-body">
-
+                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet</p>
                         </div>
                     </div>
                 </div>

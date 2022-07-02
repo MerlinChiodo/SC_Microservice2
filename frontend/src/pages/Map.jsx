@@ -49,6 +49,7 @@ function Map() {
 
 
     useEffect(() => {
+        //TODO: useRef für WebSocket
         webSocket = new WebSocket(websocket_url)
         setupWebsocket();
         getCurrentVehicles();

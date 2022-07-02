@@ -23,7 +23,6 @@ function Inquiries(){
     return isLoading ? (
         <>
             <h1 className="font-medium leading-tight text-2xl p-6 text-center">Loading...</h1>
-            <InquiryItem item={{ticket : {ticket_art: 'GRUPPENTICKET'}}}></InquiryItem>
         </>
     ) : (
         <div className="container mx-auto">

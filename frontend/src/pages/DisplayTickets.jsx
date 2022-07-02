@@ -10,7 +10,7 @@ import dayjs from 'dayjs';
 function DisplayTickets() {
 
     const {route, setRoute} = useContext(RouteContext)
-    const [routesEdit, setRoutesEdit] = useState(false)
+
 
     useEffect(()=>{
         //TODO: remove debug logs
@@ -25,7 +25,7 @@ function DisplayTickets() {
         return null;
     };
 
-    function calculateRoute(){
+    function addLaterRoute(){
 
         const directionsService = new window.google.maps.DirectionsService();
         const departure = new window.google.maps.LatLng(route[0].departure_coords[1], route[0].departure_coords[0]);
@@ -80,7 +80,7 @@ function DisplayTickets() {
                 <Ticket routeItem={routeItem} index={index}>
                 </Ticket>
             ))}
-            <button className="btn btn-accent m-6 rounded-lg" onClick={calculateRoute}>Spätere Route</button>
+            <button className="btn btn-accent m-6 rounded-lg" onClick={addLaterRoute}>Spätere Route</button>
 
         </div>
     </Wrapper>

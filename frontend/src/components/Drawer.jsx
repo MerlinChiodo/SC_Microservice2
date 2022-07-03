@@ -20,10 +20,11 @@ function ShoppingCartDrawer() {
         return sum
     }*/
     const handleClick = () => {
-        if(tickets.length !== 0){
+
+        if(tickets[0].tripInfo !== undefined){
+            console.log(tickets)
             navigate("/login")
         }
-
     }
 
     return(
@@ -42,7 +43,7 @@ function ShoppingCartDrawer() {
             </div>
             <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                 <div className="mt-6">
-                   <button onClick={handleClick} className="flex mx-auto items-center w-1/2 justify-center rounded-md border border-transparent bg-neutral-content px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-neutral-focus">
+                   <button onClick={handleClick} className="flex mx-auto items-center w-1/2 justify-center rounded-md border border-transparent bg-neutral-content px-6 py-3 text-base font-medium text-white shadow-sm hover:accent-purple-800">
                         Checkout
                    </button>
                 </div>

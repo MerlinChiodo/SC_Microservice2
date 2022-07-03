@@ -58,7 +58,7 @@ function Checkout({ currency, showSpinner }) {
         create_qrcode(window.location.origin)
             .then((qrCode) => {
                 const ticket = document.getElementById("ticket")
-                htmlToImage.toPng(ticket)
+                htmlToImage.toPng(ticket, {width: 100, height:100})
                     .then((ticket_image) => {
                     sendEmail('default', {
                         name: `${user.user_data.firstname} ${user.user_data.lastname}` ,
@@ -95,8 +95,8 @@ function Checkout({ currency, showSpinner }) {
                     <li className="font-semibold">Bezahlen</li>
                 </ul>
             </div>
-            <div className="overflow-x-auto mt-4" id="ticket">
-                <table className="table w-full">
+            <div className="overflow-x-auto mt-4">
+                <table className="table w-fit mx-auto" id="ticket">
                     <thead>
                     <tr className="hover">
                         <th>Abfahrt</th>

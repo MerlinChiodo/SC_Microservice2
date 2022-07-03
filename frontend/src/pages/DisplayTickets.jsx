@@ -5,8 +5,6 @@ import {Status, Wrapper} from "@googlemaps/react-wrapper";
 import dayjs from 'dayjs';
 
 
-
-
 function DisplayTickets() {
 
     const {route, setRoute} = useContext(RouteContext)

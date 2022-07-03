@@ -19,7 +19,7 @@ export const RouteProvider = ({children}) => {
 
     function clearTickets(){
         localStorage.removeItem('tickets')
-        setTickets([{}])
+        setTickets([])
     }
 
 

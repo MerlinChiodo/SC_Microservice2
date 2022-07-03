@@ -1,23 +1,23 @@
 import { ShoppingCart } from 'tabler-icons-react';
 
-import {Select} from "@mantine/core";
+import {NumberInput, Select} from "@mantine/core";
 import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import RouteContext from "../context/route/RouteContext";
-
-
 
 function Ticket({children, routeItem, index}){
 
     const navigate = useNavigate()
     const {setTickets, route, tickets, setCart_opened} = useContext(RouteContext)
     const [tarif, setTarif] = useState('Einzelfahrt')
+    const [anzahl, setAnzahl] = useState(1)
 
 // TODO:fix tickets
     const handleClick = () => {
         const ticket = {
             tripInfo: route[index],
-            tarif: tarif
+            tarif: tarif,
+            anzahl: anzahl
         }
 
         let existingEntries = JSON.parse(localStorage.getItem("tickets"));
@@ -59,7 +59,7 @@ function Ticket({children, routeItem, index}){
                                         </p>
                                     </div>
                             </div>
-                                <div className="p-4" >
+                                <div className="mr-8 mb-2" >
                                         <Select
                                             id="tarif"
                                             data={['Einzelfahrt', 'Tagesticket', 'StadtTicket']}
@@ -69,6 +69,13 @@ function Ticket({children, routeItem, index}){
                                             styles={{
                                                 input: {borderRadius: 10}
                                             }}
+                                        />
+                                        <NumberInput
+                                            styles={{input: {borderRadius: 10, height: "auto", lineHeight: 2.5}}}
+                                            defaultValue={1}
+                                            value={anzahl}
+                                            onChange={setAnzahl}
+                                            label="Personenanzahl"
                                         />
                                     </div>
                                 </div>

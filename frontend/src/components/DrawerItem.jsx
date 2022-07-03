@@ -1,7 +1,22 @@
 import {Select} from "@mantine/core";
 import {ShoppingCart} from "tabler-icons-react";
+import RouteContext from "../context/route/RouteContext";
+import {useContext} from "react";
 
-function DrawerItem({ticket}) {
+function DrawerItem({ticket, index}) {
+
+
+    const {tickets, setTickets} = useContext(RouteContext)
+    const removeItem = () => {
+        let existingEntries = JSON.parse(localStorage.getItem("tickets"));
+        if(existingEntries == null) {
+            existingEntries = [];
+        }
+        existingEntries.splice(index, 1)
+        localStorage.setItem('tickets', JSON.stringify(existingEntries))
+        setTickets(JSON.parse(localStorage.getItem('tickets')))
+    }
+
     return ticket.tripInfo === undefined ? null
         : (
         <>
@@ -34,10 +49,11 @@ function DrawerItem({ticket}) {
                                 </div>
                                 <hr className="solid"/>
                                 <div className="flex flex-1 items-end justify-between text-sm ">
-                                    <p className="text-xs">Menge: 1</p>
+                                    <p className="text-xs">Menge: {ticket.anzahl}</p>
 
                                     <div className="flex">
                                         <button type="button"
+                                                onClick={removeItem}
                                                 className="font-medium text-accent hover:text-accent">Entfernen
                                         </button>
                                     </div>

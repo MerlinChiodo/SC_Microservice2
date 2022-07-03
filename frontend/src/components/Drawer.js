@@ -19,8 +19,8 @@ function ShoppingCartDrawer() {
         >
             <div className="container overflow-auto h-2/3">
             {tickets &&
-                tickets.map((ticket)=>(
-                    <DrawerItem ticket={ticket}></DrawerItem>))}
+                tickets.map((ticket, index)=>(
+                    <DrawerItem ticket={ticket} index={index}></DrawerItem>))}
             </div>
             <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                 <div className="flex justify-between text-base font-medium text-gray-900">

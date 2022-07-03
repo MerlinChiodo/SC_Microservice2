@@ -1,13 +1,12 @@
 import {PayPalButtons, usePayPalScriptReducer} from "@paypal/react-paypal-js";
 import {useContext, useEffect, useState} from "react";
 import RouteContext from "../context/route/RouteContext";
-import { Ticket } from 'tabler-icons-react';
 import UserContext from "../context/user/UserContext";
 import * as htmlToImage from 'html-to-image';
 import {create_qrcode, sendEmail} from "../controllers/emailController";
 import {showNotification} from "@mantine/notifications";
-import CheckoutItem from "../components/CheckoutItem";
 import * as paypal from "@paypal/react-paypal-js";
+
 
 //TODO: remove this
 const currency = "EUR";
@@ -18,16 +17,9 @@ function Checkout({ currency, showSpinner }) {
     const {user} = useContext(UserContext)
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
     const [validCheckout, setValidCheckout] = useState(false)
-    const {tickets} = useContext(RouteContext)
+    const {tickets, clearTickets} = useContext(RouteContext)
     //TODO: replace this
     const amount = "5";
-
-    //TODO: remove debug logs
-    useEffect(()=>{
-        console.log(tickets)
-        console.log(user)
-    }, [])
-
 
     const createTicket = async (ticket) => {
         const ticket_content = {
@@ -98,16 +90,40 @@ function Checkout({ currency, showSpinner }) {
                     <li className="font-semibold">Bezahlen</li>
                 </ul>
             </div>
-   {/*         {<CheckoutItem>
-
-            </CheckoutItem>}*/}
+            <div className="overflow-x-auto mt-4" id="ticket">
+                <table className="table w-full">
+                    <thead>
+                    <tr className="hover">
+                        <th>Abfahrt</th>
+                        <th>Ankunft</th>
+                        <th>Dauer</th>
+                        <th>Umstieg</th>
+                        <th>Tarif</th>
+                        <th>Menge</th>
+                        <th>Preis</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {tickets &&
+                        tickets.map((ticket, index) =>(<tr className="hover" key={index}>
+                        <td>{ticket.tripInfo.departureTime} <br/> {ticket.tripInfo.departure_station}</td>
+                        <td>{ticket.tripInfo.arrivalTime} <br/> {ticket.tripInfo.arrival_station}</td>
+                        <td>{ticket.tripInfo.duration}</td>
+                        <td>{ticket.tripInfo.changes -1}</td>
+                        <td>{ticket.tarif}</td>
+                        <td>{ticket.anzahl}</td>
+                        <td></td>
+                    </tr>))}
+                    </tbody>
+                </table>
+            </div>
             { (showSpinner && isPending) && <h2> Loading... </h2> }
             <div className="container w-fit m-6 mx-auto">
             <div>
                 <p className="p-6">Mit externem Zahlungsdienst bezahlen:</p>
             </div>
                 <PayPalButtons
-                disabled={false}
+                disabled={validCheckout}
                 forceReRender={[amount, currency, style]}
                 fundingSource={paypal.FUNDING.PAYPAL}
                 createOrder={(data, actions) => {
@@ -132,17 +148,17 @@ function Checkout({ currency, showSpinner }) {
                 onApprove={function (data, actions) {
                     return actions.order.capture().then(function () {
                         setValidCheckout(true)
-                        createTicket().then((response)=>{
+                       /* createTicket().then((response)=>{*/
                             sendMail()
-
                             showNotification({
                                 title: 'Email versendet',
                                 message: 'Eine Email mit deinem Ticket wurde versendet',
                             })
 
-                        }).catch(err =>{
+
+                      /*  }).catch(err =>{
                             console.log(err)
-                        })
+                        })*/
                     });
                 }}
 
@@ -155,6 +171,9 @@ function Checkout({ currency, showSpinner }) {
                     })
                 }}
             />
+                {validCheckout && (<div>
+
+                </div>)}
             </div>
         </div>
     );

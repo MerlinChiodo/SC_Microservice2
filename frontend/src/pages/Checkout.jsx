@@ -19,17 +19,24 @@ function Checkout({ currency, showSpinner }) {
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
     const [validCheckout, setValidCheckout] = useState(false)
     const {tickets, clearTickets} = useContext(RouteContext)
-    //TODO: replace this
-    const amount = "5";
 
     useEffect(()=>{
 
     }, [setValidCheckout])
 
+    function calcSubtotal() {
+        let sum = 0
+        for (const index in tickets) {
+            let preis = tickets[index].tarif.preis * tickets[index].anzahl
+            sum += preis
+        }
+        return sum
+    }
+
     const createTicket = async (ticket) => {
         const ticket_content = {
             ticket_art: ticket.tarif,
-            preis: Number(amount),
+            preis: Number(calcSubtotal()),
             abfahrt_haltestelle: ticket.tripInfo.departure_station,
             abfahrt_zeit: ticket.tripInfo.departureTime,
             ankunft_haltestelle: ticket.tripInfo.arrival_station,
@@ -58,7 +65,7 @@ function Checkout({ currency, showSpinner }) {
         create_qrcode(window.location.origin)
             .then((qrCode) => {
                 const ticket = document.getElementById("ticket")
-                htmlToImage.toPng(ticket, {width: 100, height:100})
+                htmlToImage.toPng(ticket, {skipAutoScale: true})
                     .then((ticket_image) => {
                     sendEmail('default', {
                         name: `${user.user_data.firstname} ${user.user_data.lastname}` ,
@@ -124,12 +131,13 @@ function Checkout({ currency, showSpinner }) {
             </div>
             { (showSpinner && isPending) && <h2> Loading... </h2> }
             <div className="container w-fit m-6 mx-auto">
-            <div>
-                <p className="p-6">Mit externem Zahlungsdienst bezahlen:</p>
+                <div className="font-semibold text-lg pb-6">Gesamtbetrag: {calcSubtotal()}€</div>
+                <div>
+                <p className="pb-6">Mit externem Zahlungsdienst bezahlen:</p>
             </div>
                 <PayPalButtons
                 disabled={validCheckout || tickets.length === 0}
-                forceReRender={[amount, currency, style]}
+                forceReRender={[calcSubtotal(), currency, style]}
                 fundingSource={paypal.FUNDING.PAYPAL}
                 createOrder={(data, actions) => {
                     return actions.order
@@ -138,7 +146,7 @@ function Checkout({ currency, showSpinner }) {
                                 {
                                     amount: {
                                         currency_code: currency,
-                                        value: amount,
+                                        value: calcSubtotal(),
                                     },
                                 },
                             ],
@@ -158,7 +166,8 @@ function Checkout({ currency, showSpinner }) {
                             showNotification({
                                 title: 'Email versendet',
                                 message: 'Eine Email mit deinem Ticket wurde versendet',
-                                color: 'beige'
+                                color: 'pink',
+
                             })
                             clearTickets()
                       /*  }).catch(err =>{
@@ -173,7 +182,7 @@ function Checkout({ currency, showSpinner }) {
                     showNotification({
                         title: 'Zahlungsvorgang abgebrochen',
                         message: '',
-                        color: 'beige'
+                        color: 'pink',
                     })
                 }}
             />

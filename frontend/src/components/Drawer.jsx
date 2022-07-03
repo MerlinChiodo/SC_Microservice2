@@ -10,20 +10,21 @@ function ShoppingCartDrawer() {
     const {cart_opened, setCart_opened, tickets} = useContext(RouteContext)
     const navigate = useNavigate()
 
- /*   function calcSubtotal(){
-        let tickets = JSON.parse(localStorage.getItem("tickets"));
+    function calcSubtotal() {
         let sum = 0
-        for(const ticket in tickets){
-                let preis = ticket.tarif.preis * ticket.anzahl
+            for (const index in tickets) {
+                let preis = tickets[index].tarif.preis * tickets[index].anzahl
                 sum += preis
             }
-        return sum
-    }*/
-    const handleClick = () => {
+            return sum
+        }
 
-        if(tickets[0].tripInfo !== undefined){
-            console.log(tickets)
-            navigate("/login")
+    const handleClick = () => {
+        if (tickets) {
+            if (tickets[0].tripInfo !== undefined) {
+                console.log(tickets)
+                navigate("/login")
+            }
         }
     }
 
@@ -42,7 +43,8 @@ function ShoppingCartDrawer() {
                     <DrawerItem ticket={ticket} index={index}></DrawerItem>))}
             </div>
             <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
-                <div className="mt-6">
+                <div>
+                    <p className="font-semibold mt-2 mb-6">Gesamtbetrag: {calcSubtotal()}€</p>
                    <button onClick={handleClick} className="flex mx-auto items-center w-1/2 justify-center rounded-md border border-transparent bg-neutral-content px-6 py-3 text-base font-medium text-white shadow-sm hover:accent-purple-800">
                         Checkout
                    </button>

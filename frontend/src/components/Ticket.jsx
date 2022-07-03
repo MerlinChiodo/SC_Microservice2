@@ -83,11 +83,10 @@ function Ticket({children, routeItem, index}){
                                     </div>
                                 </div>
 
-                                    <div className="basis-1/12 p-6 place-self-center hover:bg-base-300 rounded-lg" >
+                                    <div className="basis-1/12 p-6 place-self-center hover:bg-base-300 rounded-lg"  onClick={handleClick} >
                                         <ShoppingCart  size={30}
                                                        style={{margin: 0, placeSelf: "center"}}
                                                        strokeWidth={2}
-                                                       onClick={handleClick}
                                         />
                                         <p  className="text-xs font-medium mt-2">
                                             Preis

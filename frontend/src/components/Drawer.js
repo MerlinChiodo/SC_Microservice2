@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 
 function ShoppingCartDrawer() {
 
-    const {cart, setCart, cart_opened, setCart_opened, tickets} = useContext(RouteContext)
+    const {cart_opened, setCart_opened, tickets} = useContext(RouteContext)
     return(
         <Drawer
             opened={cart_opened}
@@ -15,7 +15,6 @@ function ShoppingCartDrawer() {
             padding="xl"
             size="xl"
             position="right"
-
         >
             <div className="container overflow-auto h-2/3">
             {tickets &&
@@ -29,7 +28,7 @@ function ShoppingCartDrawer() {
                 </div>
                 <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                 <div className="mt-6">
-                    <Link to="/checkout"
+                    <Link to="/login"
                        className="flex items-center justify-center rounded-md border border-transparent bg-neutral-content px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-neutral-content">Checkout</Link>
                 </div>
                 <div className="mt-6 flex justify-center text-center text-sm text-gray-500">

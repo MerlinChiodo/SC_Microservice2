@@ -3,18 +3,12 @@ import PropTypes from 'prop-types'
 import {Login, Logout} from "tabler-icons-react";
 import UserContext from "../context/user/UserContext";
 import {useContext, useState} from "react";
-import { Key } from 'tabler-icons-react';
 import { KeyOff } from 'tabler-icons-react';
 import { ShoppingCart } from 'tabler-icons-react';
-import {Drawer} from "@mantine/core";
 import RouteContext from "../context/route/RouteContext";
-import DrawerItem from "./DrawerItem";
 import ShoppingCartDrawer from "./Drawer";
 
-
-
 function Navbar({ title, children }) {
-
 
     const {getLoginUser, logout, isLoggedIn, isAdminLoggedIn, logoutAdmin, getLoginAdmin} = useContext(UserContext)
     const {setCart_opened} = useContext(RouteContext)
@@ -75,7 +69,7 @@ function Navbar({ title, children }) {
                                         </KeyOff>)}
                                     </div>
                                 </li>)}
-                                { isLoggedIn && (<li>
+                                { !isAdminLoggedIn && (<li>
                                     <div className='btn btn-ghost normal-case rounded-xl place-content-center'>
                                     <ShoppingCart  onClick={() => setCart_opened(true)}
                                                    size={28}

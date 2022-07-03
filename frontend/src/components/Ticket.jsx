@@ -12,7 +12,7 @@ function Ticket({children, routeItem, index}){
     const [tarif, setTarif] = useState('Einzelfahrt')
     const [anzahl, setAnzahl] = useState(1)
 
-// TODO:fix tickets
+
     const handleClick = () => {
         const ticket = {
             tripInfo: route[index],
@@ -28,7 +28,6 @@ function Ticket({children, routeItem, index}){
         localStorage.setItem('tickets', JSON.stringify(existingEntries))
         setTickets(JSON.parse(localStorage.getItem('tickets')))
         setCart_opened(true)
-        /*navigate('/login')*/
     }
 
 
@@ -75,7 +74,7 @@ function Ticket({children, routeItem, index}){
                                             defaultValue={1}
                                             value={anzahl}
                                             onChange={setAnzahl}
-                                            label="Personenanzahl"
+                                            label="Anzahl"
                                         />
                                     </div>
                                 </div>

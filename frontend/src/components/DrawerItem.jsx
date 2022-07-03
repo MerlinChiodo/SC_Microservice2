@@ -1,10 +1,7 @@
-import {Select} from "@mantine/core";
-import {ShoppingCart} from "tabler-icons-react";
 import RouteContext from "../context/route/RouteContext";
 import {useContext} from "react";
 
 function DrawerItem({ticket, index}) {
-
 
     const {tickets, setTickets} = useContext(RouteContext)
     const removeItem = () => {

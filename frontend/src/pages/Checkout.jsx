@@ -182,7 +182,7 @@ function Checkout({ currency, showSpinner }) {
                     showNotification({
                         title: 'Zahlungsvorgang abgebrochen',
                         message: '',
-                        color: 'pink',
+                        color: 'red',
                     })
                 }}
             />

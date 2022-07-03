@@ -1,5 +1,6 @@
 import React from 'react'
 import {postEvent} from "../controllers/eventController";
+import {showNotification} from "@mantine/notifications";
 
 
 function AboutUsForm() {
@@ -16,7 +17,20 @@ function AboutUsForm() {
                     picture: "",
                     url: "http://" +e.target.website.value
                 }
-            ).then(res=> console.log(res))
+            ).then(res=> {
+                console.log(res)
+                showNotification({
+                    title: 'About Us Event versendet',
+                    message: '',
+                    color: 'pink',
+                })
+            }).catch(err => {
+                showNotification({
+                    title: 'Fehler beim Versenden des About Us Events',
+                    message: `${err}`,
+                    color: 'red',
+                })
+            })
     }
 
     return(

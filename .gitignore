@@ -3,9 +3,10 @@ node_modules
 /dist
 # local env files
 .env.local
-.env.*.local
+.env.*.locals
 backend/.env
 frontend/node_modules
+frontend/.env
 # Editor directories and files
 .idea
 .vscode

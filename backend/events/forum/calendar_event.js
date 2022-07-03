@@ -16,7 +16,7 @@ exports.sendCalendarEntry = async (req, res) => {
             if (channelError) {
                 throw channelError
             }
-            //TODO: date validieren
+
             const validate = ajv.getSchema("calendarEntry")
             try {
             if (validate(req.body)) {

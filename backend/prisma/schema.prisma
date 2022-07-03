@@ -9,7 +9,6 @@ datasource db {
 
 model Fahrt {
   fahrt_id            Int        @id @default(autoincrement())
-  buslinie            Int
   abfahrt_haltestelle String
   abfahrt_zeit        DateTime
   ankunft_haltestelle String
@@ -47,7 +46,7 @@ model Ticket {
   preis       String?
   anfrage_id  Int?
   anfrage     Anfrage?          @relation(fields: [anfrage_id], references: [anfrage_id])
-  fahrten     Fahrt[]
+  fahrt       Fahrt?
   busreisende Busreisende[]
 
   @@index([anfrage_id], map: "Ticket_anfrage_id_fkey")
@@ -72,7 +71,7 @@ model Anfrage {
   verantwortlicher String
   institution      String?
   anzahlPassagiere Int
-  bearbeitet       Boolean?
+  bearbeitet       Boolean?    @default(false)
   mitarbeiter_id   Int?
   mitarbeiter      Mitarbeiter? @relation(fields: [mitarbeiter_id], references: [mitarbeiter_id])
   ticket           Ticket?

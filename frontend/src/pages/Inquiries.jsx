@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import InquiryItem from "./InquiryItem";
+import InquiryItem from "../components/InquiryItem";
 
 function Inquiries(){
 
@@ -20,11 +20,16 @@ function Inquiries(){
 
 
 
-    return isLoading ? (<h1 className="font-medium leading-tight text-2xl p-6">Loading</h1>) : (
+    return isLoading ? (
+        <>
+            <h1 className="font-medium leading-tight text-2xl p-6 text-center">Loading...</h1>
+        </>
+    ) : (
         <div className="container mx-auto">
             {items.map((item) => (
-                <InquiryItem item={item}></InquiryItem>
+                <InquiryItem item={item} key={item.anfrage_id}></InquiryItem>
             ))}
+
         </div>
     )
 }

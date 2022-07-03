@@ -1,14 +1,28 @@
 import React from 'react'
+import {Status, Wrapper} from "@googlemaps/react-wrapper";
+import AuskunftForm from "./AuskunftForm";
+import Map from "./Map";
+
 function Home() {
+
+    const google_api_key = process.env.REACT_APP_google_key;
+
+    const render = (status) => {
+        if (status === Status.LOADING) return <h3>{status}...</h3>;
+        if (status === Status.FAILURE) return <h3>{status}...</h3>;
+        return null;
+    };
+
+
+
+
     return (
-        <div className="hero min-h-screen max-w-full m-0 bg-base-200">
-            <div className="hero-content text-center">
-                <div className="max-w-md">
-                    <h1 className="text-5xl font-bold">Stadtbus</h1>
-                    <p className="py-6">Die voranschreitende Digitalisierung, die sich mehr und mehr durch unseren Alltag zieht, macht auch vor den öffentlichen Vekehrsmitteln keinen Halt.</p>
-                    <button className="btn btn-primary">Mehr erfahren</button>
-                </div>
+        <div className="container mx-auto p-6 bg-base-100">
+            <div>
+                <Wrapper apiKey={google_api_key} render={render}>
+                    <AuskunftForm></AuskunftForm></Wrapper>
             </div>
+            <Map></Map>
         </div>
     )
 }

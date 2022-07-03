@@ -17,7 +17,7 @@ exports.sendNewsletter = async (req, res) => {
             if (channelError) {
                 throw channelError
             }
-            //TODO: date validieren
+
             const validate = ajv.getSchema("newsletterPost")
             try {
             if (validate(req.body)) {

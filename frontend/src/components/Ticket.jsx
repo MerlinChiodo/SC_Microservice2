@@ -4,19 +4,23 @@ import {NumberInput, Select} from "@mantine/core";
 import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import RouteContext from "../context/route/RouteContext";
+import {TICKETS} from "../Tarife";
 
 function Ticket({children, routeItem, index}){
 
     const navigate = useNavigate()
     const {setTickets, route, tickets, setCart_opened} = useContext(RouteContext)
-    const [tarif, setTarif] = useState('Einzelfahrt')
+    const [tarifName, setTarifName] = useState(TICKETS[3].name)
     const [anzahl, setAnzahl] = useState(1)
 
 
     const handleClick = () => {
         const ticket = {
             tripInfo: route[index],
-            tarif: tarif,
+            tarif: {
+                name: tarifName,
+                preis: TICKETS.find((ticket) => ticket.name ===tarifName).preis
+            },
             anzahl: anzahl
         }
 
@@ -61,10 +65,10 @@ function Ticket({children, routeItem, index}){
                                 <div className="mr-8 mb-2" >
                                         <Select
                                             id="tarif"
-                                            data={['Einzelfahrt', 'Tagesticket', 'StadtTicket']}
+                                            data={TICKETS.map((ticket)=> ticket.name)}
                                             label="Tarife"
-                                            value={tarif}
-                                            onChange={setTarif}
+                                            value={tarifName}
+                                            onChange={setTarifName}
                                             styles={{
                                                 input: {borderRadius: 10}
                                             }}
@@ -83,7 +87,7 @@ function Ticket({children, routeItem, index}){
                                         <ShoppingCart  size={30}
                                                        style={{margin: 0, placeSelf: "center"}}
                                                        strokeWidth={2}
-                                                        onClick={handleClick}
+                                                       onClick={handleClick}
                                         />
                                         <p  className="text-xs font-medium mt-2">
                                             Preis

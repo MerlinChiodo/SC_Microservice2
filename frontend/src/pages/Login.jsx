@@ -31,10 +31,11 @@ function Login() {
                         <h1 className="text-5xl font-bold hover:underline ml-6">weiter mit der SmartCity</h1>
                         <p className="py-6"></p>
                     </div>
-                    <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+                    <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 m-auto">
                         <div className="card-title mx-auto mt-6">In der Smartcity anmelden</div>
                         <div className="card-body">
-                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet</p>
+                            <p>Melden Sie sich in der <a className="font-semibold hover:text-primary" href="http://supersmartcity.de/">Smart City Münster</a> an um weitere Funktionen des Stadtbuses zu nutzen</p>
+                            <p>Falls Sie noch nicht registriert sind, können Sie sich im <a className="font-semibold hover:text-primary" href="http://www.supersmartcity.de:9710/">Bürgerbüro</a> melden und weitere Dienste in Anspruch nehmen.</p>
                         </div>
                     </div>
                 </div>

@@ -13,11 +13,9 @@ function Home() {
         return null;
     };
 
-
-
     return (
         <div className="container mx-auto p-6 bg-base-100">
-            <div>
+            <div className="mb-4">
                 <Wrapper apiKey={google_api_key} render={render}>
                     <AuskunftForm></AuskunftForm></Wrapper>
             </div>

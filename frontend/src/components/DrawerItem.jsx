@@ -14,6 +14,7 @@ function DrawerItem({ticket, index}) {
         setTickets(JSON.parse(localStorage.getItem('tickets')))
     }
 
+
     return ticket.tripInfo === undefined ? null
         : (
         <>
@@ -33,7 +34,7 @@ function DrawerItem({ticket, index}) {
                                         Dauer: {ticket.tripInfo.duration}
                                     </p>
                                     <p className="text-sm font-medium mx-2">
-                                        {ticket.tarif}
+                                        {ticket.tarif.name} <br/> {ticket.tarif.preis}€
                                     </p>
                                 </div>
                                 <div className="flex flex-row">

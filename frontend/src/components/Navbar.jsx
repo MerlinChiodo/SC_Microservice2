@@ -34,6 +34,19 @@ function Navbar({ title, children }) {
                         </div>
                         <div className="flex-none hidden lg:block">
                             <ul className="menu menu-horizontal">
+                                { !isLoggedIn && (<li>
+                                    <div className='btn btn-ghost normal-case rounded-xl place-content-center' >
+                                        {isAdminLoggedIn && (<KeyOff
+                                            onClick={() => {
+                                                logoutAdmin()
+                                                window.location.href = window.location.origin
+                                            }}
+                                            size={28}
+                                            color={'black'}
+                                            strokeWidth={1}>
+                                        </KeyOff>)}
+                                    </div>
+                                </li>)}
                                 <li>
                                     <Link to='/tickets' className="btn btn-ghost normal-case rounded-xl">
                                         Tickets
@@ -54,19 +67,6 @@ function Navbar({ title, children }) {
                                                                 strokeWidth={1}
                                                                 color={'black'}>
                                                             </Logout>)}
-                                    </div>
-                                </li>)}
-                                { !isLoggedIn && (<li>
-                                    <div className='btn btn-ghost normal-case rounded-xl place-content-center' >
-                                        {isAdminLoggedIn && (<KeyOff
-                                            onClick={() => {
-                                                logoutAdmin()
-                                                window.location.href = window.location.origin
-                                            }}
-                                            size={28}
-                                            color={'black'}
-                                            strokeWidth={1}>
-                                        </KeyOff>)}
                                     </div>
                                 </li>)}
                                 { !isAdminLoggedIn && (<li>

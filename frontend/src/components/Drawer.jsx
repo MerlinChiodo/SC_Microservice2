@@ -13,8 +13,10 @@ function ShoppingCartDrawer() {
     function calcSubtotal() {
         let sum = 0
             for (const index in tickets) {
-                let preis = tickets[index].tarif.preis * tickets[index].anzahl
-                sum += preis
+                if (tickets[index].tarif){
+                    let preis = tickets[index].tarif.preis * tickets[index].anzahl
+                    sum += preis
+                }
             }
             return sum
         }

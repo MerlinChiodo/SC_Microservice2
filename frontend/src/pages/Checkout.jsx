@@ -6,6 +6,8 @@ import UserContext from "../context/user/UserContext";
 import * as htmlToImage from 'html-to-image';
 import {create_qrcode, sendEmail} from "../controllers/emailController";
 import {showNotification} from "@mantine/notifications";
+import CheckoutItem from "../components/CheckoutItem";
+import * as paypal from "@paypal/react-paypal-js";
 
 //TODO: remove this
 const currency = "EUR";
@@ -27,7 +29,7 @@ function Checkout({ currency, showSpinner }) {
     }, [])
 
 
-    const createTicket = async () => {
+    const createTicket = async (ticket) => {
         const ticket_content = {
             ticket_art: ticket.tarif,
             preis: Number(amount),
@@ -96,48 +98,9 @@ function Checkout({ currency, showSpinner }) {
                     <li className="font-semibold">Bezahlen</li>
                 </ul>
             </div>
-            <div className="card rounded-md min-w-fit w-1/2 shrink-0 m-6 bg-base-200 shadow-xl collapse mx-auto" tabIndex="0">
-                <div className="card-body p-4">
-                    <div className="flex justify-between divide-x-4 divide-dashed divide-base-100">
-                        <div  className="flex flex-row justify-between basis-11/12 ">
-                            <div id="ticket" className="flex flex-col place-content-around gap-2 collapse-title">
-                                <div className="flex flex-row">
-                                    <p  className="text-xl font-medium mr-2">
-                                        {ticket.tripInfo.departureTime} - {ticket.tripInfo.arrivalTime}
-                                    </p>
-                                    <p className="text-lg font-medium mx-2">
-                                        Umstiege: {ticket.tripInfo.changes -1}
-                                    </p>
-                                    <p className="text-lg font-medium mx-2">
-                                        Dauer: {ticket.tripInfo.duration}
-                                    </p>
-                                    <p className="text-lg font-medium mx-2">
-                                        {ticket.tarif}
-                                    </p>
-                                </div>
-                                <div className="flex flex-row">
-                                    <p  className="text-sm font-medium">
-                                        Abfahrt: <br/>{ticket.tripInfo.departure_station}
-                                    </p>
-                                    <p  className="text-sm font-medium">
-                                        Ankunft: <br/> {ticket.tripInfo.arrival_station}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+   {/*         {<CheckoutItem>
 
-                        <div className="basis-1/12 p-6 place-self-center rounded-lg" >
-                            <Ticket     size={30}
-                                           style={{margin: 0, placeSelf: "center"}}
-                                           strokeWidth={2}
-                            />
-                            <p  className="text-xs font-medium mt-2 text-center">
-                                {amount} €
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </CheckoutItem>}*/}
             { (showSpinner && isPending) && <h2> Loading... </h2> }
             <div className="container w-fit m-6 mx-auto">
             <div>
@@ -146,7 +109,7 @@ function Checkout({ currency, showSpinner }) {
                 <PayPalButtons
                 disabled={false}
                 forceReRender={[amount, currency, style]}
-                fundingSource={undefined}
+                fundingSource={paypal.FUNDING.PAYPAL}
                 createOrder={(data, actions) => {
                     return actions.order
                         .create({

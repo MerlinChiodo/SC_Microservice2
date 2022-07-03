@@ -8,6 +8,8 @@ import { KeyOff } from 'tabler-icons-react';
 import { ShoppingCart } from 'tabler-icons-react';
 import {Drawer} from "@mantine/core";
 import RouteContext from "../context/route/RouteContext";
+import DrawerItem from "./DrawerItem";
+import ShoppingCartDrawer from "./Drawer";
 
 
 
@@ -15,10 +17,11 @@ function Navbar({ title, children }) {
 
 
     const {getLoginUser, logout, isLoggedIn, isAdminLoggedIn, logoutAdmin, getLoginAdmin} = useContext(UserContext)
-
+    const {setCart_opened} = useContext(RouteContext)
 
     return (
         <>
+        <ShoppingCartDrawer></ShoppingCartDrawer>
         <div className="drawer ">
                 <input id="my-drawer-3" type="checkbox" className="drawer-toggle"/>
                 <div className="drawer-content flex flex-col">
@@ -67,9 +70,19 @@ function Navbar({ title, children }) {
                                                 window.location.href = window.location.origin
                                             }}
                                             size={28}
+                                            color={'black'}
                                             strokeWidth={1}>
                                         </KeyOff>)}
                                     </div>
+                                </li>)}
+                                { isLoggedIn && (<li>
+                                    <div className='btn btn-ghost normal-case rounded-xl place-content-center'>
+                                    <ShoppingCart  onClick={() => setCart_opened(true)}
+                                                   size={28}
+                                                   color={'black'}
+                                                   strokeWidth={1.5}>
+                                    </ShoppingCart>
+                                </div>
                                 </li>)}
                             </ul>
                         </div>

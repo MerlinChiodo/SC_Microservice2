@@ -10,18 +10,25 @@ import RouteContext from "../context/route/RouteContext";
 function Ticket({children, routeItem, index}){
 
     const navigate = useNavigate()
-    const {setTicket, route, ticket, setCart_opened} = useContext(RouteContext)
+    const {setTickets, route, tickets, setCart_opened} = useContext(RouteContext)
     const [tarif, setTarif] = useState('Einzelfahrt')
 
-
+// TODO:fix tickets
     const handleClick = () => {
-        localStorage.setItem('ticket',JSON.stringify({
+        const ticket = {
             tripInfo: route[index],
             tarif: tarif
-        }))
-        setTicket(JSON.parse(localStorage.getItem('ticket')))
+        }
+
+        let existingEntries = JSON.parse(localStorage.getItem("tickets"));
+        if(existingEntries == null) {
+            existingEntries = [];
+        }
+        existingEntries.push(ticket)
+        localStorage.setItem('tickets', JSON.stringify(existingEntries))
+        setTickets(JSON.parse(localStorage.getItem('tickets')))
         setCart_opened(true)
-        navigate('/login')
+        /*navigate('/login')*/
     }
 
 

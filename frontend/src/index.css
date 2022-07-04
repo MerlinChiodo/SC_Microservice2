@@ -16,7 +16,7 @@ code {
     monospace;
 }
 .map-container {
-    height: 700px;
+    height: 600px;
 }
 
 .vehicle_red {
@@ -64,7 +64,6 @@ code {
     cursor: pointer;
 }
 
-/*
 .stop {
     background-image: url('../public/stop.svg');
     background-size: cover;
@@ -72,18 +71,21 @@ code {
     height: 20px;
     border-radius: 50%;
     cursor: pointer;
-}*/
+}
 
 .mapboxgl-popup {
     max-width: 200px;
+    border-width: 3px;
+    --tw-bg-opacity: 1;
+    background-color: hsl(var(--b1) / var(--tw-bg-opacity));
+    color: #291334;
 }
 
 .mapboxgl-popup-content {
     text-align: center;
-    font-family: 'Open Sans', sans-serif;
-    @apply border rounded-xl bg-base-300 text-gray-800
-
+    color: #291334;
 }
+
 
 @layer components {
   .btn-primary {

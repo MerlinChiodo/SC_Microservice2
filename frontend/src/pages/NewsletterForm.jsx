@@ -30,7 +30,7 @@ function NewsletterForm(){
             title: form.values.title,
             short_description: form.values.short_description,
             long_description: form.values.long_description,
-            picture_url: "mopo",
+            picture_url: "https://cdn.pixabay.com/photo/2016/03/17/16/31/bus-1263266_1280.jpg",
         }).then(res =>{
             console.log(res)
             showNotification({

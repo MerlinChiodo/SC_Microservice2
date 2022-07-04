@@ -8,18 +8,20 @@ export const RouteProvider = ({children}) => {
 
 
     const [route, setRoute] = useState(JSON.parse(localStorage.getItem('routes')) || [{}])
-    const [ticket, setTicket] = useState(JSON.parse(localStorage.getItem('ticket')) || {})
-
+    const [tickets, setTickets] = useState(JSON.parse(localStorage.getItem('tickets')) || [{}])
+    const [cart, setCart] = useState([{}])
+    const [cart_opened, setCart_opened] = useState(false)
 
     function clearRoute() {
         localStorage.removeItem('routes')
         setRoute([{}])
     }
 
-    function clearTicket(){
-        localStorage.removeItem('ticket')
-        setTicket({})
+    function clearTickets(){
+        localStorage.removeItem('tickets')
+        setTickets([])
     }
+
 
 
     return (
@@ -27,10 +29,14 @@ export const RouteProvider = ({children}) => {
                     value={{
                         route,
                         setRoute,
-                        ticket,
-                        setTicket,
+                        tickets,
+                        setTickets,
                         clearRoute,
-                        clearTicket
+                        clearTickets,
+                        cart,
+                        setCart,
+                        cart_opened,
+                        setCart_opened
                     }}>
                     {children}
                 </RouteContext.Provider>

@@ -7,8 +7,6 @@ import * as turf from "@turf/turf";
 
 function Map() {
 
-
-
     const websocket_url = "wss://websocket.busradar.conterra.de";
     const api_url = "https://rest.busradar.conterra.de/prod/";
     mapboxgl.accessToken = process.env.REACT_APP_mapbox_key
@@ -244,8 +242,7 @@ function Map() {
             .setHTML('<h3>Linie ' + feature.properties.linientext + '</h3><h4>' + feature.properties.richtungstext + '</h4>' +
                 '<p>Verspätung ' + feature.properties.delay + ' Sekunden</p>' +
                 '<p id="' + feature.properties.fahrzeugid + '">Nächster Halt</p>' +
-                '<p>Fahrzeug ' + feature.properties.fahrzeugid + '</p>' +
-                '<p>VIS Zeit ' + new Date(feature.properties.visfahrplanlagezst * 1000).toLocaleTimeString() + '</p>');
+                '<p>Fahrzeug ' + feature.properties.fahrzeugid + '</p>');
         popup.on('open', function (e) {
             getStop(feature.properties.nachhst, feature.properties.fahrzeugid);
         })

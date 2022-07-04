@@ -43,7 +43,7 @@ model Ticket {
   ticket_id   Int               @id @default(autoincrement())
   ticket_art  Ticketart
   geltungstag DateTime
-  preis       String?
+  preis       String?           @default("25")
   anfrage_id  Int?
   anfrage     Anfrage?          @relation(fields: [anfrage_id], references: [anfrage_id])
   fahrt       Fahrt?

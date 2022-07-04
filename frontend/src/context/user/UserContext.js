@@ -1,5 +1,6 @@
-import React, {createContext, useEffect, useState} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 import Cookies from 'js-cookie';
+import RouteContext from "../route/RouteContext";
 
 
 const UserContext = createContext()
@@ -11,7 +12,7 @@ export const UserProvider = ({children}) => {
     const [loading, setLoading] = useState(false)
     const [isAdminLoggedIn, setAdminLoggedIn] = useState(false)
     const [admin, setAdmin] = useState({})
-
+    const {clearTickets} = useContext(RouteContext)
 
     useEffect(()=> {
         let params = (new URL(document.location)).searchParams;
@@ -103,6 +104,7 @@ export const UserProvider = ({children}) => {
         Cookies.remove('user_token')
         setUser({})
         setLoggedIn(false)
+        clearTickets()
     }
     const logoutAdmin = ()=>{
         Cookies.remove('employee_token')

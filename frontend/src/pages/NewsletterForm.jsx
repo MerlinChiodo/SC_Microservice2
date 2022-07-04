@@ -3,6 +3,7 @@ import {useState} from "react";
 import {postEvent} from "../controllers/eventController";
 import {useForm, zodResolver} from "@mantine/form";
 import {z} from "zod";
+import {showNotification} from "@mantine/notifications";
 
 const schema = z.object({
     title: z.string().min(2, { message: 'Title should have at least 2 letters' }),
@@ -30,6 +31,19 @@ function NewsletterForm(){
             short_description: form.values.short_description,
             long_description: form.values.long_description,
             picture_url: "mopo",
+        }).then(res =>{
+            console.log(res)
+            showNotification({
+                title: 'Newsletter Artikel versendet',
+                message: '',
+                color: 'pink',
+            })
+        }).catch(err => {
+            showNotification({
+                title: 'Fehler beim Versenden des Newsletter Artikels',
+                message: '',
+                color: 'red',
+            })
         })
     }
 

@@ -17,7 +17,7 @@ function AuskunftForm(){
     const navigate = useNavigate();
     const api_url = "https://rest.busradar.conterra.de/prod/";
 
-    const[stops, setStops] = useState(new Set())
+    const[stops, setStops] = useState([])
     const[time, setTime] = useState(new Date())
     const[isRouteValid, setIsRouteValid] = useState(false)
     const[homeAddress, setHomeAddress] = useState("")
@@ -38,8 +38,14 @@ function AuskunftForm(){
         getStops(stops)
     }
 
+    function getUniqueStopNames(){
+        let stop_names = stops.map((stop)=> stop["name"])
+        var uniq = [...new Set(stop_names)]
+        return uniq
+
+    }
     function getStops(stops_json) {
-        let stops = new Set()
+        let stops = []
         for (let key in stops_json.features) {
             let stop_name = stops_json.features[key].properties.lbez
             let coords = stops_json.features[key].geometry.coordinates
@@ -48,9 +54,10 @@ function AuskunftForm(){
                 name: stop_name,
                 coordinates: coords
             }
-            stops.add(stop)
+            stops.push(stop)
         }
         setStops(stops)
+
     }
     //TODO: remove code duplication
     const calculateRoute = (departure_coords, arrival_coords) => {
@@ -68,7 +75,6 @@ function AuskunftForm(){
         };
         directionsService.route(request, function(result, status) {
             if (status === 'OK') {
-                console.log(result)
 
                 try {
                     localStorage.setItem('routes', JSON.stringify([{
@@ -94,14 +100,20 @@ function AuskunftForm(){
                         message: 'Für diese Bushaltestellen gibt es keine gültige Verbindung',
                     })
                 }
+            } else {
+                setIsRouteValid(false)
+                showNotification({
+                    title: 'Keine gültige Busverbindung',
+                    message: 'Für diese Bushaltestellen gibt es keine gültige Verbindung',
+                })
             }
         })
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const coords_departure = [...stops].find(stop => stop.name===e.target.abfahrt_haltestelle.value).coordinates
-        const coords_arrival = [...stops].find(stop => stop.name===e.target.ankunfts_haltestelle.value).coordinates
+        const coords_departure = stops.find(stop => stop.name===e.target.abfahrt_haltestelle.value).coordinates
+        const coords_arrival = stops.find(stop => stop.name===e.target.ankunfts_haltestelle.value).coordinates
         clearRoute()
         calculateRoute(coords_departure, coords_arrival)
     }
@@ -115,13 +127,11 @@ function AuskunftForm(){
                         <Autocomplete
                             minLength={2}
                             id="abfahrt_haltestelle"
-                            data={[...stops].map((stop)=> stop["name"])}
+                            data={getUniqueStopNames()}
                             styles={{
                                 input: {borderRadius: 10}
                             }}
                             placeholder="Bahnhof/Haltestelle"
-                           /* data={[{value: homeAddress, group: "zuhause"},
-                            ]}*/
                             required
                         >
                         </Autocomplete>
@@ -130,7 +140,7 @@ function AuskunftForm(){
                         <label className="mb-2 text-sm font-medium text-gray-900" htmlFor="ankunfts_haltestelle">nach</label>
                             <Autocomplete
                                 id="ankunfts_haltestelle"
-                                data={[...stops].map((stop)=> stop["name"])}
+                                data={getUniqueStopNames()}
                                 minLength={2}
                                 styles={{
                                     input: {borderRadius: 10}

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Modal} from "@mantine/core";
+import {Badge, Modal} from "@mantine/core";
 import emailjs from "emailjs-com";
 import {create_qrcode, sendEmail} from "../controllers/emailController";
 import {showNotification} from "@mantine/notifications";
@@ -7,7 +7,7 @@ import {showNotification} from "@mantine/notifications";
 function InquiryItem({item}){
 
     const [opened, setOpened] = useState(false);
-
+    const [status, setStatus] = useState("offen")
 
     const handleClick_deny = async () => {
         const response = await fetch(`/inquiry/denyInquiry/${item.anfrage_id}`, {
@@ -16,6 +16,7 @@ function InquiryItem({item}){
         const data = await response.json()
         console.log(data)
         setOpened(false)
+        setStatus("abgelehnt")
         //email senden
     }
 
@@ -27,6 +28,7 @@ function InquiryItem({item}){
         const data = await response.json()
         console.log(data)
         setOpened(false)
+        setStatus("angenommen")
         //email senden
         create_qrcode(`${window.location.origin}/inquiry/getInquiry/${item.anfrage_id}`)
             .then((qrCode) => {
@@ -42,7 +44,7 @@ function InquiryItem({item}){
                 })
                 showNotification({
                     title: 'Email versendet',
-                    message: 'Eine Email mit deinem Ticket wurde versendet',
+                    message: 'Eine Email mit dem Ticket wurde versendet',
                 })
             })
             .catch(err => {
@@ -57,6 +59,8 @@ function InquiryItem({item}){
                 opened={opened}
                 onClose={() => setOpened(false)}
                 title="Antrag bearbeiten"
+                centered
+
             >
                 <div className="flow-root">
                     <ul role="list" className="divide-y divide-gray-200">
@@ -108,7 +112,7 @@ function InquiryItem({item}){
                                 </div>
                             </div>
                         </li>
-                        <li className="pt-3 pb-0 sm:pt-4">
+                        <li className="pt-3 sm:pt-4">
                             <div className="flex items-center space-x-4">
                                 <div className="flex-1 min-w-0">
                                     <p className="text-sm font-medium text-gray-900 truncate ">
@@ -127,7 +131,7 @@ function InquiryItem({item}){
                                         Preis
                                     </p>
                                     <p className="text-sm text-gray-500 truncate ">
-                                        {item.preis}
+                                        {item.ticket.preis}€
                                     </p>
                                 </div>
                             </div>
@@ -140,9 +144,10 @@ function InquiryItem({item}){
                 </div>
             </Modal>
 
-            <div className="p-2 bg-white border shadow-md sm:p-8 " onClick={() => setOpened(true)}>
+            <div className="p-2 bg-white border shadow-md sm:p-8 m-4" onClick={() => setOpened(true)}>
             <div className="flex justify-between items-center mb-4">
                 <h5 className="text-xl font-bold leading-none text-gray-900 ">Anfrage {item.anfrage_id}</h5>
+                <Badge variant="gradient" gradient={{ from: '#ed6ea0', to: '#ec8c69', deg: 35 }}>{status}</Badge>
             </div>
             <div className="flow-root">
                 <ul role="list" className="divide-y divide-gray-200 ">
@@ -156,6 +161,7 @@ function InquiryItem({item}){
                                     {item.ticket.ticket_art}
                                 </p>
                             </div>
+
                         </div>
                     </li>
                     <li className="py-3 sm:py-4">

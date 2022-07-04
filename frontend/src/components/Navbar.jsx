@@ -3,22 +3,19 @@ import PropTypes from 'prop-types'
 import {Login, Logout} from "tabler-icons-react";
 import UserContext from "../context/user/UserContext";
 import {useContext, useState} from "react";
-import { Key } from 'tabler-icons-react';
 import { KeyOff } from 'tabler-icons-react';
 import { ShoppingCart } from 'tabler-icons-react';
-import {Drawer} from "@mantine/core";
 import RouteContext from "../context/route/RouteContext";
-
-
+import ShoppingCartDrawer from "./Drawer";
 
 function Navbar({ title, children }) {
 
-
     const {getLoginUser, logout, isLoggedIn, isAdminLoggedIn, logoutAdmin, getLoginAdmin} = useContext(UserContext)
-
+    const {setCart_opened} = useContext(RouteContext)
 
     return (
         <>
+        <ShoppingCartDrawer></ShoppingCartDrawer>
         <div className="drawer ">
                 <input id="my-drawer-3" type="checkbox" className="drawer-toggle"/>
                 <div className="drawer-content flex flex-col">
@@ -37,6 +34,19 @@ function Navbar({ title, children }) {
                         </div>
                         <div className="flex-none hidden lg:block">
                             <ul className="menu menu-horizontal">
+                                { !isLoggedIn && (<li>
+                                    <div className='btn btn-ghost normal-case rounded-xl place-content-center' >
+                                        {isAdminLoggedIn && (<KeyOff
+                                            onClick={() => {
+                                                logoutAdmin()
+                                                window.location.href = window.location.origin
+                                            }}
+                                            size={28}
+                                            color={'black'}
+                                            strokeWidth={1}>
+                                        </KeyOff>)}
+                                    </div>
+                                </li>)}
                                 <li>
                                     <Link to='/tickets' className="btn btn-ghost normal-case rounded-xl">
                                         Tickets
@@ -59,17 +69,14 @@ function Navbar({ title, children }) {
                                                             </Logout>)}
                                     </div>
                                 </li>)}
-                                { !isLoggedIn && (<li>
-                                    <div className='btn btn-ghost normal-case rounded-xl place-content-center' >
-                                        {isAdminLoggedIn && (<KeyOff
-                                            onClick={() => {
-                                                logoutAdmin()
-                                                window.location.href = window.location.origin
-                                            }}
-                                            size={28}
-                                            strokeWidth={1}>
-                                        </KeyOff>)}
-                                    </div>
+                                { !isAdminLoggedIn && (<li>
+                                    <div className='btn btn-ghost normal-case rounded-xl place-content-center'>
+                                    <ShoppingCart  onClick={() => setCart_opened(true)}
+                                                   size={28}
+                                                   color={'black'}
+                                                   strokeWidth={1.5}>
+                                    </ShoppingCart>
+                                </div>
                                 </li>)}
                             </ul>
                         </div>

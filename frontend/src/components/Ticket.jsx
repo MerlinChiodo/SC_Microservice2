@@ -1,26 +1,37 @@
 import { ShoppingCart } from 'tabler-icons-react';
 
-import {Select} from "@mantine/core";
+import {NumberInput, Select} from "@mantine/core";
 import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import RouteContext from "../context/route/RouteContext";
-
-
+import {TICKETS} from "../Tarife";
 
 function Ticket({children, routeItem, index}){
 
     const navigate = useNavigate()
-    const {setTicket, route, ticket} = useContext(RouteContext)
-    const [tarif, setTarif] = useState('Einzelfahrt')
+    const {setTickets, route, tickets, setCart_opened} = useContext(RouteContext)
+    const [tarifName, setTarifName] = useState(TICKETS[3].name)
+    const [anzahl, setAnzahl] = useState(1)
 
 
     const handleClick = () => {
-        localStorage.setItem('ticket',JSON.stringify({
+        const ticket = {
             tripInfo: route[index],
-            tarif: tarif
-        }))
-        setTicket(JSON.parse(localStorage.getItem('ticket')))
-        navigate('/login')
+            tarif: {
+                name: tarifName,
+                preis: TICKETS.find((ticket) => ticket.name ===tarifName).preis
+            },
+            anzahl: anzahl
+        }
+
+        let existingEntries = JSON.parse(localStorage.getItem("tickets"));
+        if(existingEntries == null) {
+            existingEntries = [];
+        }
+        existingEntries.push(ticket)
+        localStorage.setItem('tickets', JSON.stringify(existingEntries))
+        setTickets(JSON.parse(localStorage.getItem('tickets')))
+        setCart_opened(true)
     }
 
 
@@ -51,25 +62,31 @@ function Ticket({children, routeItem, index}){
                                         </p>
                                     </div>
                             </div>
-                                <div className="p-4" >
+                                <div className="mr-8 mb-2" >
                                         <Select
                                             id="tarif"
-                                            data={['Einzelfahrt', 'Tagesticket', 'StadtTicket']}
+                                            data={TICKETS.map((ticket)=> ticket.name)}
                                             label="Tarife"
-                                            value={tarif}
-                                            onChange={setTarif}
+                                            value={tarifName}
+                                            onChange={setTarifName}
                                             styles={{
                                                 input: {borderRadius: 10}
                                             }}
                                         />
+                                        <NumberInput
+                                            styles={{input: {borderRadius: 10, height: "auto", lineHeight: 2.5}}}
+                                            defaultValue={1}
+                                            value={anzahl}
+                                            onChange={setAnzahl}
+                                            label="Anzahl"
+                                        />
                                     </div>
                                 </div>
 
-                                    <div className="basis-1/12 p-6 place-self-center hover:bg-base-300 rounded-lg" >
+                                    <div className="basis-1/12 p-6 place-self-center hover:bg-base-300 rounded-lg"  onClick={handleClick} >
                                         <ShoppingCart  size={30}
                                                        style={{margin: 0, placeSelf: "center"}}
                                                        strokeWidth={2}
-                                                        onClick={handleClick}
                                         />
                                         <p  className="text-xs font-medium mt-2">
                                             Preis

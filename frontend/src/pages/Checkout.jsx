@@ -1,11 +1,13 @@
 import {PayPalButtons, usePayPalScriptReducer} from "@paypal/react-paypal-js";
 import {useContext, useEffect, useState} from "react";
 import RouteContext from "../context/route/RouteContext";
-import { Ticket } from 'tabler-icons-react';
 import UserContext from "../context/user/UserContext";
 import * as htmlToImage from 'html-to-image';
 import {create_qrcode, sendEmail} from "../controllers/emailController";
 import {showNotification} from "@mantine/notifications";
+import * as paypal from "@paypal/react-paypal-js";
+import {Link} from "react-router-dom";
+
 
 //TODO: remove this
 const currency = "EUR";
@@ -16,21 +18,25 @@ function Checkout({ currency, showSpinner }) {
     const {user} = useContext(UserContext)
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
     const [validCheckout, setValidCheckout] = useState(false)
-    const {ticket} = useContext(RouteContext)
-    //TODO: replace this
-    const amount = "5";
+    const {tickets, clearTickets} = useContext(RouteContext)
 
-    //TODO: remove debug logs
     useEffect(()=>{
-        console.log(ticket)
-        console.log(user)
-    }, [])
 
+    }, [setValidCheckout])
 
-    const createTicket = async () => {
+    function calcSubtotal() {
+        let sum = 0
+        for (const index in tickets) {
+            let preis = tickets[index].tarif.preis * tickets[index].anzahl
+            sum += preis
+        }
+        return sum
+    }
+
+    const createTicket = async (ticket) => {
         const ticket_content = {
             ticket_art: ticket.tarif,
-            preis: Number(amount),
+            preis: Number(calcSubtotal()),
             abfahrt_haltestelle: ticket.tripInfo.departure_station,
             abfahrt_zeit: ticket.tripInfo.departureTime,
             ankunft_haltestelle: ticket.tripInfo.arrival_station,
@@ -59,7 +65,7 @@ function Checkout({ currency, showSpinner }) {
         create_qrcode(window.location.origin)
             .then((qrCode) => {
                 const ticket = document.getElementById("ticket")
-                htmlToImage.toPng(ticket)
+                htmlToImage.toPng(ticket, {skipAutoScale: true})
                     .then((ticket_image) => {
                     sendEmail('default', {
                         name: `${user.user_data.firstname} ${user.user_data.lastname}` ,
@@ -96,57 +102,43 @@ function Checkout({ currency, showSpinner }) {
                     <li className="font-semibold">Bezahlen</li>
                 </ul>
             </div>
-            <div className="card rounded-md min-w-fit w-1/2 shrink-0 m-6 bg-base-200 shadow-xl collapse mx-auto" tabIndex="0">
-                <div className="card-body p-4">
-                    <div className="flex justify-between divide-x-4 divide-dashed divide-base-100">
-                        <div  className="flex flex-row justify-between basis-11/12 ">
-                            <div id="ticket" className="flex flex-col place-content-around gap-2 collapse-title">
-                                <div className="flex flex-row">
-                                    <p  className="text-xl font-medium mr-2">
-                                        {ticket.tripInfo.departureTime} - {ticket.tripInfo.arrivalTime}
-                                    </p>
-                                    <p className="text-lg font-medium mx-2">
-                                        Umstiege: {ticket.tripInfo.changes -1}
-                                    </p>
-                                    <p className="text-lg font-medium mx-2">
-                                        Dauer: {ticket.tripInfo.duration}
-                                    </p>
-                                    <p className="text-lg font-medium mx-2">
-                                        {ticket.tarif}
-                                    </p>
-                                </div>
-                                <div className="flex flex-row">
-                                    <p  className="text-sm font-medium">
-                                        Abfahrt: <br/>{ticket.tripInfo.departure_station}
-                                    </p>
-                                    <p  className="text-sm font-medium">
-                                        Ankunft: <br/> {ticket.tripInfo.arrival_station}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="basis-1/12 p-6 place-self-center rounded-lg" >
-                            <Ticket     size={30}
-                                           style={{margin: 0, placeSelf: "center"}}
-                                           strokeWidth={2}
-                            />
-                            <p  className="text-xs font-medium mt-2 text-center">
-                                {amount} €
-                            </p>
-                        </div>
-                    </div>
-                </div>
+            <div className="overflow-x-auto mt-4">
+                <table className="table w-fit mx-auto" id="ticket">
+                    <thead>
+                    <tr className="hover">
+                        <th>Abfahrt</th>
+                        <th>Ankunft</th>
+                        <th>Dauer</th>
+                        <th>Umstieg</th>
+                        <th>Tarif</th>
+                        <th>Menge</th>
+                        <th>Preis</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {tickets &&
+                        tickets.map((ticket, index) =>(<tr className="hover" key={index}>
+                        <td>{ticket.tripInfo.departureTime} <br/> {ticket.tripInfo.departure_station}</td>
+                        <td>{ticket.tripInfo.arrivalTime} <br/> {ticket.tripInfo.arrival_station}</td>
+                        <td>{ticket.tripInfo.duration}</td>
+                        <td>{ticket.tripInfo.changes -1}</td>
+                        <td>{ticket.tarif.name}</td>
+                        <td>{ticket.anzahl}</td>
+                        <td>{ticket.tarif.preis}€</td>
+                    </tr>))}
+                    </tbody>
+                </table>
             </div>
             { (showSpinner && isPending) && <h2> Loading... </h2> }
             <div className="container w-fit m-6 mx-auto">
-            <div>
-                <p className="p-6">Mit externem Zahlungsdienst bezahlen:</p>
+                <div className="font-semibold text-lg pb-6">Gesamtbetrag: {calcSubtotal()}€</div>
+                <div>
+                <p className="pb-6">Mit externem Zahlungsdienst bezahlen:</p>
             </div>
                 <PayPalButtons
-                disabled={false}
-                forceReRender={[amount, currency, style]}
-                fundingSource={undefined}
+                disabled={validCheckout || tickets.length === 0}
+                forceReRender={[calcSubtotal(), currency, style]}
+                fundingSource={paypal.FUNDING.PAYPAL}
                 createOrder={(data, actions) => {
                     return actions.order
                         .create({
@@ -154,7 +146,7 @@ function Checkout({ currency, showSpinner }) {
                                 {
                                     amount: {
                                         currency_code: currency,
-                                        value: amount,
+                                        value: calcSubtotal(),
                                     },
                                 },
                             ],
@@ -169,17 +161,18 @@ function Checkout({ currency, showSpinner }) {
                 onApprove={function (data, actions) {
                     return actions.order.capture().then(function () {
                         setValidCheckout(true)
-                        createTicket().then((response)=>{
+                       /* createTicket().then((response)=>{*/
                             sendMail()
-
                             showNotification({
                                 title: 'Email versendet',
                                 message: 'Eine Email mit deinem Ticket wurde versendet',
-                            })
+                                color: 'pink',
 
-                        }).catch(err =>{
+                            })
+                            clearTickets()
+                      /*  }).catch(err =>{
                             console.log(err)
-                        })
+                        })*/
                     });
                 }}
 
@@ -189,9 +182,13 @@ function Checkout({ currency, showSpinner }) {
                     showNotification({
                         title: 'Zahlungsvorgang abgebrochen',
                         message: '',
+                        color: 'red',
                     })
                 }}
             />
+                {validCheckout && (<div className="mx-auto">
+                    <Link className="link link-hover" to="/">Zurück zur Startseite</Link>
+                </div>)}
             </div>
         </div>
     );

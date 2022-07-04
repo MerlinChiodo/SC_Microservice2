@@ -17,6 +17,8 @@ import Checkout from "./pages/Checkout";
 import Error from "./pages/Error";
 import {NotificationsProvider} from "@mantine/notifications";
 import Footer from "./components/Footer";
+import Impressum from "./pages/Impressum";
+import Datenschutz from "./pages/Datenschutz";
 
 
 function App() {
@@ -49,6 +51,8 @@ function App() {
                       <Route path='/login' element={<Login/>}/>
                       <Route path='/checkout' element={<Checkout/>}/>
                       <Route path='/error' element={<Error/>}/>
+                      <Route path='/impressum' element={<Impressum/>}/>
+                      <Route path='/datenschutz' element={<Datenschutz/>}/>
                   </Routes>
 
                 </Navbar>

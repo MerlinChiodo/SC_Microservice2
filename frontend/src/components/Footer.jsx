@@ -14,8 +14,13 @@ function Footer() {
                     <div className="link link-hover"
                          onClick={() => getLoginAdmin(`${window.location.origin}/employee/`, `${window.location.origin}/error/`)}
                     >
-                        Mitarbeiter
+                        Anmeldung Mitarbeiter
                     </div>
+                    {isAdminLoggedIn && (<Link className="link link-hover"
+                         to="/employee"
+                    >
+                        Mitarbeiterseite
+                    </Link>)}
                 </div>
                 <div>
                     <span className="footer-title">SmartCity</span>
@@ -28,10 +33,10 @@ function Footer() {
                 </div>
                 <div>
                     <span className="footer-title">Legal</span>
-                    <Link className="link link-hover" to="/">
+                    <Link className="link link-hover" to="/impressum">
                         Impressum
                     </Link>
-                    <Link className="link link-hover" to="/">
+                    <Link className="link link-hover" to="/datenschutz">
                         Datenschutz
                     </Link>
                 </div>

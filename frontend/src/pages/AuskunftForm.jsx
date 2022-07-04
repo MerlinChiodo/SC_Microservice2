@@ -75,7 +75,6 @@ function AuskunftForm(){
         };
         directionsService.route(request, function(result, status) {
             if (status === 'OK') {
-                console.log(result)
 
                 try {
                     localStorage.setItem('routes', JSON.stringify([{

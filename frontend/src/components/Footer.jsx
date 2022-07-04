@@ -8,7 +8,7 @@ function Footer() {
 
     return(
         <>
-            <footer className="footer p-10 bg-base-200 text-base-content overflow-visible">
+            <footer className="footer p-10 pb-0 bg-base-200 text-base-content h-auto">
                 <div>
                     <span className="footer-title">Mitarbeiterbereich</span>
                     <div className="link link-hover"

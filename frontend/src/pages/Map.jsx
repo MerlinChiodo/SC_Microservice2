@@ -239,9 +239,8 @@ function Map() {
         var popup = new mapboxgl.Popup({
             offset: 25
         })
-            .setHTML('<h3>Linie ' + feature.properties.linientext + '</h3><h4>' + feature.properties.richtungstext + '</h4>' +
+            .setHTML('<h3><b>Linie ' + feature.properties.linientext + '</h3><h4>' + feature.properties.richtungstext + '</h4></b>' +
                 '<p>Verspätung ' + feature.properties.delay + ' Sekunden</p>' +
-                '<p id="' + feature.properties.fahrzeugid + '">Nächster Halt</p>' +
                 '<p>Fahrzeug ' + feature.properties.fahrzeugid + '</p>');
         popup.on('open', function (e) {
             getStop(feature.properties.nachhst, feature.properties.fahrzeugid);
@@ -260,12 +259,12 @@ function Map() {
 
     function getStop(id, cid) {
         if (id in stopmarker) {
-            /*document.getElementById(cid).innerHTML = "Nächster Halt: " + stopmarker[id].properties.lbez;*/
+            document.getElementById(cid).innerHTML = "Nächster Halt: " + stopmarker[id].properties.lbez;
         } else {
             getAsync(api_url + "haltestellen/" + id,
                 function (e) {
                     var f = JSON.parse(e);
-                    /*document.getElementById(cid).innerHTML = "Nächster Halt: " + f.properties.lbez;*/
+                    document.getElementById(cid).innerHTML = "Nächster Halt: " + f.properties.lbez;
                     var el = document.createElement('div');
                     el.className = 'stop';
 
@@ -296,7 +295,7 @@ function Map() {
                 for (var f in features) {
                     tab += "<li>" + features[f].linienid + " " + features[f].richtungstext + " " + new Date(features[f].abfahrtszeit * 1000 + features[f].delay * 1000).toLocaleTimeString() + "</li>";
                 }
-                /*document.getElementById("abfahrten" + cid).innerHTML = tab + "</ul>";*/
+                document.getElementById("abfahrten" + cid).innerHTML = tab + "</ul>";
             }
         );
     }
@@ -306,6 +305,10 @@ function Map() {
         <div>
             <p id="timestamp"></p>
             <div ref={mapContainer} className="map-container" />
+            <p className="place-self-end">Powered by:</p>
+            <div><img width="70" height="80" src="/conterra_Logo.png" alt="Conterra Logo"/></div>
+            <a className="hover:text-primary pr-2" href="https://conterra.de/impressum" target="_blank">Impressum</a>
+            <a className="hover:text-primary " href="https://conterra.de/datenschutzhinweise" target="_blank">Datenschutz</a>
         </div>
 
     )

@@ -30,7 +30,7 @@ function NewsletterForm(){
             title: form.values.title,
             short_description: form.values.short_description,
             long_description: form.values.long_description,
-            picture_url: "mopo",
+            picture_url: "https://cdn.pixabay.com/photo/2016/03/17/16/31/bus-1263266_1280.jpg",
         }).then(res =>{
             console.log(res)
             showNotification({
@@ -90,7 +90,7 @@ function NewsletterForm(){
                 />
             </div>
             <div className="mt-6">
-                <label htmlFor="long_description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Langbeschreibung</label>
+                <label htmlFor="long_description" className="block mb-2 text-sm font-medium text-gray-900">Langbeschreibung</label>
                 <textarea id="long_description"
                           rows="4"
                           className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "

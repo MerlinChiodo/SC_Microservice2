@@ -34,6 +34,9 @@ exports.getInquiry = async(req, res) => {
             where: {
                 anfrage_id: inquiry_id,
             },
+            include : {
+                ticket: true
+            },
         })
         return res.status(200).json(inquiry)
     } catch (error){

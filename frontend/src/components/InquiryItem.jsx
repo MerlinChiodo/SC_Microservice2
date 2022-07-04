@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Modal} from "@mantine/core";
+import {Badge, Modal} from "@mantine/core";
 import emailjs from "emailjs-com";
 import {create_qrcode, sendEmail} from "../controllers/emailController";
 import {showNotification} from "@mantine/notifications";
@@ -7,7 +7,7 @@ import {showNotification} from "@mantine/notifications";
 function InquiryItem({item}){
 
     const [opened, setOpened] = useState(false);
-
+    const [status, setStatus] = useState("offen")
 
     const handleClick_deny = async () => {
         const response = await fetch(`/inquiry/denyInquiry/${item.anfrage_id}`, {
@@ -16,6 +16,7 @@ function InquiryItem({item}){
         const data = await response.json()
         console.log(data)
         setOpened(false)
+        setStatus("abgelehnt")
         //email senden
     }
 
@@ -27,6 +28,7 @@ function InquiryItem({item}){
         const data = await response.json()
         console.log(data)
         setOpened(false)
+        setStatus("angenommen")
         //email senden
         create_qrcode(`${window.location.origin}/inquiry/getInquiry/${item.anfrage_id}`)
             .then((qrCode) => {
@@ -42,7 +44,7 @@ function InquiryItem({item}){
                 })
                 showNotification({
                     title: 'Email versendet',
-                    message: 'Eine Email mit deinem Ticket wurde versendet',
+                    message: 'Eine Email mit dem Ticket wurde versendet',
                 })
             })
             .catch(err => {
@@ -145,6 +147,7 @@ function InquiryItem({item}){
             <div className="p-2 bg-white border shadow-md sm:p-8 m-4" onClick={() => setOpened(true)}>
             <div className="flex justify-between items-center mb-4">
                 <h5 className="text-xl font-bold leading-none text-gray-900 ">Anfrage {item.anfrage_id}</h5>
+                <Badge variant="gradient" gradient={{ from: '#ed6ea0', to: '#ec8c69', deg: 35 }}>{status}</Badge>
             </div>
             <div className="flow-root">
                 <ul role="list" className="divide-y divide-gray-200 ">
@@ -158,6 +161,7 @@ function InquiryItem({item}){
                                     {item.ticket.ticket_art}
                                 </p>
                             </div>
+
                         </div>
                     </li>
                     <li className="py-3 sm:py-4">

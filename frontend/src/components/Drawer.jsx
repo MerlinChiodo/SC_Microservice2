@@ -2,7 +2,7 @@ import DrawerItem from "./DrawerItem";
 import {Drawer} from "@mantine/core";
 import RouteContext from "../context/route/RouteContext";
 import {useContext} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 
 function ShoppingCartDrawer() {
